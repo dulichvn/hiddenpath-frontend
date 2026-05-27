@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About HiddenPath Vietnam — Our Story, Philosophy &amp; Team</title>
+  <meta name="description" content="HiddenPath Vietnam was founded by locals who wanted to give travelers a way to experience Vietnam that was intimate, honest, and genuinely transformative. Read our story."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            teal:   { DEFAULT:'#006D5B', dark:'#005548', light:'#E8F4F1' },
+            orange: { DEFAULT:'#FF8A42', hover:'#E87535' },
+            slate:  { DEFAULT:'#2C3340' },
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"','Georgia','serif'],
+            body:    ['"DM Sans"','system-ui','sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* =====================================================
+       TOKENS & RESET
+    ===================================================== */
+    :root{
+      --teal:#006D5B; --teal-dark:#005548; --teal-light:#E8F4F1;
+      --orange:#FF8A42; --orange-h:#E87535;
+      --slate:#2C3340; --warm:#FAF9F7; --gray:#E8E6E1;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    html{font-family:'DM Sans',system-ui,sans-serif;}
+    body{background:var(--warm);color:var(--slate);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    ::selection{background:rgba(0,109,91,.15);}
+    .font-display{font-family:'Cormorant Garamond',Georgia,serif;}
+    .section-label{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);}
+
+    /* =====================================================
+       SCROLL PROGRESS
+    ===================================================== */
+    #scroll-progress{position:fixed;top:0;left:0;height:3px;background:var(--orange);z-index:9999;transition:width .1s linear;}
+
+    /* =====================================================
+       ANIMATIONS
+    ===================================================== */
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @keyframes slideRight{from{width:0;}to{width:100%;}}
+    @keyframes floatUp{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .reveal-delay-1.visible{transition-delay:.12s;}
+    .reveal-delay-2.visible{transition-delay:.24s;}
+    .reveal-delay-3.visible{transition-delay:.36s;}
+    .reveal-delay-4.visible{transition-delay:.48s;}
+    .reveal-left{opacity:0;transform:translateX(-36px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal-left.visible{opacity:1;transform:translateX(0);}
+    .reveal-right{opacity:0;transform:translateX(36px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal-right.visible{opacity:1;transform:translateX(0);}
+
+    /* =====================================================
+       NAV
+    ===================================================== */
+    #main-nav{transition:background .4s ease,box-shadow .4s ease;}
+    #main-nav.scrolled{background:rgba(250,249,247,.96)!important;backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(0,0,0,.08);}
+    #main-nav.scrolled .nav-link{color:var(--slate)!important;}
+    #main-nav.scrolled .nav-logo{color:var(--teal)!important;}
+    #main-nav.scrolled .logo-sub{color:var(--slate);opacity:.45;}
+    #mobile-menu{display:none;}
+    #mobile-menu.open{display:block;animation:fadeInUp .3s ease;}
+
+    /* =====================================================
+       HERO / MANIFESTO
+    ===================================================== */
+    .hero-overlay{
+      background:linear-gradient(
+        105deg,
+        rgba(0,0,0,.72) 0%,
+        rgba(0,0,0,.45) 45%,
+        rgba(0,0,0,.18) 100%
+      );
+    }
+    /* Animated underline on hero H1 */
+    .hero-underline{
+      position:relative;
+      display:inline-block;
+    }
+    .hero-underline::after{
+      content:'';
+      position:absolute;
+      bottom:-6px;left:0;
+      height:2px;
+      background:var(--orange);
+      width:0;
+      animation:slideRight 1.2s ease .9s forwards;
+    }
+
+    /* =====================================================
+       MANIFESTO STRIP — the big italic pull-quote zone
+    ===================================================== */
+    .manifesto-strip{
+      position:relative;
+      overflow:hidden;
+    }
+    .manifesto-strip::before{
+      content:'';
+      position:absolute;
+      top:0;left:0;bottom:0;
+      width:4px;
+      background:var(--teal);
+    }
+
+    /* =====================================================
+       FOUNDERS SECTION
+    ===================================================== */
+    .founders-photo-wrap{
+      position:relative;
+      border-radius:20px;
+      overflow:hidden;
+    }
+    .founders-photo-wrap::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom,transparent 55%,rgba(0,109,91,.35) 100%);
+      border-radius:20px;
+    }
+    .founded-badge{
+      position:absolute;
+      bottom:24px; right:-20px;
+      z-index:10;
+      background:var(--orange);
+      color:white;
+      border-radius:16px;
+      padding:1rem 1.5rem;
+      box-shadow:0 12px 40px rgba(255,138,66,.4);
+      font-family:'Cormorant Garamond',serif;
+    }
+    /* Oversized pull-quote */
+    .pull-quote{
+      font-family:'Cormorant Garamond',Georgia,serif;
+      font-style:italic;
+      font-weight:400;
+      line-height:1.15;
+      color:var(--slate);
+      position:relative;
+    }
+    .pull-quote::before{
+      content:'\201C';
+      position:absolute;
+      top:-.5rem;left:-1.5rem;
+      font-size:6rem;
+      line-height:1;
+      color:var(--teal-light);
+      font-style:normal;
+      pointer-events:none;
+    }
+
+    /* =====================================================
+       TIMELINE
+    ===================================================== */
+    .timeline-node{
+      position:relative;
+      padding-left:2rem;
+    }
+    .timeline-node::before{
+      content:'';
+      position:absolute;
+      left:0;top:6px;
+      width:10px;height:10px;
+      border-radius:50%;
+      background:var(--teal);
+      border:2px solid var(--teal-light);
+    }
+    .timeline-node::after{
+      content:'';
+      position:absolute;
+      left:4px;top:22px;bottom:-16px;
+      width:2px;
+      background:var(--teal-light);
+    }
+    .timeline-node:last-child::after{display:none;}
+
+    /* =====================================================
+       PILLAR CARDS
+    ===================================================== */
+    .pillar-card{
+      background:white;
+      border-radius:20px;
+      border:1px solid var(--gray);
+      transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .pillar-card::before{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;
+      height:3px;
+      background:var(--teal);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .35s ease;
+    }
+    .pillar-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 24px 56px rgba(0,0,0,.1);
+      border-color:transparent;
+    }
+    .pillar-card:hover::before{transform:scaleX(1);}
+    .pillar-icon-wrap{
+      width:56px;height:56px;border-radius:16px;
+      background:var(--teal-light);
+      display:flex;align-items:center;justify-content:center;
+      margin-bottom:1.25rem;
+      transition:background .3s ease;
+    }
+    .pillar-card:hover .pillar-icon-wrap{background:var(--teal);}
+    .pillar-card:hover .pillar-icon-wrap svg{stroke:white;}
+
+    /* =====================================================
+       NUMBERS STRIP
+    ===================================================== */
+    .numbers-strip{
+      background:var(--slate);
+      position:relative;
+      overflow:hidden;
+    }
+    .numbers-strip::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      opacity:.04;
+      background-image:radial-gradient(white 1px,transparent 1px);
+      background-size:32px 32px;
+    }
+    .stat-item{
+      font-family:'Cormorant Garamond',Georgia,serif;
+    }
+
+    /* =====================================================
+       TEAM CARDS — flip on hover to reveal insider tip
+    ===================================================== */
+    .team-card-wrap{
+      perspective:1200px;
+      height:420px;
+    }
+    .team-card-inner{
+      position:relative;
+      width:100%;height:100%;
+      transform-style:preserve-3d;
+      transition:transform .6s cubic-bezier(.4,0,.2,1);
+      border-radius:20px;
+    }
+    .team-card-wrap:hover .team-card-inner{
+      transform:rotateY(180deg);
+    }
+    .team-card-front,.team-card-back{
+      position:absolute;inset:0;
+      backface-visibility:hidden;
+      -webkit-backface-visibility:hidden;
+      border-radius:20px;
+      overflow:hidden;
+    }
+    .team-card-back{
+      transform:rotateY(180deg);
+      background:var(--teal);
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:2rem;
+      text-align:center;
+    }
+    .team-img-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,transparent 45%,rgba(0,0,0,.78) 100%);
+    }
+    /* Mobile: tap to flip */
+    .team-card-wrap.flipped .team-card-inner{transform:rotateY(180deg);}
+
+    /* =====================================================
+       CTA BAND
+    ===================================================== */
+    .cta-band{background:var(--teal);position:relative;overflow:hidden;}
+    .cta-band::before{content:'';position:absolute;inset:0;opacity:.06;background-image:radial-gradient(white 1px,transparent 1px);background-size:40px 40px;}
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+    .btn-primary{background:var(--orange);color:white;transition:background .25s,transform .2s,box-shadow .25s;}
+    .btn-primary:hover{background:var(--orange-h);transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,138,66,.38);}
+    .btn-outline-teal{border:2px solid var(--teal);color:var(--teal);transition:all .25s;}
+    .btn-outline-teal:hover{background:var(--teal);color:white;}
+    .btn-ghost{border:2px solid rgba(255,255,255,.65);color:white;transition:all .25s;}
+    .btn-ghost:hover{background:white;color:var(--teal);}
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+    #booking-modal{display:none;animation:fadeIn .3s ease;}
+    #booking-modal.open{display:flex;}
+    .modal-card{animation:fadeInUp .4s ease forwards;border-radius:26px;}
+    .book-opt{border:2px solid var(--gray);border-radius:16px;cursor:pointer;transition:all .25s;}
+    .book-opt:hover{border-color:var(--teal);background:var(--teal-light);transform:translateY(-2px);}
+    .book-opt.wa:hover{border-color:#25D366;background:#F0FFF4;}
+    .modal-panel{transition:opacity .25s;}
+    .modal-panel.hidden{display:none;}
+    .confirm-ring{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
+
+    /* =====================================================
+       MISC
+    ===================================================== */
+    .tag-pill{display:inline-flex;align-items:center;background:var(--teal-light);color:var(--teal);font-size:.7rem;font-weight:600;padding:.3rem .8rem;border-radius:100px;}
+    .section-rule{border:none;border-top:1px solid var(--gray);margin:0;}
+    /* Decorative large background letter */
+    .deco-letter{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(12rem,20vw,20rem);
+      font-weight:600;
+      color:rgba(0,109,91,.04);
+      line-height:1;
+      user-select:none;
+      pointer-events:none;
+      position:absolute;
+      right:-2rem;top:-3rem;
+    }
+    /* Wavy section separator */
+    .wave-sep{
+      width:100%;
+      height:60px;
+      background:white;
+      clip-path:ellipse(55% 100% at 50% 100%);
+      margin-top:-2px;
+    }
+  </style>
+<script src="js/config.js"></script>
+         <script src="js/api.js"></script>
+         </head>
+<body>
+<div id="scroll-progress" style="width:0%"></div>
+
+<!-- ====================================================
+     NAVIGATION (identical to homepage/tour pages)
+==================================================== -->
+<nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 px-5 py-5 md:px-12">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="index.html" class="nav-logo flex flex-col leading-none text-white transition-colors duration-300">
+      <span class="font-body font-semibold text-[1.15rem] tracking-tight">Hidden<span class="font-light">Path</span></span>
+      <span class="logo-sub text-white/55 tracking-[.22em] uppercase transition-colors duration-300" style="font-size:.58rem;">Vietnam</span>
+    </a>
+    <div class="hidden md:flex items-center gap-7">
+      <a href="index.html#tours"        class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors">Tours</a>
+      <a href="about.html"              class="nav-link text-white hover:text-white text-sm font-medium transition-colors border-b-2 border-[#FF8A42] pb-0.5">About</a>
+      <a href="index.html#destinations" class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors">Destinations</a>
+      <a href="index.html#journal"      class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors">Journal</a>
+      <button onclick="openModal()" class="btn-primary ml-3 px-6 py-2.5 rounded-full text-sm font-semibold">Book a Free Call</button>
+    </div>
+    <button onclick="toggleMenu()" class="md:hidden text-white p-1">
+      <svg id="ham-open"  width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="ham-close" class="hidden" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden mx-2 mt-3 bg-white/96 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden">
+    <div class="p-6 flex flex-col gap-1">
+      <a href="index.html#tours"        onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Tours</a>
+      <a href="about.html"              onclick="toggleMenu()" class="text-[#006D5B] font-semibold py-3 border-b border-gray-100 text-sm">About</a>
+      <a href="index.html#destinations" onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Destinations</a>
+      <a href="index.html#journal"      onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Journal</a>
+      <button onclick="openModal();toggleMenu();" class="btn-primary w-full mt-4 py-3.5 rounded-full text-sm font-semibold">Book a Free Call</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ====================================================
+     SECTION 1 — HERO / MANIFESTO
+     Medium-height editorial banner, diagonal text layout
+==================================================== -->
+<section id="hero" class="relative" style="height:80vh;min-height:560px;display:flex;align-items:flex-end;">
+  <!-- IMG-SWAP: Hero — documentary-style misty Vietnam landscape with human element -->
+  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85&auto=format&fit=crop&crop=center"
+       alt="Misty mountains at dawn — the landscape HiddenPath exists to protect"
+       class="absolute inset-0 w-full h-full object-cover"
+       style="object-position:center 35%;"
+       loading="eager" fetchpriority="high"/>
+  <div class="hero-overlay absolute inset-0"></div>
+
+  <!-- Breadcrumb -->
+  <div class="absolute top-28 left-0 right-0 z-10">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+      <nav class="flex items-center gap-2 text-white/50 text-xs font-medium">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        <span class="text-white/80">About Us</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero content — left-aligned editorial block -->
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-5 md:px-12 pb-16 md:pb-24">
+    <div class="max-w-3xl" style="animation:fadeInUp 1s ease .2s both;">
+      <p class="section-label text-white/60 mb-5">Our Philosophy &nbsp;·&nbsp; Est. 2019, Hanoi</p>
+      <h1 class="font-display text-white mb-6 leading-[1.06]"
+          style="font-size:clamp(2.4rem,6vw,5rem);font-weight:500;letter-spacing:-.02em;">
+        Travel is Not About<br/>
+        Checking Boxes.<br/>
+        <em class="hero-underline">It&rsquo;s About Leaving Footprints.</em>
+      </h1>
+      <p class="text-white/80 font-light text-lg md:text-xl leading-relaxed max-w-xl">
+        We are a small team of Vietnamese locals who believe that the way tourism is sold in our country is broken &mdash; and that we can fix it, one careful journey at a time.
+      </p>
+    </div>
+  </div>
+
+  <!-- Bottom fade into page -->
+  <div class="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+       style="background:linear-gradient(to bottom,transparent,var(--warm));"></div>
+</section>
+
+<!-- ====================================================
+     NUMBERS STRIP — trust layer immediately after hero
+==================================================== -->
+<div class="numbers-strip py-10 reveal">
+  <div class="max-w-7xl mx-auto px-5 md:px-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div class="stat-item">
+        <p class="text-white font-semibold leading-none mb-1" style="font-size:clamp(2.8rem,5vw,4rem);">312<span style="font-size:1.5rem;">+</span></p>
+        <p class="text-white/45 text-xs tracking-widest uppercase">Five-Star Reviews</p>
+      </div>
+      <div class="stat-item">
+        <p class="text-white font-semibold leading-none mb-1" style="font-size:clamp(2.8rem,5vw,4rem);">2,400<span style="font-size:1.5rem;">+</span></p>
+        <p class="text-white/45 text-xs tracking-widest uppercase">Lives Changed</p>
+      </div>
+      <div class="stat-item">
+        <p class="text-white font-semibold leading-none mb-1" style="font-size:clamp(2.8rem,5vw,4rem);">6</p>
+        <p class="text-white/45 text-xs tracking-widest uppercase">Years Operating</p>
+      </div>
+      <div class="stat-item">
+        <p class="text-white font-semibold leading-none mb-1" style="font-size:clamp(2.8rem,5vw,4rem);">18</p>
+        <p class="text-white/45 text-xs tracking-widest uppercase">Curated Routes</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     SECTION 2 — MANIFESTO PULL-QUOTE
+     Full-width oversized italic statement — the "stop" moment
+==================================================== -->
+<section class="py-20 md:py-28 bg-[#FAF9F7] overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 md:px-12">
+    <div class="manifesto-strip pl-8 md:pl-12 reveal">
+      <p class="section-label mb-5">What We Believe</p>
+      <blockquote class="pull-quote"
+                  style="font-size:clamp(2rem,5.5vw,4.2rem);max-width:1020px;padding-left:1.5rem;">
+        Vietnam does not need more tourists. It needs more travelers who understand the difference between witnessing a place and extracting from it.
+      </blockquote>
+      <p class="text-[#2C3340]/55 text-base font-light leading-relaxed max-w-2xl mt-8 ml-6">
+        Every route we build asks a single question first: <strong class="font-medium text-[#2C3340]">is this good for the community we pass through?</strong> If the answer is no, we redesign the route. This is not a marketing position. It&rsquo;s the reason we exist.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule"/>
+
+<!-- ====================================================
+     SECTION 3 — FOUNDERS' STORY
+     Asymmetric split: photo left, narrative right
+==================================================== -->
+<section id="story" class="py-20 md:py-32 bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Photo side -->
+      <div class="relative reveal-left">
+        <div class="founders-photo-wrap" style="height:520px;">
+          <!-- IMG-SWAP: Founders portrait — authentic Vietnamese couple, documentary style -->
+          <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&auto=format&fit=crop&crop=faces"
+               alt="Minh and Lan — HiddenPath founders"
+               class="w-full h-full object-cover"/>
+        </div>
+        <!-- Floating year badge -->
+        <div class="founded-badge text-center">
+          <p class="text-white/70 text-xs tracking-widest uppercase mb-0.5">Founded</p>
+          <p class="text-white font-semibold leading-none" style="font-size:2.2rem;">2019</p>
+          <p class="text-white/70 text-xs mt-0.5">Hanoi, Vietnam</p>
+        </div>
+        <!-- Decorative teal accent block behind photo -->
+        <div class="absolute -bottom-6 -left-6 w-2/3 h-2/3 rounded-2xl -z-10"
+             style="background:var(--teal-light);"></div>
+      </div>
+
+      <!-- Story side -->
+      <div class="reveal-right">
+        <p class="section-label mb-4">The Founders&rsquo; Story</p>
+        <h2 class="font-display text-[#2C3340] mb-6"
+            style="font-size:clamp(2rem,4vw,3.2rem);font-weight:500;letter-spacing:-.015em;line-height:1.15;">
+          Two Locals Who Decided<br/>Enough Was <em>Enough.</em>
+        </h2>
+
+        <div class="space-y-5 text-[#2C3340]/68 leading-relaxed text-base">
+          <p>
+            Minh Nguy&#7877;n spent six years as a licensed guide watching tour buses disgorge hundreds of people into places that were not built for them. He watched the vendor who used to make handmade lacquerware pivot to selling mass-produced magnets because the tourists moved too fast to notice the difference.
+          </p>
+          <p>
+            Lan Ph&#7841;m was working in sustainable development when she noticed that nearly every international tourism project framed local communities as <em>settings</em> &mdash; photogenic backdrops for travelers&rsquo; Instagram grids &mdash; rather than as the actual point.
+          </p>
+          <p>
+            They met at a workshop in 2017. By 2019, they had both quit their jobs, pooled savings, and launched HiddenPath with three routes, a WhatsApp group of 12 travelers, and an operating rule they still enforce today: <strong class="font-medium text-[#2C3340]">never take a group larger than 12, never run a stop that pays us a commission, never pretend that a place is something it&rsquo;s not.</strong>
+          </p>
+          <p>
+            Six years later, HiddenPath has guided over 2,400 travelers &mdash; and turned away more business than it&rsquo;s taken when that business didn&rsquo;t meet the standard.
+          </p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="mt-10 space-y-5">
+          <div class="timeline-node">
+            <p class="text-xs font-semibold text-[#006D5B] tracking-widest uppercase mb-0.5">2019</p>
+            <p class="text-sm text-[#2C3340]/70">HiddenPath launches with 3 routes and 12 travelers on the first departure.</p>
+          </div>
+          <div class="timeline-node">
+            <p class="text-xs font-semibold text-[#006D5B] tracking-widest uppercase mb-0.5">2020</p>
+            <p class="text-sm text-[#2C3340]/70">COVID closes Vietnam&rsquo;s borders. Minh and Lan use the year to redesign every route from scratch, slower and deeper.</p>
+          </div>
+          <div class="timeline-node">
+            <p class="text-xs font-semibold text-[#006D5B] tracking-widest uppercase mb-0.5">2022</p>
+            <p class="text-sm text-[#2C3340]/70">1,000th traveler. Lonely Planet features HiddenPath in its annual &ldquo;Best in Travel&rdquo; list.</p>
+          </div>
+          <div class="timeline-node">
+            <p class="text-xs font-semibold text-[#006D5B] tracking-widest uppercase mb-0.5">2025</p>
+            <p class="text-sm text-[#2C3340]/70">TripAdvisor Travelers&rsquo; Choice. 18 routes. 312+ five-star reviews. Still max 12 per departure. Always.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule"/>
+
+<!-- ====================================================
+     SECTION 4 — CORE PILLARS / VALUES
+     3-column hover-lift cards with animated top border
+==================================================== -->
+<section id="values" class="py-20 md:py-28 bg-[#FAF9F7] relative overflow-hidden">
+  <!-- Background decorative letter -->
+  <span class="deco-letter select-none" aria-hidden="true">V</span>
+
+  <div class="max-w-7xl mx-auto px-5 md:px-12 relative z-10">
+
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <p class="section-label mb-3">Our Three Commitments</p>
+      <h2 class="font-display text-[#2C3340]"
+          style="font-size:clamp(1.9rem,4vw,3.2rem);font-weight:500;letter-spacing:-.01em;line-height:1.15;">
+        The Pillars We Build<br/>Every Journey On
+      </h2>
+      <p class="text-[#2C3340]/58 text-base font-light leading-relaxed mt-4">
+        These aren&rsquo;t brand values on a poster. They are the criteria by which we accept or reject partnerships, design or abandon routes, and hire or decline to hire guides.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Pillar 1: Radical Transparency -->
+      <div class="pillar-card p-8 reveal reveal-delay-1">
+        <div class="pillar-icon-wrap">
+          <svg width="26" height="26" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-[#2C3340] mb-3" style="font-size:1.55rem;font-weight:500;">Radical Transparency</h3>
+        <p class="text-[#2C3340]/62 text-sm leading-relaxed mb-5">
+          Our price is our price. No hidden supplements, no commission-driven stops at overpriced silk shops, no &ldquo;optional&rdquo; activities designed to inflate our margin. Every cost is explained before you book.
+        </p>
+        <div class="space-y-2">
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Zero commission-driven detours, ever</span>
+          </div>
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Itemised price breakdowns on request</span>
+          </div>
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Free cancellation up to 60 days out</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 2: Hyper-Local Roots -->
+      <div class="pillar-card p-8 reveal reveal-delay-2">
+        <div class="pillar-icon-wrap">
+          <svg width="26" height="26" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-[#2C3340] mb-3" style="font-size:1.55rem;font-weight:500;">Hyper-Local Roots</h3>
+        <p class="text-[#2C3340]/62 text-sm leading-relaxed mb-5">
+          Every guide was born in the region they lead. We partner exclusively with family-owned guesthouses and boutiques. On our Sapa routes, 40% of our tourism spend goes directly to H&rsquo;mong and Dao women&rsquo;s cooperatives.
+        </p>
+        <div class="space-y-2">
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>100% locally born &amp; trained guides</span>
+          </div>
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Family-owned accommodation only</span>
+          </div>
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Supporting 6 minority women cooperatives</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pillar 3: Carbon-Conscious Routes -->
+      <div class="pillar-card p-8 reveal reveal-delay-3">
+        <div class="pillar-icon-wrap">
+          <svg width="26" height="26" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24">
+            <path d="M12 22c4.97 0 9-4.477 9-10 0-1.33-.269-2.6-.75-3.75A6.5 6.5 0 0 1 9 13.5c0-1.88.797-3.576 2.074-4.783A10.06 10.06 0 0 0 3 12c0 5.523 4.03 10 9 10z"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-[#2C3340] mb-3" style="font-size:1.55rem;font-weight:500;">Carbon-Conscious Routes</h3>
+        <p class="text-[#2C3340]/62 text-sm leading-relaxed mb-5">
+          We design for slowness deliberately. Overnight trains instead of flights. Local motorbikes instead of air-conditioned coaches. Paths that regenerate rather than erode. Travel that leaves a place better than it found it.
+        </p>
+        <div class="space-y-2">
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Trains over domestic flights wherever possible</span>
+          </div>
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Low-impact trail systems in Sapa &amp; Ha Long</span>
+          </div>
+          <div class="flex items-start gap-2.5 text-sm text-[#2C3340]/68">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Annual trail restoration contribution</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Philosophy addendum -->
+    <div class="mt-14 bg-white rounded-2xl border border-[#E8E6E1] p-8 md:p-10 reveal">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 items-start">
+        <div class="md:col-span-2">
+          <p class="section-label mb-3">Why These Three?</p>
+          <p class="text-[#2C3340]/68 text-base leading-relaxed">
+            We didn&rsquo;t choose these three pillars from a brand workshop. We arrived at them by looking at every tour complaint, every community concern, and every environmental audit we&rsquo;d done over five years &mdash; and noticing that every single problem traced back to one of three root causes: <em>dishonesty about money</em>, <em>disconnection from community</em>, or <em>indifference to impact</em>. These pillars are the direct antidotes.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 md:mt-7">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#E8F4F1] flex items-center justify-center shrink-0">
+              <svg width="16" height="16" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p class="text-sm font-medium text-[#2C3340]">Zero greenwashing</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#E8F4F1] flex items-center justify-center shrink-0">
+              <svg width="16" height="16" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p class="text-sm font-medium text-[#2C3340]">Annually third-party reviewed</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#E8F4F1] flex items-center justify-center shrink-0">
+              <svg width="16" height="16" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p class="text-sm font-medium text-[#2C3340]">Community veto on every new route</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-rule"/>
+
+<!-- ====================================================
+     SECTION 5 — MEET THE TEAM
+     Flip-card grid: front = portrait / back = insider tip
+==================================================== -->
+<section id="team" class="py-20 md:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <p class="section-label mb-3">The People Behind the Paths</p>
+      <h2 class="font-display text-[#2C3340]"
+          style="font-size:clamp(1.9rem,4vw,3.2rem);font-weight:500;letter-spacing:-.01em;line-height:1.15;">
+        Meet Your Local Experts
+      </h2>
+      <p class="text-[#2C3340]/55 text-base font-light leading-relaxed mt-3">
+        Hover over any card to reveal their secret. Each one has lived in their region their entire life. None of them own a script.
+      </p>
+      <p class="text-[#2C3340]/38 text-xs mt-2 italic">(On mobile, tap a card to flip it)</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Team Member 1: Minh — Co-Founder & Head Curator -->
+      <div class="team-card-wrap reveal reveal-delay-1" onclick="this.classList.toggle('flipped')">
+        <div class="team-card-inner">
+          <!-- Front -->
+          <div class="team-card-front">
+            <!-- IMG-SWAP: Minh — founder portrait, warm documentary style -->
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80&auto=format&fit=crop&crop=faces&facepad=3"
+                 alt="Minh Nguyen — Co-Founder"
+                 class="w-full h-full object-cover object-top"/>
+            <div class="team-img-overlay"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 z-10">
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="tag-pill">Co-Founder</span>
+                <span class="bg-[#FF8A42]/20 text-[#FF8A42] text-[.65rem] font-semibold px-2.5 py-1 rounded-full">Hanoi Born</span>
+              </div>
+              <h3 class="font-display text-white text-2xl font-medium leading-tight">Minh Nguy&#7877;n</h3>
+              <p class="text-white/65 text-sm mt-0.5">Head Travel Curator</p>
+            </div>
+            <!-- Flip hint -->
+            <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="team-card-back">
+            <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+              <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <p class="text-white/55 text-xs tracking-widest uppercase mb-3">Local Insider Tip</p>
+            <p class="font-display text-white text-xl italic leading-snug mb-4">&ldquo;Ask me where to find the ph&#7903; that has been served from the same pot in the same alley since 1962. It has no sign. It sells out by 8am.&rdquo;</p>
+            <p class="text-white/50 text-xs">8 years guiding &middot; 420+ travelers</p>
+            <div class="mt-4 flex flex-wrap justify-center gap-1.5">
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Hanoi Old Quarter</span>
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Ha Long Bay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 2: Lan — Co-Founder & Culture Lead -->
+      <div class="team-card-wrap reveal reveal-delay-2" onclick="this.classList.toggle('flipped')">
+        <div class="team-card-inner">
+          <div class="team-card-front">
+            <!-- IMG-SWAP: Lan — female co-founder portrait, warm and authentic -->
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&q=80&auto=format&fit=crop&crop=faces&facepad=3"
+                 alt="Lan Pham — Co-Founder"
+                 class="w-full h-full object-cover object-top"/>
+            <div class="team-img-overlay"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 z-10">
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="tag-pill">Co-Founder</span>
+                <span class="bg-[#FF8A42]/20 text-[#FF8A42] text-[.65rem] font-semibold px-2.5 py-1 rounded-full">Hanoi Born</span>
+              </div>
+              <h3 class="font-display text-white text-2xl font-medium leading-tight">Lan Ph&#7841;m</h3>
+              <p class="text-white/65 text-sm mt-0.5">Culture &amp; Community Lead</p>
+            </div>
+            <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </div>
+          </div>
+          <div class="team-card-back">
+            <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+              <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </div>
+            <p class="text-white/55 text-xs tracking-widest uppercase mb-3">Local Insider Tip</p>
+            <p class="font-display text-white text-xl italic leading-snug mb-4">&ldquo;The best way to understand Vietnam is to share a meal inside someone&rsquo;s home. I can arrange it. The family will remember you after you&rsquo;ve gone home, too.&rdquo;</p>
+            <p class="text-white/50 text-xs">Sustainable Development background &middot; 6 yrs at HiddenPath</p>
+            <div class="mt-4 flex flex-wrap justify-center gap-1.5">
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Central Vietnam</span>
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Community Routes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 3: Quan — Sapa Trekking Specialist -->
+      <div class="team-card-wrap reveal reveal-delay-3" onclick="this.classList.toggle('flipped')">
+        <div class="team-card-inner">
+          <div class="team-card-front">
+            <!-- IMG-SWAP: Quan — outdoorsy, mountain guide energy portrait -->
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&q=80&auto=format&fit=crop&crop=faces&facepad=3"
+                 alt="Quan Tran — Sapa Specialist"
+                 class="w-full h-full object-cover object-top"/>
+            <div class="team-img-overlay"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 z-10">
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="tag-pill">Sapa Born</span>
+                <span class="bg-[#FF8A42]/20 text-[#FF8A42] text-[.65rem] font-semibold px-2.5 py-1 rounded-full">H&rsquo;mong Interpreter</span>
+              </div>
+              <h3 class="font-display text-white text-2xl font-medium leading-tight">Qu&#226;n Tr&#7847;n</h3>
+              <p class="text-white/65 text-sm mt-0.5">Sapa Trekking Specialist</p>
+            </div>
+            <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </div>
+          </div>
+          <div class="team-card-back">
+            <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+              <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 8"/><path d="M21 21H3"/></svg>
+            </div>
+            <p class="text-white/55 text-xs tracking-widest uppercase mb-3">Local Insider Tip</p>
+            <p class="font-display text-white text-xl italic leading-snug mb-4">&ldquo;I know a rice terrace viewpoint that isn&rsquo;t in any guidebook. It&rsquo;s a 20-minute walk off the tourist trail. I&rsquo;ll show you. Pack something warm &mdash; the fog at sunrise is cold and beautiful.&rdquo;</p>
+            <p class="text-white/50 text-xs">Born in Sapa &middot; Speaks H&rsquo;mong, Dao, Vietnamese, English</p>
+            <div class="mt-4 flex flex-wrap justify-center gap-1.5">
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Sapa Valleys</span>
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Ethnic Routes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 4: Mai Huong — Indigenous Food Historian -->
+      <div class="team-card-wrap reveal reveal-delay-4" onclick="this.classList.toggle('flipped')">
+        <div class="team-card-inner">
+          <div class="team-card-front">
+            <!-- IMG-SWAP: Mai — warm, knowledgeable, food-world personality -->
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80&auto=format&fit=crop&crop=faces&facepad=3"
+                 alt="Mai Huong — Food Historian"
+                 class="w-full h-full object-cover object-top"/>
+            <div class="team-img-overlay"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 z-10">
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="tag-pill">H&#7897;i An Born</span>
+                <span class="bg-[#FF8A42]/20 text-[#FF8A42] text-[.65rem] font-semibold px-2.5 py-1 rounded-full">Food Historian</span>
+              </div>
+              <h3 class="font-display text-white text-2xl font-medium leading-tight">Mai H&#432;&#417;ng</h3>
+              <p class="text-white/65 text-sm mt-0.5">Indigenous Food &amp; Southern Routes</p>
+            </div>
+            <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </div>
+          </div>
+          <div class="team-card-back">
+            <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
+              <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
+            <p class="text-white/55 text-xs tracking-widest uppercase mb-3">Local Insider Tip</p>
+            <p class="font-display text-white text-xl italic leading-snug mb-4">&ldquo;I know a b&aacute;nh m&igrave; cart in H&#7897;i An run by an 84-year-old woman. She wakes at 4am. The queue starts at 5:30. It will be the best thing you eat in Vietnam.&rdquo;</p>
+            <p class="text-white/50 text-xs">MA in Food Anthropology &middot; H&#7897;i An, Da N&#7861;ng, M&#234;kong routes</p>
+            <div class="mt-4 flex flex-wrap justify-center gap-1.5">
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Central Vietnam</span>
+              <span class="bg-white/15 text-white text-xs px-3 py-1 rounded-full">Mekong Delta</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Join the team nudge -->
+    <div class="text-center mt-14 reveal">
+      <p class="text-[#2C3340]/50 text-sm mb-2">Passionate about Vietnam and sustainable travel?</p>
+      <a href="mailto:hello@hiddenpath.vn" class="text-[#006D5B] font-semibold text-sm hover:underline inline-flex items-center gap-1.5">
+        We&rsquo;re always looking for exceptional local experts &rarr;
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-rule"/>
+
+<!-- ====================================================
+     SECTION 6 — PRESS & RECOGNITION
+     Simple strip of logos and quotes
+==================================================== -->
+<section class="py-16 bg-[#FAF9F7] reveal">
+  <div class="max-w-7xl mx-auto px-5 md:px-12">
+    <p class="text-center text-[#2C3340]/40 text-xs tracking-widest uppercase mb-8">As Featured In</p>
+    <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+      <div class="text-center">
+        <p class="font-display text-[#2C3340]/35 font-semibold" style="font-size:1.3rem;letter-spacing:-.01em;">Lonely Planet</p>
+      </div>
+      <div class="w-px h-6 bg-[#E8E6E1] hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-body text-[#2C3340]/35 font-semibold text-sm tracking-widest uppercase">CNN Travel</p>
+      </div>
+      <div class="w-px h-6 bg-[#E8E6E1] hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-display text-[#2C3340]/35 font-semibold" style="font-size:1.15rem;">Cond&eacute; Nast Traveller</p>
+      </div>
+      <div class="w-px h-6 bg-[#E8E6E1] hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-body text-[#2C3340]/35 font-semibold text-xs tracking-widest uppercase">National Geographic</p>
+      </div>
+      <div class="w-px h-6 bg-[#E8E6E1] hidden sm:block"></div>
+      <div class="text-center flex items-center gap-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#00AA6C"><rect width="24" height="24" rx="4"/><text x="4" y="17" font-size="10" fill="white" font-weight="bold">TA</text></svg>
+        <p class="font-body text-[#2C3340]/35 font-semibold text-xs tracking-widest uppercase">Travelers&rsquo; Choice 2025</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule"/>
+
+<!-- ====================================================
+     SECTION 7 — BOOKING CTA
+     Same teal band as homepage and tour pages
+==================================================== -->
+<section class="cta-band py-24 md:py-32">
+  <div class="max-w-3xl mx-auto px-5 md:px-12 text-center relative z-10 reveal">
+    <p class="section-label text-white/40 mb-4">Ready When You Are</p>
+    <h2 class="font-display text-white mb-6"
+        style="font-size:clamp(2.2rem,6vw,4.2rem);font-weight:400;line-height:1.1;letter-spacing:-.015em;">
+      Ready to Co-Create<br/><em>Your Story?</em>
+    </h2>
+    <p class="text-white/72 text-lg font-light mb-3 leading-relaxed max-w-xl mx-auto">
+      Every HiddenPath journey begins with a 20-minute conversation. No scripts, no sales tactics &mdash; just honest advice from someone who actually lives here.
+    </p>
+    <p class="text-white/45 text-sm mb-10">Minh, Lan, Qu&#226;n, or Mai will pick up. We promise.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button onclick="openModal()" class="btn-primary px-10 py-4 rounded-full text-base font-semibold">
+        Book a Free 20-Min Call &rarr;
+      </button>
+      <a href="index.html#tours" class="btn-ghost px-10 py-4 rounded-full text-base font-semibold">
+        Explore Our Tours First
+      </a>
+    </div>
+    <p class="text-white/35 text-sm mt-6">No spam. No hard sell. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- ====================================================
+     FOOTER — identical dark slate footer
+==================================================== -->
+<footer class="bg-[#2C3340] text-white">
+  <div class="max-w-7xl mx-auto px-5 md:px-12 pt-16 pb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+
+      <!-- Brand -->
+      <div class="sm:col-span-2 lg:col-span-1">
+        <div class="font-body font-semibold text-[1.1rem] tracking-tight mb-0.5">Hidden<span class="font-light">Path</span></div>
+        <div class="text-[.58rem] tracking-[.22em] uppercase text-white/40 mb-4">Vietnam</div>
+        <p class="text-white/50 text-sm leading-relaxed mb-5">Curated small-group journeys for thoughtful travelers. Est. 2019, Hanoi.</p>
+        <div class="flex gap-4">
+          <a href="#" aria-label="Instagram" class="text-white/35 hover:text-white transition-colors">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="text-white/35 hover:text-white transition-colors">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok" class="text-white/35 hover:text-white transition-colors">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.02-.06z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Explore -->
+      <div>
+        <h4 class="font-semibold text-sm mb-5">Explore</h4>
+        <ul class="space-y-3 text-sm text-white/50">
+          <li><a href="index.html#tours" class="hover:text-[#FF8A42] transition-colors">All Tours</a></li>
+          <li><a href="index.html#destinations" class="hover:text-[#FF8A42] transition-colors">Destinations</a></li>
+          <li><a href="about.html" class="hover:text-[#FF8A42] transition-colors text-white/70">About HiddenPath</a></li>
+          <li><a href="index.html#journal" class="hover:text-[#FF8A42] transition-colors">Travel Journal</a></li>
+          <li><a href="#values" class="hover:text-[#FF8A42] transition-colors">Responsible Travel</a></li>
+          <li><a href="#" class="hover:text-[#FF8A42] transition-colors">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="font-semibold text-sm mb-5">Contact</h4>
+        <ul class="space-y-3 text-sm text-white/50">
+          <li class="flex gap-2 items-start">
+            <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>hello@hiddenpath.vn</span>
+          </li>
+          <li class="flex gap-2 items-start">
+            <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12"/></svg>
+            <span>WhatsApp: +84 91 234 5678</span>
+          </li>
+          <li class="flex gap-2 items-start">
+            <svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>36 H&agrave;ng B&egrave;, Ho&agrave;n Ki&#7871;m, H&agrave; N&#7897;i</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div>
+        <h4 class="font-semibold text-sm mb-2">The Hidden Path Letter</h4>
+        <p class="text-white/45 text-xs mb-4 leading-relaxed">Seasonal dispatches from Vietnam. Real stories, zero spam.</p>
+        <div class="flex flex-col gap-2">
+          <input type="email" placeholder="your@email.com"
+                 class="bg-white/10 border border-white/18 text-white placeholder:text-white/28 rounded-full px-4 py-3 text-sm outline-none focus:border-[#FF8A42] transition-colors"/>
+          <button class="btn-primary py-3 rounded-full text-sm font-semibold">Subscribe &rarr;</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="border-t border-white/10 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30">
+      <p>&copy; 2026 HiddenPath Vietnam. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-white/60 transition-colors">Privacy Policy</a>
+        <a href="#" class="hover:text-white/60 transition-colors">Terms of Service</a>
+        <a href="#" class="hover:text-white/60 transition-colors">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ====================================================
+     BOOKING MODAL (same as all other pages)
+==================================================== -->
+<div id="booking-modal" class="fixed inset-0 z-[200] items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/58 backdrop-blur-sm" onclick="closeModal()"></div>
+  <div class="modal-card relative bg-white max-w-[480px] w-full p-8 md:p-10 z-10 overflow-hidden">
+    <button onclick="closeModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#F0EDE9] flex items-center justify-center hover:bg-[#E5E1DC] transition-colors z-10">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2C3340" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <!-- Panel: Options -->
+    <div id="modal-panel-options" class="modal-panel">
+      <div class="mb-7 pr-8">
+        <p class="section-label mb-2">Free Consultation</p>
+        <h3 class="font-display text-[#2C3340] mb-2" style="font-size:1.9rem;font-weight:500;line-height:1.1;">Talk to a<br/>Local Expert</h3>
+        <p class="text-[#2C3340]/55 text-sm leading-relaxed">20 minutes. No script. No pressure. Just honest answers from someone who actually lives here.</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <button onclick="goCalendly()" class="book-opt flex items-center gap-5 p-5 w-full text-left">
+          <div class="w-12 h-12 rounded-xl bg-[#E8F4F1] flex items-center justify-center shrink-0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="flex-1">
+            <p class="font-semibold text-[#2C3340] text-sm mb-0.5">Schedule via Calendly</p>
+            <p class="text-xs text-[#2C3340]/50 text-left">Pick a time &mdash; Mon&ndash;Sat, 9am&ndash;6pm ICT.</p>
+          </div>
+          <svg class="text-[#006D5B] shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button onclick="goWhatsApp()" class="book-opt wa flex items-center gap-5 p-5 w-full text-left">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(37,211,102,.12);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="flex-1">
+            <p class="font-semibold text-[#2C3340] text-sm mb-0.5">Chat on WhatsApp</p>
+            <p class="text-xs text-[#2C3340]/50 text-left">Typically reply within 15 minutes.</p>
+          </div>
+          <svg class="shrink-0" style="color:#25D366;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <p class="text-center text-xs text-[#2C3340]/30 mt-5">We never share your details. Privacy Policy applies.</p>
+    </div>
+    <!-- Panel: Calendly -->
+    <div id="modal-panel-calendly" class="modal-panel hidden text-center py-4">
+      <div class="confirm-ring bg-[#E8F4F1]">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+      </div>
+      <h3 class="font-display text-[#2C3340] mb-2 pr-8" style="font-size:1.7rem;font-weight:500;line-height:1.15;">Calendly is opening&hellip;</h3>
+      <p class="text-[#2C3340]/58 text-sm mb-2">Pick any slot in the new tab.</p>
+      <p class="text-[#2C3340]/40 text-xs mb-7">Didn&rsquo;t open? <a id="calendly-fallback-link" href="https://calendly.com/hiddenpath-vietnam/consultation" target="_blank" class="text-[#006D5B] font-semibold hover:underline">Click here &rarr;</a></p>
+      <button onclick="resetModal()" class="w-full btn-outline-teal py-3 rounded-full text-sm font-semibold">&larr; Back to options</button>
+    </div>
+    <!-- Panel: WhatsApp -->
+    <div id="modal-panel-wa" class="modal-panel hidden text-center py-4">
+      <div class="confirm-ring" style="background:rgba(37,211,102,.1);">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <h3 class="font-display text-[#2C3340] mb-2 pr-8" style="font-size:1.7rem;font-weight:500;line-height:1.15;">Opening WhatsApp&hellip;</h3>
+      <p class="text-[#2C3340]/58 text-sm mb-2">Your message is pre-loaded. Just hit send.</p>
+      <p class="text-[#2C3340]/40 text-xs mb-7">Didn&rsquo;t open? <a id="wa-fallback-link" href="#" target="_blank" class="text-[#25D366] font-semibold hover:underline">Click here &rarr;</a></p>
+      <button onclick="resetModal()" class="w-full btn-outline-teal py-3 rounded-full text-sm font-semibold">&larr; Back to options</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     JAVASCRIPT
+==================================================== -->
+<script>
+  /* ── CONFIG ────────────────────────────────────────────── */
+  const CALENDLY_URL = 'https://calendly.com/hiddenpath-vietnam/consultation';
+  const WHATSAPP_NUM = '84912345678';
+  const WA_MSG = encodeURIComponent("Hi HiddenPath! I just read your About page and I'd love to learn more about your tours. Could we have a quick chat?");
+  const WA_URL = `https://wa.me/${WHATSAPP_NUM}?text=${WA_MSG}`;
+
+  /* ── Scroll progress ─────────────────────────────────── */
+  const pb = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    pb.style.width = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) + '%';
+  }, { passive: true });
+
+  /* ── Nav scroll state ────────────────────────────────── */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80), { passive: true });
+
+  /* ── Mobile menu ─────────────────────────────────────── */
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+    document.getElementById('ham-open').classList.toggle('hidden');
+    document.getElementById('ham-close').classList.toggle('hidden');
+  }
+
+  /* ── Scroll-reveal (reuse same mechanism as all pages) ── */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => ro.observe(el));
+
+  /* ── Anchor smooth scroll ────────────────────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  /* ── Modal ───────────────────────────────────────────── */
+  function showPanel(id) {
+    ['modal-panel-options', 'modal-panel-calendly', 'modal-panel-wa'].forEach(p => {
+      document.getElementById(p).classList.toggle('hidden', p !== id);
+    });
+  }
+  function openModal()  { showPanel('modal-panel-options'); document.getElementById('booking-modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { document.getElementById('booking-modal').classList.remove('open'); document.body.style.overflow = ''; setTimeout(() => showPanel('modal-panel-options'), 300); }
+  function resetModal() { showPanel('modal-panel-options'); }
+  function goCalendly() { document.getElementById('calendly-fallback-link').href = CALENDLY_URL; showPanel('modal-panel-calendly'); window.open(CALENDLY_URL, '_blank', 'noopener'); }
+  function goWhatsApp() { document.getElementById('wa-fallback-link').href = WA_URL; showPanel('modal-panel-wa'); window.open(WA_URL, '_blank', 'noopener'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>

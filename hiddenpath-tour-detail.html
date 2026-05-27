@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Northern Soul — 10-Day Vietnam Journey | HiddenPath Vietnam</title>
+  <meta name="description" content="Hanoi's old quarter, the mist-wrapped peaks of Sapa, and three nights on Ha Long Bay. From $1,890 USD. Max 12 guests." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            teal:   { DEFAULT:'#006D5B', dark:'#005548', light:'#E8F4F1' },
+            orange: { DEFAULT:'#FF8A42', hover:'#E87535' },
+            slate:  { DEFAULT:'#2C3340' },
+          },
+          fontFamily: {
+            display:['"Cormorant Garamond"','Georgia','serif'],
+            body:['"DM Sans"','system-ui','sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root{--teal:#006D5B;--teal-dark:#005548;--teal-light:#E8F4F1;--orange:#FF8A42;--orange-h:#E87535;--slate:#2C3340;--warm:#FAF9F7;--gray:#E8E6E1;--nav-h:80px;}
+    *,*::before,*::after{box-sizing:border-box;}
+    html{font-family:'DM Sans',system-ui,sans-serif;}
+    body{background:var(--warm);color:var(--slate);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    ::selection{background:rgba(0,109,91,.15);}
+    .font-display{font-family:'Cormorant Garamond',Georgia,serif;}
+    .section-label{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);}
+    #scroll-progress{position:fixed;top:0;left:0;height:3px;background:var(--orange);z-index:9999;transition:width .1s linear;}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .reveal-delay-1.visible{transition-delay:.10s;}
+    .reveal-delay-2.visible{transition-delay:.20s;}
+    .reveal-delay-3.visible{transition-delay:.30s;}
+
+    /* NAV */
+    #main-nav{transition:background .4s ease,box-shadow .4s ease;}
+    #main-nav.scrolled{background:rgba(250,249,247,.96)!important;backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(0,0,0,.08);}
+    #main-nav.scrolled .nav-link{color:var(--slate)!important;}
+    #main-nav.scrolled .nav-logo{color:var(--teal)!important;}
+    #main-nav.scrolled .logo-sub{color:var(--slate);opacity:.45;}
+
+    /* HERO */
+    .hero-overlay{background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.02) 38%,rgba(0,0,0,.74) 100%);}
+    .hero-stat{background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.22);border-radius:10px;}
+
+    /* SECTION TABS */
+    #section-tabs{position:sticky;top:var(--nav-h);z-index:40;background:white;border-bottom:1px solid var(--gray);transition:box-shadow .3s ease;}
+    #section-tabs.elevated{box-shadow:0 4px 20px rgba(0,0,0,.07);}
+    .tab-link{position:relative;color:rgba(44,51,64,.5);font-size:.82rem;font-weight:500;padding:.9rem .1rem;white-space:nowrap;transition:color .2s ease;}
+    .tab-link::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--teal);transform:scaleX(0);transition:transform .25s ease;}
+    .tab-link.active{color:var(--teal);}
+    .tab-link.active::after{transform:scaleX(1);}
+    .tab-link:hover{color:var(--slate);}
+
+    /* LAYOUT */
+    .content-grid{display:grid;grid-template-columns:1fr;gap:2rem;}
+    @media(min-width:1024px){.content-grid{grid-template-columns:1fr 360px;gap:3.5rem;align-items:start;}}
+    #booking-card{position:sticky;top:calc(var(--nav-h) + 64px);}
+
+    /* ITINERARY */
+    .day-body{display:none;overflow:hidden;}
+    .day-body.open{display:block;animation:fadeInUp .35s ease;}
+    .day-row{border-bottom:1px solid var(--gray);cursor:pointer;transition:background .2s ease;}
+    .day-row:hover{background:#FAFAF8;}
+    .day-num{width:36px;height:36px;border-radius:50%;background:var(--teal-light);color:var(--teal);font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,color .2s;}
+    .day-row.open-day .day-num{background:var(--teal);color:white;}
+    .day-chev{transition:transform .3s ease;}
+    .day-row.open-day .day-chev{transform:rotate(180deg);}
+    .day-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:.45rem;flex-shrink:0;}
+    .day-act{display:flex;gap:.6rem;align-items:flex-start;padding:.45rem 0;font-size:.875rem;color:rgba(44,51,64,.7);line-height:1.5;}
+    .dtag{display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:100px;}
+    .dtag-meals{background:#FFF4EC;color:#D4681A;}
+    .dtag-stay{background:var(--teal-light);color:var(--teal);}
+    .dtag-easy{background:#F0FFF4;color:#22863A;}
+    .dtag-mod{background:#FFFBEB;color:#92400E;}
+
+    /* ROUTE */
+    .route-node{display:flex;flex-direction:column;align-items:center;gap:.4rem;flex:1;}
+    .route-icon{width:44px;height:44px;border-radius:50%;background:var(--warm);border:2px solid var(--teal-light);display:flex;align-items:center;justify-content:center;transition:border-color .3s,background .3s;}
+    .route-icon:hover{border-color:var(--teal);background:var(--teal-light);}
+    .route-line{flex:1;height:2px;background:repeating-linear-gradient(to right,var(--teal) 0,var(--teal) 6px,transparent 6px,transparent 12px);margin-top:-18px;}
+
+    /* GALLERY */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:220px 220px;gap:8px;}
+    .gallery-grid .gal-0{grid-column:span 2;grid-row:span 2;}
+    .gal-item{overflow:hidden;border-radius:10px;cursor:pointer;position:relative;}
+    .gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+    .gal-item:hover img{transform:scale(1.06);}
+    .gal-over{position:absolute;inset:0;background:rgba(0,109,91,.6);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;border-radius:10px;}
+    .gal-item:hover .gal-over{opacity:1;}
+    @media(max-width:640px){
+      .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+      .gallery-grid .gal-0{grid-column:span 2;grid-row:span 1;height:200px;}
+      .gal-item:not(.gal-0){height:140px;}
+    }
+
+    /* LIGHTBOX */
+    #lightbox{display:none;animation:fadeIn .25s ease;}
+    #lightbox.open{display:flex;}
+
+    /* DATES */
+    .date-row{border:1.5px solid var(--gray);border-radius:14px;cursor:pointer;transition:border-color .2s,background .2s;}
+    .date-row:hover{border-color:var(--teal);background:#FAFFFE;}
+    .date-row.selected{border-color:var(--teal);background:var(--teal-light);}
+    .date-row.selected .date-sel-btn{background:var(--teal);color:white;border-color:var(--teal);}
+    .spots-bar{height:4px;border-radius:2px;background:var(--gray);overflow:hidden;}
+    .spots-fill{height:100%;border-radius:2px;background:var(--orange);}
+
+    /* BOOKING CARD */
+    .booking-card{background:white;border:1px solid var(--gray);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.09);}
+    .price-big{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:var(--slate);line-height:1;}
+    .bk-date-pill{border:1.5px solid var(--gray);border-radius:100px;padding:.4rem .9rem;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .2s;}
+    .bk-date-pill:hover{border-color:var(--teal);color:var(--teal);}
+    .bk-date-pill.active{background:var(--teal);border-color:var(--teal);color:white;}
+    .trust-row{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(44,51,64,.55);}
+
+    /* BUTTONS */
+    .btn-primary{background:var(--orange);color:white;transition:background .25s,transform .2s,box-shadow .25s;}
+    .btn-primary:hover{background:var(--orange-h);transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,138,66,.38);}
+    .btn-outline-teal{border:2px solid var(--teal);color:var(--teal);transition:all .25s;}
+    .btn-outline-teal:hover{background:var(--teal);color:white;}
+    .btn-ghost{border:2px solid rgba(255,255,255,.65);color:white;transition:all .25s;}
+    .btn-ghost:hover{background:white;color:var(--teal);}
+
+    /* GUIDE */
+    .guide-card{background:white;border-radius:20px;border:1px solid var(--gray);overflow:hidden;}
+
+    /* REVIEWS */
+    .review-card{background:var(--warm);border-radius:18px;padding:1.75rem;border:1px solid transparent;transition:border-color .3s,box-shadow .3s;}
+    .review-card:hover{border-color:var(--gray);box-shadow:0 8px 30px rgba(0,0,0,.05);}
+
+    /* FAQ */
+    .faq-body{display:none;overflow:hidden;}
+    .faq-body.open{display:block;animation:fadeInUp .3s ease;}
+    .faq-row{border-bottom:1px solid var(--gray);cursor:pointer;}
+    .faq-chev{transition:transform .3s;flex-shrink:0;}
+    .faq-row.open-faq .faq-chev{transform:rotate(180deg);}
+
+    /* INCLUDES */
+    .inc-item,.exc-item{display:flex;gap:.7rem;align-items:flex-start;padding:.5rem 0;font-size:.875rem;border-bottom:1px solid rgba(232,230,225,.6);}
+    .inc-item:last-child,.exc-item:last-child{border-bottom:none;}
+
+    /* RELATED */
+    .related-card{border-radius:16px;overflow:hidden;transition:transform .35s,box-shadow .35s;border:1px solid var(--gray);}
+    .related-card:hover{transform:translateY(-7px);box-shadow:0 24px 50px rgba(0,0,0,.11);}
+    .related-card img{transition:transform .5s;}
+    .related-card:hover img{transform:scale(1.05);}
+
+    /* MOBILE STICKY BAR */
+    #mobile-sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:white;border-top:1px solid var(--gray);box-shadow:0 -8px 30px rgba(0,0,0,.1);transform:translateY(100%);transition:transform .35s ease;}
+    #mobile-sticky-bar.visible{transform:translateY(0);}
+
+    /* MODAL */
+    #booking-modal{display:none;animation:fadeIn .3s ease;}
+    #booking-modal.open{display:flex;}
+    .modal-card{animation:fadeInUp .4s ease forwards;border-radius:26px;}
+    .book-opt{border:2px solid var(--gray);border-radius:16px;cursor:pointer;transition:all .25s;}
+    .book-opt:hover{border-color:var(--teal);background:var(--teal-light);transform:translateY(-2px);}
+    .book-opt.wa:hover{border-color:#25D366;background:#F0FFF4;}
+    .modal-panel{transition:opacity .25s;}
+    .modal-panel.hidden{display:none;}
+    .confirm-ring{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
+
+    /* MISC */
+    .sec-divider{border:none;border-top:1px solid var(--gray);margin:3rem 0;}
+    .tag-pill{display:inline-flex;align-items:center;background:var(--teal-light);color:var(--teal);font-size:.7rem;font-weight:600;padding:.3rem .8rem;border-radius:100px;}
+    .hi-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-light);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+    #mobile-menu{display:none;}
+    #mobile-menu.open{display:block;animation:fadeInUp .3s ease;}
+  </style>
+<script src="js/config.js"></script>
+         <script src="js/api.js"></script>
+         </head>
+<body>
+<div id="scroll-progress" style="width:0%"></div>
+
+<!-- NAV -->
+<nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 px-5 py-5 md:px-12">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="index.html" class="nav-logo flex flex-col leading-none text-white transition-colors duration-300">
+      <span class="font-body font-semibold text-[1.15rem] tracking-tight">Hidden<span class="font-light">Path</span></span>
+      <span class="logo-sub text-white/55 tracking-[.22em] uppercase transition-colors duration-300" style="font-size:.58rem;">Vietnam</span>
+    </a>
+    <div class="hidden md:flex items-center gap-7">
+      <a href="index.html#tours"        class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors">Tours</a>
+      <a href="index.html#about"        class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors">About</a>
+      <a href="index.html#destinations" class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors">Destinations</a>
+      <a href="index.html#journal"      class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors">Journal</a>
+      <button onclick="openModal()" class="btn-primary ml-3 px-6 py-2.5 rounded-full text-sm font-semibold">Book a Free Call</button>
+    </div>
+    <button onclick="toggleMenu()" class="md:hidden text-white p-1">
+      <svg id="ham-open" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="ham-close" class="hidden" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden mx-2 mt-3 bg-white/96 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden">
+    <div class="p-6 flex flex-col gap-1">
+      <a href="index.html#tours"        onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Tours</a>
+      <a href="index.html#about"        onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">About</a>
+      <a href="index.html#destinations" onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Destinations</a>
+      <button onclick="openModal();toggleMenu();" class="btn-primary w-full mt-4 py-3.5 rounded-full text-sm font-semibold">Book a Free Call</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="relative flex flex-col justify-end" style="height:92vh;min-height:600px;">
+  <!-- IMG-SWAP: Tour hero — Ha Long Bay dawn mist -->
+  <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920&q=85&auto=format&fit=crop"
+       alt="Ha Long Bay at dawn" class="absolute inset-0 w-full h-full object-cover" loading="eager" fetchpriority="high"/>
+  <div class="hero-overlay absolute inset-0"></div>
+
+  <!-- Breadcrumb -->
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-5 md:px-12 mb-6">
+    <nav class="flex items-center gap-2 text-white/55 text-xs font-medium">
+      <a href="index.html" class="hover:text-white transition-colors">Home</a>
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      <a href="index.html#tours" class="hover:text-white transition-colors">Tours</a>
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      <span class="text-white/80">The Northern Soul</span>
+    </nav>
+  </div>
+
+  <!-- Tour title block -->
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-5 md:px-12 mb-8" style="animation:fadeInUp .9s ease .2s both;">
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="bg-[#FF8A42] text-white text-[.65rem] font-bold px-3 py-1.5 rounded-full tracking-widest uppercase">Bestseller</span>
+      <span class="tag-pill">Adventure &amp; Culture</span>
+      <span class="tag-pill">North Vietnam</span>
+    </div>
+    <h1 class="font-display text-white mb-3" style="font-size:clamp(2.8rem,7vw,5.5rem);font-weight:500;letter-spacing:-.02em;line-height:1.06;">The Northern Soul</h1>
+    <p class="text-white/80 font-light text-lg md:text-xl max-w-xl leading-relaxed">Hanoi's timeworn streets, Sapa's mist-draped peaks, and three nights aboard a traditional junk on Ha Long Bay.</p>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="relative z-10 w-full border-t border-white/15" style="background:rgba(0,0,0,.35);backdrop-filter:blur(12px);">
+    <div class="max-w-7xl mx-auto px-5 md:px-12 py-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="hero-stat px-4 py-3">
+        <p class="text-white/55 text-[.62rem] tracking-widest uppercase mb-0.5">Duration</p>
+        <p class="text-white font-semibold font-display" style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;">10 Days / 9 Nights</p>
+      </div>
+      <div class="hero-stat px-4 py-3">
+        <p class="text-white/55 text-[.62rem] tracking-widest uppercase mb-0.5">From</p>
+        <p class="text-white font-semibold font-display" style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;">$1,890 <span class="text-white/60 text-sm font-normal" style="font-family:'DM Sans',sans-serif;">USD/pp</span></p>
+      </div>
+      <div class="hero-stat px-4 py-3">
+        <p class="text-white/55 text-[.62rem] tracking-widest uppercase mb-0.5">Group Size</p>
+        <p class="text-white font-semibold font-display" style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;">Max 12 Travelers</p>
+      </div>
+      <div class="hero-stat px-4 py-3">
+        <p class="text-white/55 text-[.62rem] tracking-widest uppercase mb-0.5">Rating</p>
+        <div class="flex items-center gap-1.5">
+          <span class="text-amber-400 text-base">★★★★★</span>
+          <span class="text-white font-semibold font-display" style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;">4.9</span>
+          <span class="text-white/45 text-xs">(87)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION TABS -->
+<div id="section-tabs" class="overflow-x-auto">
+  <div class="max-w-7xl mx-auto px-5 md:px-12">
+    <div class="flex gap-7 md:gap-10">
+      <a href="#overview"  class="tab-link active" data-tab="overview">Overview</a>
+      <a href="#itinerary" class="tab-link" data-tab="itinerary">Itinerary</a>
+      <a href="#includes"  class="tab-link" data-tab="includes">Included</a>
+      <a href="#gallery"   class="tab-link" data-tab="gallery">Gallery</a>
+      <a href="#guide"     class="tab-link" data-tab="guide">Your Guide</a>
+      <a href="#dates"     class="tab-link" data-tab="dates">Dates &amp; Prices</a>
+      <a href="#reviews"   class="tab-link" data-tab="reviews">Reviews</a>
+      <a href="#faq"       class="tab-link" data-tab="faq">FAQ</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT GRID -->
+<div class="max-w-7xl mx-auto px-5 md:px-12 py-12 md:py-16 content-grid">
+
+  <!-- LEFT COLUMN -->
+  <div class="min-w-0">
+
+    <!-- OVERVIEW -->
+    <section id="overview" class="mb-14 reveal">
+      <p class="section-label mb-3">About This Journey</p>
+      <h2 class="font-display text-[#2C3340] mb-5" style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:500;letter-spacing:-.01em;line-height:1.15;">Where Vietnam Reveals Its Deepest Soul</h2>
+      <div class="text-[#2C3340]/68 leading-relaxed space-y-4 text-base mb-8">
+        <p>The north is where Vietnam feels most itself — ancient, layered, and unhurried in ways the south no longer is. This journey is for travelers who want more than a checklist. Who want to <em>understand</em> a place, not just visit it.</p>
+        <p>You'll begin in <strong class="text-[#2C3340] font-medium">Hanoi</strong>, a city that has resisted modernity with quiet dignity. Two full days to let its rhythms settle — the honk of motorbikes around Hoan Kiem Lake at 6am, the steam rising from a bowl of phở in a doorway that's served the same family recipe since 1952. Then north by overnight sleeper train to <strong class="text-[#2C3340] font-medium">Sapa</strong>, where the mountains open and the terraced rice fields look drawn by hand.</p>
+        <p>The journey ends on <strong class="text-[#2C3340] font-medium">Ha Long Bay</strong>, aboard a traditional wooden junk. Three nights surrounded by 1,600 limestone karsts rising from jade-green water. Kayaking through caves. Watching fishermen cast nets at dawn. Eating dinner on deck as the mist comes in. This is the Vietnam people talk about for the rest of their lives.</p>
+      </div>
+
+      <!-- Route -->
+      <div class="bg-white rounded-2xl border border-[#E8E6E1] p-6 mb-8">
+        <p class="text-[.65rem] font-semibold tracking-[.18em] uppercase text-[#2C3340]/40 mb-5">Your Route</p>
+        <div class="flex items-center gap-2">
+          <div class="route-node">
+            <div class="route-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+            <p class="text-xs font-semibold text-[#2C3340] text-center">Hanoi</p>
+            <p class="text-[.65rem] text-[#2C3340]/45 text-center">Days 1–2</p>
+          </div>
+          <div class="route-line"></div>
+          <div class="route-node">
+            <div class="route-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 8"/><path d="M21 21H3"/></svg></div>
+            <p class="text-xs font-semibold text-[#2C3340] text-center">Sapa</p>
+            <p class="text-[.65rem] text-[#2C3340]/45 text-center">Days 3–5</p>
+          </div>
+          <div class="route-line"></div>
+          <div class="route-node">
+            <div class="route-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+            <p class="text-xs font-semibold text-[#2C3340] text-center">Ha Long</p>
+            <p class="text-[.65rem] text-[#2C3340]/45 text-center">Days 6–9</p>
+          </div>
+          <div class="route-line"></div>
+          <div class="route-node">
+            <div class="route-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.6" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <p class="text-xs font-semibold text-[#2C3340] text-center">Hanoi</p>
+            <p class="text-[.65rem] text-[#2C3340]/45 text-center">Day 10</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Highlights -->
+      <div>
+        <p class="section-label mb-4">Journey Highlights</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="flex gap-3 items-start"><div class="hi-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><p class="font-medium text-sm text-[#2C3340]">Overnight sleeper train to Sapa</p><p class="text-xs text-[#2C3340]/55 mt-0.5">Wake up to mountain fog and rice terraces</p></div></div>
+          <div class="flex gap-3 items-start"><div class="hi-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 8"/></svg></div><div><p class="font-medium text-sm text-[#2C3340]">Trekking through Hmong & Dao villages</p><p class="text-xs text-[#2C3340]/55 mt-0.5">Sapa's ethnic minority communities, up close</p></div></div>
+          <div class="flex gap-3 items-start"><div class="hi-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><div><p class="font-medium text-sm text-[#2C3340]">3 nights aboard a private junk</p><p class="text-xs text-[#2C3340]/55 mt-0.5">Sunrise tai chi, kayaking, cave exploration</p></div></div>
+          <div class="flex gap-3 items-start"><div class="hi-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div><p class="font-medium text-sm text-[#2C3340]">Hanoi street food walking tour</p><p class="text-xs text-[#2C3340]/55 mt-0.5">Old Quarter kitchens, bún chả, egg coffee</p></div></div>
+          <div class="flex gap-3 items-start"><div class="hi-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><p class="font-medium text-sm text-[#2C3340]">Home-cooked dinner with a Dao family</p><p class="text-xs text-[#2C3340]/55 mt-0.5">A family in the Sapa valley opens their home</p></div></div>
+          <div class="flex gap-3 items-start"><div class="hi-icon"><svg width="18" height="18" fill="none" stroke="#006D5B" stroke-width="1.7" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div><p class="font-medium text-sm text-[#2C3340]">Access to hidden karst caves</p><p class="text-xs text-[#2C3340]/55 mt-0.5">Off the tourist circuit — small group only</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sec-divider"/>
+
+    <!-- ITINERARY -->
+    <section id="itinerary" class="mb-14 reveal">
+      <p class="section-label mb-3">Day by Day</p>
+      <h2 class="font-display text-[#2C3340] mb-2" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.01em;">Your 10-Day Itinerary</h2>
+      <p class="text-[#2C3340]/55 text-sm mb-7">Click any day to expand. All times adjust to your group's pace.</p>
+      <div id="itinerary-list">
+
+        <div class="day-row open-day" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">1</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Arrive Hanoi — Welcome &amp; First Impressions</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Airport transfer · Old Quarter walk · Welcome dinner</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body open px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Private airport transfer to your boutique hotel in the French Quarter — a converted 1920s colonial villa two blocks from Hoan Kiem Lake. Check in, freshen up.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Late afternoon free time. No agenda. Let the city come to you — the motorbike noise, the incense, the street vendors. Walk the lake. Sit at a café. Arrive slowly.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Evening: welcome dinner at a rooftop restaurant with your group and guide Minh. Northern cuisine, bia hơi, and the beginning of something.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 Welcome Dinner</span><span class="dtag dtag-stay">🏨 La Siesta Premium, Hanoi</span><span class="dtag dtag-easy">🟢 Easy Day</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">2</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Hanoi Deep Dive</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Old Quarter · Temple of Literature · Street food evening</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Guided walk through the 36 ancient trades of the Old Quarter. Each street named for what was sold here 700 years ago — Tin Street, Paper Street, Silver Street.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Temple of Literature (Vietnam's first university, 1076 AD), Ho Chi Minh Mausoleum district, cyclo through the French Quarter.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Evening: street food tour — bún chả, bánh mì, egg coffee, and Minh's personal shortlist of the city's best hidden corners.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 Breakfast + Street Food</span><span class="dtag dtag-stay">🏨 La Siesta Premium, Hanoi</span><span class="dtag dtag-easy">🟢 Easy / Moderate</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">3</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Hanoi → Sapa by Overnight Train</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Free morning · Evening departure · Private sleeper cabin</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Morning at leisure — the weekend market at Dong Xuan, or simply wander. A gentle Hanoi morning before the mountains.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>9pm: overnight sleeper train from Hanoi to Lao Cai (gateway to Sapa). Private 4-berth teak-panelled cabin. Arrive 6am.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Bring something warm — the mountains get cold overnight. And earplugs, though the rhythm of the train is its own kind of lullaby.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 Breakfast</span><span class="dtag dtag-stay">🚂 Overnight Sleeper Train</span><span class="dtag dtag-easy">🟢 Easy</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">4</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Sapa — Cat Cat Village Trek</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Black Hmong village · Rice terrace walks · Local market</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Arrive Lao Cai at 6am, transfer to Sapa (45 min). Check in, freshen up — then out immediately. The best light is morning.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Trek from Sapa town through Cat Cat village, home of the Black Hmong. Descends through terraced fields and bamboo groves. ~4 hours walking, mostly downhill.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Lunch at a family restaurant with views across the valley. Afternoon free in Sapa town — browse the Saturday handicraft market if timing aligns.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 Breakfast + Lunch</span><span class="dtag dtag-stay">🏨 Pao's Sapa Leisure Hotel</span><span class="dtag dtag-mod">🟡 Moderate (4–5hr)</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">5</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Sapa — Ta Van Valley &amp; Family Dinner</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Deeper valley trek · Dao village · Home-cooked dinner</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>The best day in Sapa. Ta Van valley — deeper, quieter, and more spectacularly terraced than the Cat Cat route. Red Dao villages along the way. ~5 hours.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Optional: Fansipan cable car (Southeast Asia's highest peak, 3,143m). Views across into China and Laos on a clear day. Not included but easily arranged.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Evening: the moment past travelers mention most. A Dao family invites us into their home. Twelve people at a low table, fragrant rice wine, dishes you couldn't order anywhere. Minh translates. Something shifts.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 All Meals Included</span><span class="dtag dtag-stay">🏨 Pao's Sapa Leisure Hotel</span><span class="dtag dtag-mod">🟡 Moderate (5–6hr)</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">6</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Sapa → Ha Long Bay — Board the Junk</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Transfer · Check-in · Sunset cruise · First night at sea</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Morning transfer Sapa → Lao Cai, then private van to Ha Long City (~5 hours with scenic lunch stop).</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Afternoon: board our traditional wooden junk at Ha Long harbour. Your private cabin — teak-panelled, bay-facing porthole — awaits.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Sunset cruise deeper into the bay. Dinner on deck as the stars emerge. The bay at night sounds like nothing else on earth.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 Breakfast + Dinner</span><span class="dtag dtag-stay">⛵ Orchid Classic Cruise</span><span class="dtag dtag-easy">🟢 Easy</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">7</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Ha Long — Kayaking, Caves &amp; Floating Village</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Kayak · Surprise Cave · Cua Van floating village · Cooking class</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Morning: kayaking through hidden lagoons accessible only by paddling through low cave arches. The feeling of discovering something untouched.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Explore Surprise Cave (Hang Sung Sot) — the largest grotto in the bay, with chambers large enough to house cathedrals.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Afternoon: visit Cua Van floating fishing village. Four generations of families who have lived on the water.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Evening: on-deck cooking class with the ship's chef. Learn to make bánh cuốn (steamed rice rolls). Dinner under lanterns.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 All Meals</span><span class="dtag dtag-stay">⛵ Orchid Classic Cruise</span><span class="dtag dtag-mod">🟡 Moderate</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">8</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Ha Long — Sunrise Tai Chi &amp; Free Waters</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Sunrise · Swimming · Rock climbing (optional) · Farewell dinner</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>5:45am: optional sunrise tai chi on the sun deck. The bay is mirror-still at this hour. The karsts appear and disappear in the mist.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Morning: swimming off the junk in a sheltered cove. Optional rock climbing on karst limestone, equipment provided.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Afternoon anchored in a secluded bay. Reading, napping, watching the water change colour as the sun moves. This is what you came for.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Evening: farewell dinner on deck. The chef's signature seafood feast. A sunset you'll photograph badly and remember perfectly.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 All Meals + Farewell Dinner</span><span class="dtag dtag-stay">⛵ Orchid Classic Cruise</span><span class="dtag dtag-easy">🟢 Easy / Your Pace</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">9</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Ha Long → Hanoi — Free Afternoon</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Disembark · Return to Hanoi · Hanoi at leisure</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Final breakfast on the bay. Disembark and transfer back to Hanoi (3.5 hours). Arrive early afternoon.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Afternoon entirely free — revisit a favourite street, return to a restaurant that moved you, or sit at a café by Hoan Kiem Lake and watch the city.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>Optional: day trip to Ninh Binh — "Ha Long Bay on land" — dramatic karst scenery explored by sampan boat. Arrange independently or with Minh's guidance.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 Breakfast</span><span class="dtag dtag-stay">🏨 La Siesta Premium, Hanoi</span><span class="dtag dtag-easy">🟢 Easy</span></div>
+          </div>
+        </div>
+
+        <div class="day-row" onclick="toggleDay(this)">
+          <div class="flex items-center gap-4 px-1 py-4">
+            <div class="day-num">10</div>
+            <div class="flex-1 min-w-0"><p class="font-semibold text-[#2C3340] text-sm">Departure — Until We Meet Again</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Breakfast · Airport transfer · Tour ends</p></div>
+            <div class="flex items-center gap-2 shrink-0"><svg class="day-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          </div>
+          <div class="day-body px-1 pb-5">
+            <div class="pl-12 space-y-1 mb-4">
+              <div class="day-act"><span class="day-dot"></span><span>Private transfer to Noi Bai International Airport at your requested time. Breakfast included at the hotel before departure.</span></div>
+              <div class="day-act"><span class="day-dot"></span><span>The HiddenPath WhatsApp channel stays active — Minh will happily answer questions from the airport lounge or the plane home.</span></div>
+            </div>
+            <div class="pl-12 flex flex-wrap gap-2"><span class="dtag dtag-meals">🍽 Breakfast</span><span class="dtag dtag-easy">🟢 Easy</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="sec-divider"/>
+
+    <!-- INCLUDES -->
+    <section id="includes" class="mb-14 reveal">
+      <p class="section-label mb-3">What's Covered</p>
+      <h2 class="font-display text-[#2C3340] mb-7" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.01em;">Inclusions &amp; Exclusions</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4"><div class="w-6 h-6 rounded-full bg-[#E8F4F1] flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p class="font-semibold text-[#2C3340] text-sm">Included in your price</p></div>
+          <div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">All accommodation (boutique hotels + junk cabin)</span></div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">All ground transfers and overnight sleeper train</span></div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">English-speaking guide throughout the journey</span></div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">All entrance fees and activity costs</span></div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">Breakfast daily, select lunches and dinners</span></div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">Welcome dinner &amp; farewell seafood feast</span></div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">Kayaking gear and guides on Ha Long Bay</span></div>
+            <div class="inc-item"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg><span class="text-[#2C3340]/70">24/7 WhatsApp support before, during &amp; after</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-4"><div class="w-6 h-6 rounded-full bg-[#FEF2F2] flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#991B1B" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div><p class="font-semibold text-[#2C3340] text-sm">Not included</p></div>
+          <div>
+            <div class="exc-item"><svg width="14" height="14" fill="none" stroke="#991B1B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="text-[#2C3340]/70">International flights to/from Hanoi</span></div>
+            <div class="exc-item"><svg width="14" height="14" fill="none" stroke="#991B1B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="text-[#2C3340]/70">Travel insurance (mandatory — we recommend providers)</span></div>
+            <div class="exc-item"><svg width="14" height="14" fill="none" stroke="#991B1B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="text-[#2C3340]/70">Vietnam visa fees (varies by nationality)</span></div>
+            <div class="exc-item"><svg width="14" height="14" fill="none" stroke="#991B1B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="text-[#2C3340]/70">Alcoholic beverages (unless specified)</span></div>
+            <div class="exc-item"><svg width="14" height="14" fill="none" stroke="#991B1B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="text-[#2C3340]/70">Optional activities (Fansipan cable car, etc.)</span></div>
+            <div class="exc-item"><svg width="14" height="14" fill="none" stroke="#991B1B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="text-[#2C3340]/70">Gratuities for guides and drivers</span></div>
+            <div class="exc-item"><svg width="14" height="14" fill="none" stroke="#991B1B" stroke-width="2.5" viewBox="0 0 24 24" class="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span class="text-[#2C3340]/70">Personal expenses and shopping</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sec-divider"/>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="mb-14 reveal">
+      <p class="section-label mb-3">On This Journey</p>
+      <h2 class="font-display text-[#2C3340] mb-7" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.01em;">What You'll See</h2>
+      <div class="gallery-grid">
+        <div class="gal-item gal-0" onclick="openLightbox(0)">
+          <!-- IMG-SWAP: Gallery featured — Sapa rice terraces -->
+          <img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=900&q=80&auto=format&fit=crop" alt="Sapa rice terraces"/>
+          <div class="gal-over"><svg width="32" height="32" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+        <div class="gal-item" onclick="openLightbox(1)">
+          <!-- IMG-SWAP: Gallery 2 — Ha Long Bay -->
+          <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500&q=80&auto=format&fit=crop" alt="Ha Long Bay"/>
+          <div class="gal-over"><svg width="22" height="22" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+        <div class="gal-item" onclick="openLightbox(2)">
+          <!-- IMG-SWAP: Gallery 3 — Mountain trekking -->
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80&auto=format&fit=crop" alt="Trekking in Sapa"/>
+          <div class="gal-over"><svg width="22" height="22" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+        <div class="gal-item" onclick="openLightbox(3)">
+          <!-- IMG-SWAP: Gallery 4 — Lanterns / evening atmosphere -->
+          <img src="https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=500&q=80&auto=format&fit=crop" alt="Evening lanterns"/>
+          <div class="gal-over"><svg width="22" height="22" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+        <div class="gal-item" onclick="openLightbox(4)">
+          <!-- IMG-SWAP: Gallery 5 — City by night -->
+          <img src="https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=500&q=80&auto=format&fit=crop" alt="Vietnam by night"/>
+          <div class="gal-over"><svg width="22" height="22" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+      <p class="text-xs text-[#2C3340]/40 mt-3 text-center">Click any image to enlarge · All photos from real HiddenPath departures</p>
+    </section>
+
+    <hr class="sec-divider"/>
+
+    <!-- GUIDE -->
+    <section id="guide" class="mb-14 reveal">
+      <p class="section-label mb-3">Your Guide</p>
+      <h2 class="font-display text-[#2C3340] mb-6" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.01em;">Meet Minh — Born in Hanoi</h2>
+      <div class="guide-card">
+        <div class="grid grid-cols-1 md:grid-cols-3">
+          <div class="relative h-64 md:h-auto overflow-hidden">
+            <!-- IMG-SWAP: Guide portrait -->
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&auto=format&fit=crop&facepad=3" alt="Minh Nguyen — HiddenPath Guide" class="w-full h-full object-cover object-top"/>
+            <div class="absolute bottom-3 left-3 bg-[#006D5B] text-white text-xs font-semibold px-3 py-1.5 rounded-full">⭐ 4.97 avg. rating</div>
+          </div>
+          <div class="col-span-2 p-7 md:p-8">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <h3 class="font-display text-2xl font-medium text-[#2C3340]">Minh Nguyễn</h3>
+                <p class="text-[#2C3340]/55 text-sm mt-0.5">Senior Guide · Hanoi-born · 8 years with HiddenPath</p>
+              </div>
+              <div class="flex gap-2 shrink-0">
+                <span class="bg-[#E8F4F1] text-[#006D5B] text-xs font-medium px-3 py-1 rounded-full">🇺🇸 English</span>
+                <span class="bg-[#E8F4F1] text-[#006D5B] text-xs font-medium px-3 py-1 rounded-full">🇫🇷 French</span>
+              </div>
+            </div>
+            <p class="text-[#2C3340]/68 text-sm leading-relaxed mb-5">"I grew up two streets from Hoan Kiem Lake. My grandmother ran a phở stall in the Old Quarter until she was 82. I didn't become a guide to explain Vietnam — I did it because sharing this place is the thing I love most. I want you to leave with stories, not just photographs."</p>
+            <div class="grid grid-cols-3 gap-4 mb-5">
+              <div class="text-center bg-[#FAF9F7] rounded-xl p-3"><p class="font-display text-2xl font-semibold text-[#006D5B]">8<span class="text-lg">yr</span></p><p class="text-xs text-[#2C3340]/50 mt-0.5">Guiding</p></div>
+              <div class="text-center bg-[#FAF9F7] rounded-xl p-3"><p class="font-display text-2xl font-semibold text-[#006D5B]">420<span class="text-lg">+</span></p><p class="text-xs text-[#2C3340]/50 mt-0.5">Travelers</p></div>
+              <div class="text-center bg-[#FAF9F7] rounded-xl p-3"><p class="font-display text-2xl font-semibold text-[#006D5B]">4.97</p><p class="text-xs text-[#2C3340]/50 mt-0.5">Rating</p></div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tag-pill">Street Food Expert</span>
+              <span class="tag-pill">History &amp; Culture</span>
+              <span class="tag-pill">Trekking</span>
+              <span class="tag-pill">Photography</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sec-divider"/>
+
+    <!-- DATES -->
+    <section id="dates" class="mb-14 reveal">
+      <p class="section-label mb-3">Book Your Spot</p>
+      <h2 class="font-display text-[#2C3340] mb-2" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.01em;">2025 Departures</h2>
+      <p class="text-[#2C3340]/55 text-sm mb-7">All dates run Friday → Sunday (10 days). Prices per person, double occupancy. Solo supplement available.</p>
+      <div class="space-y-3">
+
+        <div class="date-row p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4" onclick="selectDate(this,'mar15')">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-xl bg-[#E8F4F1] flex flex-col items-center justify-center shrink-0">
+              <p class="text-[#006D5B] font-semibold text-xs uppercase tracking-wide">Mar</p>
+              <p class="font-display text-[#006D5B] text-xl font-semibold leading-none">15</p>
+            </div>
+            <div>
+              <p class="font-semibold text-[#2C3340] text-sm">March 15 – 24, 2025</p>
+              <div class="flex items-center gap-3 mt-1"><div class="spots-bar w-24"><div class="spots-fill" style="width:83%"></div></div><p class="text-xs text-[#FF8A42] font-medium">Only 2 spots left</p></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 sm:gap-6">
+            <div class="text-right"><p class="font-display text-xl font-semibold text-[#2C3340]">$1,890</p><p class="text-xs text-[#2C3340]/45">per person</p></div>
+            <button class="date-sel-btn btn-outline-teal px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap" onclick="event.stopPropagation();selectDate(this.closest('.date-row'),'mar15')">Select</button>
+          </div>
+        </div>
+
+        <div class="date-row p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4" onclick="selectDate(this,'apr12')">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-xl bg-[#E8F4F1] flex flex-col items-center justify-center shrink-0">
+              <p class="text-[#006D5B] font-semibold text-xs uppercase tracking-wide">Apr</p>
+              <p class="font-display text-[#006D5B] text-xl font-semibold leading-none">12</p>
+            </div>
+            <div>
+              <p class="font-semibold text-[#2C3340] text-sm">April 12 – 21, 2025</p>
+              <div class="flex items-center gap-3 mt-1"><div class="spots-bar w-24"><div class="spots-fill" style="width:25%"></div></div><p class="text-xs text-[#2C3340]/50 font-medium">9 spots available</p></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 sm:gap-6">
+            <div class="text-right"><p class="font-display text-xl font-semibold text-[#2C3340]">$1,890</p><p class="text-xs text-[#2C3340]/45">per person</p></div>
+            <button class="date-sel-btn btn-outline-teal px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap" onclick="event.stopPropagation();selectDate(this.closest('.date-row'),'apr12')">Select</button>
+          </div>
+        </div>
+
+        <div class="date-row p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4" onclick="selectDate(this,'sep06')">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-xl flex flex-col items-center justify-center shrink-0" style="background:rgba(255,138,66,.12);">
+              <p class="text-[#FF8A42] font-semibold text-xs uppercase tracking-wide">Sep</p>
+              <p class="font-display text-[#FF8A42] text-xl font-semibold leading-none">6</p>
+            </div>
+            <div>
+              <p class="font-semibold text-[#2C3340] text-sm">September 6 – 15, 2025 <span class="ml-2 bg-[#FF8A42] text-white text-[.6rem] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Early Bird</span></p>
+              <div class="flex items-center gap-3 mt-1"><div class="spots-bar w-24"><div class="spots-fill" style="width:10%"></div></div><p class="text-xs text-[#2C3340]/50 font-medium">11 spots available</p></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 sm:gap-6">
+            <div class="text-right"><p class="text-xs text-[#2C3340]/40 line-through">$1,890</p><p class="font-display text-xl font-semibold text-[#FF8A42]">$1,701</p><p class="text-xs text-[#2C3340]/45">10% early bird</p></div>
+            <button class="date-sel-btn btn-outline-teal px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap" onclick="event.stopPropagation();selectDate(this.closest('.date-row'),'sep06')">Select</button>
+          </div>
+        </div>
+
+        <div class="date-row p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4" onclick="selectDate(this,'nov08')">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-xl bg-[#E8F4F1] flex flex-col items-center justify-center shrink-0">
+              <p class="text-[#006D5B] font-semibold text-xs uppercase tracking-wide">Nov</p>
+              <p class="font-display text-[#006D5B] text-xl font-semibold leading-none">8</p>
+            </div>
+            <div>
+              <p class="font-semibold text-[#2C3340] text-sm">November 8 – 17, 2025</p>
+              <div class="flex items-center gap-3 mt-1"><div class="spots-bar w-24"><div class="spots-fill" style="width:10%"></div></div><p class="text-xs text-[#2C3340]/50 font-medium">12 spots available</p></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 sm:gap-6">
+            <div class="text-right"><p class="font-display text-xl font-semibold text-[#2C3340]">$1,890</p><p class="text-xs text-[#2C3340]/45">per person</p></div>
+            <button class="date-sel-btn btn-outline-teal px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap" onclick="event.stopPropagation();selectDate(this.closest('.date-row'),'nov08')">Select</button>
+          </div>
+        </div>
+
+      </div>
+      <p class="text-xs text-[#2C3340]/40 mt-4">Can't find a date? <button onclick="openModal()" class="text-[#006D5B] font-semibold hover:underline">Talk to us</button> — private departures are often available.</p>
+    </section>
+
+    <hr class="sec-divider"/>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="mb-14 reveal">
+      <div class="flex items-end justify-between mb-7 gap-4 flex-wrap">
+        <div><p class="section-label mb-2">Traveler Stories</p><h2 class="font-display text-[#2C3340]" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.01em;">What Past Travelers Say</h2></div>
+        <div class="flex items-center gap-2 bg-[#FAF9F7] border border-[#E8E6E1] rounded-2xl px-5 py-3">
+          <span class="text-amber-400 text-lg">★★★★★</span>
+          <div><p class="font-display text-xl font-semibold text-[#2C3340]">4.9 / 5</p><p class="text-xs text-[#2C3340]/45">87 reviews</p></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="review-card">
+          <div class="text-amber-400 text-base mb-3">★★★★★</div>
+          <p class="font-display text-[#2C3340] italic leading-relaxed mb-5" style="font-size:1.1rem;">"The dinner with the Dao family in Sapa was the moment my whole understanding of travel shifted. I've been on many tours. This was the first time I felt like a guest rather than a consumer."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Sarah M." class="w-10 h-10 rounded-full object-cover"/>
+            <div><p class="font-semibold text-[#2C3340] text-sm">Sarah M.</p><p class="text-xs text-[#2C3340]/45">London, UK · March 2024</p></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="text-amber-400 text-base mb-3">★★★★★</div>
+          <p class="font-display text-[#2C3340] italic leading-relaxed mb-5" style="font-size:1.1rem;">"Minh is the reason this tour is extraordinary. He knows every story behind every street — and he's also very funny, which you need when eating things you can't identify at 7am."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Tom H." class="w-10 h-10 rounded-full object-cover"/>
+            <div><p class="font-semibold text-[#2C3340] text-sm">Tom H.</p><p class="text-xs text-[#2C3340]/45">Sydney, Australia · October 2024</p></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="text-amber-400 text-base mb-3">★★★★★</div>
+          <p class="font-display text-[#2C3340] italic leading-relaxed mb-5" style="font-size:1.1rem;">"Three nights on the junk sounds like a long time. It isn't — it's not enough. Ha Long Bay at 5am, green tea on the bow deck, mist burning off the karsts. I would go back tomorrow."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Claire B." class="w-10 h-10 rounded-full object-cover"/>
+            <div><p class="font-semibold text-[#2C3340] text-sm">Claire B.</p><p class="text-xs text-[#2C3340]/45">San Francisco, USA · January 2025</p></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="text-amber-400 text-base mb-3">★★★★★</div>
+          <p class="font-display text-[#2C3340] italic leading-relaxed mb-5" style="font-size:1.1rem;">"I travel solo and was nervous about the group dynamic. But max 12 is genuinely different. We were 9 on my departure — by the end of Day 2, we felt like old friends."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Robert K." class="w-10 h-10 rounded-full object-cover"/>
+            <div><p class="font-semibold text-[#2C3340] text-sm">Robert K.</p><p class="text-xs text-[#2C3340]/45">Zürich, Switzerland · November 2024</p></div>
+          </div>
+        </div>
+      </div>
+            <div class="text-center mt-6"><a href="#" class="text-sm text-[#006D5B] font-medium hover:underline">Read all 87 reviews on Google &rarr;</a></div>
+    </section>
+
+    <hr class="sec-divider"/>
+
+    <!-- FAQ -->
+    <section id="faq" class="mb-14 reveal">
+      <p class="section-label mb-3">Common Questions</p>
+      <h2 class="font-display text-[#2C3340] mb-7" style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.01em;">Everything You Want to Know</h2>
+      <div id="faq-list">
+        <div class="faq-row" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-4 py-5"><p class="font-medium text-[#2C3340] text-sm pr-4">What fitness level do I need?</p><svg class="faq-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="faq-body pb-5"><p class="text-[#2C3340]/65 text-sm leading-relaxed">You don&rsquo;t need to be an athlete, but you should be comfortable walking 5&ndash;6 hours on the Sapa trekking days (Days 4 and 5). Terrain includes uneven paths and moderate inclines. All other days are entirely relaxed. We recommend light exercise in the weeks before departure &mdash; not for the hard moments, but so you enjoy the beautiful ones more.</p></div>
+        </div>
+        <div class="faq-row" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-4 py-5"><p class="font-medium text-[#2C3340] text-sm pr-4">What&rsquo;s the best time of year?</p><svg class="faq-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="faq-body pb-5"><p class="text-[#2C3340]/65 text-sm leading-relaxed">September&ndash;November is our favourite: harvest season in Sapa (the terraces are golden), cooler Hanoi, and calmer Ha Long seas. March&ndash;April is also beautiful &mdash; drier and perfectly mild. We avoid July&ndash;August due to typhoon season and peak domestic crowds.</p></div>
+        </div>
+        <div class="faq-row" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-4 py-5"><p class="font-medium text-[#2C3340] text-sm pr-4">Is there a solo traveler supplement?</p><svg class="faq-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="faq-body pb-5"><p class="text-[#2C3340]/65 text-sm leading-relaxed">Yes &mdash; the published price assumes double occupancy. Solo travelers pay a supplement of $320. Alternatively we can try to match you with another solo traveler from the group &mdash; done on request, subject to availability. Ask us on the free call.</p></div>
+        </div>
+        <div class="faq-row" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-4 py-5"><p class="font-medium text-[#2C3340] text-sm pr-4">Can I extend or customise the itinerary?</p><svg class="faq-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="faq-body pb-5"><p class="text-[#2C3340]/65 text-sm leading-relaxed">Absolutely &mdash; this is one of our favourite conversations. Common extensions: 3 days in Ninh Binh before the tour, or continuing south to H&#7897;i An after. We can also upgrade individual elements: premium junk cabin, private driver, extended cooking class. Bring it up on the call.</p></div>
+        </div>
+        <div class="faq-row" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-4 py-5"><p class="font-medium text-[#2C3340] text-sm pr-4">What is your cancellation policy?</p><svg class="faq-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="faq-body pb-5"><p class="text-[#2C3340]/65 text-sm leading-relaxed">20% deposit to confirm, balance due 60 days before departure. Cancellations 60+ days out: full deposit refund. 60&ndash;30 days: 50% refund. Within 30 days: non-refundable &mdash; this is why we strongly recommend travel insurance. If we ever cancel, full refunds are issued immediately.</p></div>
+        </div>
+        <div class="faq-row" onclick="toggleFaq(this)">
+          <div class="flex items-center justify-between gap-4 py-5"><p class="font-medium text-[#2C3340] text-sm pr-4">Do I need a Vietnam visa?</p><svg class="faq-chev" width="16" height="16" fill="none" stroke="#2C3340" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+          <div class="faq-body pb-5"><p class="text-[#2C3340]/65 text-sm leading-relaxed">Most Western nationalities (UK, EU, USA, Australia, Canada) receive a 90-day e-visa on arrival &mdash; apply at evisa.xuatnhapcanh.gov.vn about 3&ndash;4 weeks before. Cost approx $25 USD. We send a step-by-step guide once you&rsquo;ve confirmed your spot.</p></div>
+        </div>
+      </div>
+      <div class="mt-8 bg-[#E8F4F1] rounded-2xl p-6 flex items-start gap-4">
+        <div class="w-10 h-10 rounded-full bg-[#006D5B] flex items-center justify-center shrink-0 mt-0.5">
+          <svg width="18" height="18" fill="none" stroke="white" stroke-width="1.7" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/></svg>
+        </div>
+        <div>
+          <p class="font-semibold text-[#2C3340] text-sm mb-1">Still have questions?</p>
+          <p class="text-[#2C3340]/65 text-sm">Our free 20-minute call is exactly for this. Honest answers, no pressure.</p>
+          <button onclick="openModal()" class="btn-primary mt-3 px-5 py-2.5 rounded-full text-sm font-semibold">Book the Free Call &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /left col -->
+
+  <!-- RIGHT COLUMN: Sticky Booking Card -->
+  <div class="hidden lg:block">
+    <div id="booking-card" class="booking-card p-7">
+      <div class="mb-5">
+        <p class="text-xs text-[#2C3340]/45 mb-1">From</p>
+        <div class="flex items-end gap-2">
+          <p class="price-big" id="card-price">$1,890</p>
+          <p class="text-[#2C3340]/50 text-sm mb-1.5">USD per person</p>
+        </div>
+        <div class="flex items-center gap-1.5"><span class="text-amber-400 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="text-sm font-semibold text-[#2C3340]">4.9</span><span class="text-xs text-[#2C3340]/40">(87)</span></div>
+      </div>
+      <div class="bg-[#FAF9F7] rounded-xl p-4 mb-5 border border-[#E8E6E1]">
+        <p class="text-[.65rem] font-semibold tracking-[.18em] uppercase text-[#2C3340]/40 mb-2">Select Departure</p>
+        <div class="flex flex-wrap gap-2" id="card-date-pills">
+          <span class="bk-date-pill active" onclick="cardSelectDate(this,'mar15','$1,890')" data-id="mar15">Mar 15 &thinsp;&#9888; 2 left</span>
+          <span class="bk-date-pill" onclick="cardSelectDate(this,'apr12','$1,890')" data-id="apr12">Apr 12</span>
+          <span class="bk-date-pill" onclick="cardSelectDate(this,'sep06','$1,701')" data-id="sep06">Sep 6 &thinsp;&#127991; $1,701</span>
+          <span class="bk-date-pill" onclick="cardSelectDate(this,'nov08','$1,890')" data-id="nov08">Nov 8</span>
+        </div>
+      </div>
+      <button onclick="openModal()" class="btn-primary w-full py-4 rounded-full text-base font-semibold mb-3">Reserve My Spot &rarr;</button>
+      <button onclick="openModal()" class="btn-outline-teal w-full py-3.5 rounded-full text-sm font-semibold mb-5">Ask a Question First</button>
+      <div class="space-y-2.5 border-t border-[#E8E6E1] pt-5">
+        <div class="trust-row"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Free cancellation up to 60 days before</span></div>
+        <div class="trust-row"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span>Maximum 12 travelers &mdash; never crowded</span></div>
+        <div class="trust-row"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>20% deposit to confirm your spot</span></div>
+        <div class="trust-row"><svg width="14" height="14" fill="none" stroke="#006D5B" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/></svg><span>24/7 WhatsApp support during your trip</span></div>
+      </div>
+      <div class="mt-5 pt-4 border-t border-[#E8E6E1] flex items-center gap-3">
+        <div class="flex -space-x-2">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&q=80&auto=format&fit=crop&facepad=2" class="w-7 h-7 rounded-full border-2 border-white object-cover" alt=""/>
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&q=80&auto=format&fit=crop&facepad=2" class="w-7 h-7 rounded-full border-2 border-white object-cover" alt=""/>
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&q=80&auto=format&fit=crop&facepad=2" class="w-7 h-7 rounded-full border-2 border-white object-cover" alt=""/>
+        </div>
+        <p class="text-xs text-[#2C3340]/55"><span class="font-semibold text-[#2C3340]">12 people</span> viewed this tour today</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content-grid -->
+
+<!-- RELATED TOURS -->
+<section class="py-16 md:py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-5 md:px-12">
+    <div class="text-center max-w-lg mx-auto mb-10 reveal"><p class="section-label mb-2">More to Explore</p><h2 class="font-display text-[#2C3340]" style="font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:500;letter-spacing:-.01em;">You Might Also Love</h2></div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <a href="#" class="related-card block bg-white reveal reveal-delay-1">
+        <div class="relative h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=600&q=80&auto=format&fit=crop" alt="The Central Chapter" class="w-full h-full object-cover"/><span class="absolute top-3 right-3 bg-black/28 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full">7 Days</span></div>
+        <div class="p-5"><h3 class="font-display text-xl font-medium text-[#2C3340] mb-1">The Central Chapter</h3><p class="text-[#2C3340]/55 text-xs leading-relaxed mb-3">Hu&#7871; &middot; Da Nang &middot; H&#7897;i An &mdash; dynasties, coastline, golden lantern light.</p><div class="flex items-center justify-between"><p class="font-display text-lg font-semibold text-[#2C3340]">$1,290 <span class="text-xs font-normal text-[#2C3340]/40">pp</span></p><span class="text-[#006D5B] text-xs font-semibold">View Tour &rarr;</span></div></div>
+      </a>
+      <a href="#" class="related-card block bg-white reveal reveal-delay-2">
+        <div class="relative h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=600&q=80&auto=format&fit=crop" alt="Vietnam in Full" class="w-full h-full object-cover"/><span class="absolute top-3 left-3 bg-[#006D5B] text-white text-[.6rem] font-bold px-2.5 py-1 rounded-full uppercase">Signature</span><span class="absolute top-3 right-3 bg-black/28 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full">15 Days</span></div>
+        <div class="p-5"><h3 class="font-display text-xl font-medium text-[#2C3340] mb-1">Vietnam in Full</h3><p class="text-[#2C3340]/55 text-xs leading-relaxed mb-3">North to South &mdash; the complete Vietnam experience, nothing left out.</p><div class="flex items-center justify-between"><p class="font-display text-lg font-semibold text-[#2C3340]">$2,890 <span class="text-xs font-normal text-[#2C3340]/40">pp</span></p><span class="text-[#006D5B] text-xs font-semibold">View Tour &rarr;</span></div></div>
+      </a>
+      <a href="#" class="related-card block bg-white reveal reveal-delay-3">
+        <div class="relative h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1555217851-6141534701ac?w=600&q=80&auto=format&fit=crop" alt="The Slow South" class="w-full h-full object-cover"/><span class="absolute top-3 right-3 bg-black/28 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full">8 Days</span></div>
+        <div class="p-5"><h3 class="font-display text-xl font-medium text-[#2C3340] mb-1">The Slow South</h3><p class="text-[#2C3340]/55 text-xs leading-relaxed mb-3">Saigon &middot; Mekong &middot; Ph&uacute; Qu&#7889;c &mdash; vibrant cities, river life, island calm.</p><div class="flex items-center justify-between"><p class="font-display text-lg font-semibold text-[#2C3340]">$1,490 <span class="text-xs font-normal text-[#2C3340]/40">pp</span></p><span class="text-[#006D5B] text-xs font-semibold">View Tour &rarr;</span></div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="py-24 relative overflow-hidden" style="background:#006D5B;">
+  <div class="absolute inset-0 opacity-[.06]" style="background-image:radial-gradient(white 1px,transparent 1px);background-size:40px 40px;"></div>
+  <div class="max-w-2xl mx-auto px-5 md:px-12 text-center relative z-10 reveal">
+    <p class="section-label text-white/40 mb-4">Only 2 Spots Left on March 15</p>
+    <h2 class="font-display text-white mb-5" style="font-size:clamp(2rem,5vw,3.8rem);font-weight:400;line-height:1.1;letter-spacing:-.015em;">Your Northern Soul<br/><em>is Waiting.</em></h2>
+    <p class="text-white/70 text-lg font-light mb-8 leading-relaxed">Talk to a local Vietnam expert &mdash; free, 20 minutes, no scripts.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button onclick="openModal()" class="btn-primary px-10 py-4 rounded-full text-base font-semibold">Reserve a Spot &rarr;</button>
+      <button onclick="openModal()" class="btn-ghost px-10 py-4 rounded-full text-base font-semibold">Ask a Question First</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#2C3340] text-white py-10">
+  <div class="max-w-7xl mx-auto px-5 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div><div class="font-body font-semibold text-lg tracking-tight">Hidden<span class="font-light">Path</span></div><div style="font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);">Vietnam</div></div>
+    <div class="flex flex-wrap gap-6 text-sm text-white/50">
+      <a href="index.html#tours" class="hover:text-white transition-colors">All Tours</a>
+      <a href="index.html#about" class="hover:text-white transition-colors">About</a>
+      <a href="index.html#destinations" class="hover:text-white transition-colors">Destinations</a>
+      <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+    </div>
+    <p class="text-xs text-white/30">&copy; 2026 HiddenPath Vietnam</p>
+  </div>
+</footer>
+
+<!-- MOBILE STICKY BAR -->
+<div id="mobile-sticky-bar" class="lg:hidden">
+  <div class="px-5 py-3 flex items-center justify-between gap-4">
+    <div><p class="text-xs text-[#2C3340]/50">From</p><p class="font-display text-xl font-semibold text-[#2C3340]" id="mobile-bar-price">$1,890 <span style="font-size:.875rem;font-weight:400;color:rgba(44,51,64,.4)">pp</span></p></div>
+    <div class="flex gap-2 flex-1 justify-end">
+      <button onclick="openModal()" class="btn-outline-teal px-4 py-2.5 rounded-full text-sm font-semibold">Ask a Question</button>
+      <button onclick="openModal()" class="btn-primary px-5 py-2.5 rounded-full text-sm font-semibold">Reserve &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="fixed inset-0 z-[300] bg-black/92 items-center justify-center p-4">
+  <button onclick="closeLightbox()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/15 text-white flex items-center justify-center hover:bg-white/25 transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"/>
+  <p id="lightbox-cap" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/55 text-sm text-center"></p>
+</div>
+
+<!-- BOOKING MODAL -->
+<div id="booking-modal" class="fixed inset-0 z-[200] items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/58 backdrop-blur-sm" onclick="closeModal()"></div>
+  <div class="modal-card relative bg-white max-w-[480px] w-full p-8 md:p-10 z-10 overflow-hidden">
+    <button onclick="closeModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#F0EDE9] flex items-center justify-center hover:bg-[#E5E1DC] transition-colors z-10"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2C3340" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div id="modal-panel-options" class="modal-panel">
+      <div class="mb-7 pr-8"><p class="section-label mb-2">Free Consultation</p><h3 class="font-display text-[#2C3340] mb-2" style="font-size:1.9rem;font-weight:500;line-height:1.1;">Talk to a<br/>Local Expert</h3><p class="text-[#2C3340]/55 text-sm leading-relaxed">20 minutes. No script. No pressure. Honest answers about The Northern Soul.</p></div>
+      <div class="flex flex-col gap-3">
+        <button onclick="goCalendly()" class="book-opt flex items-center gap-5 p-5 w-full text-left"><div class="w-12 h-12 rounded-xl bg-[#E8F4F1] flex items-center justify-center shrink-0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="flex-1"><p class="font-semibold text-[#2C3340] text-sm mb-0.5">Schedule via Calendly</p><p class="text-xs text-[#2C3340]/50 text-left">Pick a time &mdash; Mon&ndash;Sat, 9am&ndash;6pm ICT.</p></div><svg class="text-[#006D5B] shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <button onclick="goWhatsApp()" class="book-opt wa flex items-center gap-5 p-5 w-full text-left"><div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(37,211,102,.12);"><svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div><div class="flex-1"><p class="font-semibold text-[#2C3340] text-sm mb-0.5">Chat on WhatsApp</p><p class="text-xs text-[#2C3340]/50 text-left">Typically reply within 15 minutes.</p></div><svg class="shrink-0" style="color:#25D366;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+      <p class="text-center text-xs text-[#2C3340]/30 mt-5">We never share your details.</p>
+    </div>
+    <div id="modal-panel-calendly" class="modal-panel hidden text-center py-4">
+      <div class="confirm-ring bg-[#E8F4F1]"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg></div>
+      <h3 class="font-display text-[#2C3340] mb-2 pr-8" style="font-size:1.7rem;font-weight:500;line-height:1.15;">Calendly is opening&hellip;</h3>
+      <p class="text-[#2C3340]/58 text-sm mb-2">Pick any slot in the new tab.</p>
+      <p class="text-[#2C3340]/40 text-xs mb-7">Didn&rsquo;t open? <a id="calendly-fallback-link" href="https://calendly.com/hiddenpath-vietnam/consultation" target="_blank" class="text-[#006D5B] font-semibold hover:underline">Click here &rarr;</a></p>
+      <button onclick="resetModal()" class="w-full btn-outline-teal py-3 rounded-full text-sm font-semibold">&larr; Back</button>
+    </div>
+    <div id="modal-panel-wa" class="modal-panel hidden text-center py-4">
+      <div class="confirm-ring" style="background:rgba(37,211,102,.1);"><svg width="30" height="30" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+      <h3 class="font-display text-[#2C3340] mb-2 pr-8" style="font-size:1.7rem;font-weight:500;line-height:1.15;">Opening WhatsApp&hellip;</h3>
+      <p class="text-[#2C3340]/58 text-sm mb-2">Your message is pre-loaded. Just hit send.</p>
+      <p class="text-[#2C3340]/40 text-xs mb-7">Didn&rsquo;t open? <a id="wa-fallback-link" href="#" target="_blank" class="text-[#25D366] font-semibold hover:underline">Click here &rarr;</a></p>
+      <button onclick="resetModal()" class="w-full btn-outline-teal py-3 rounded-full text-sm font-semibold">&larr; Back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CALENDLY_URL = 'https://calendly.com/hiddenpath-vietnam/consultation';
+  const WHATSAPP_NUM = '84912345678';
+  const WA_MSG = encodeURIComponent("Hi HiddenPath! I'm interested in The Northern Soul tour. Could you help me choose a departure date?");
+  const WA_URL = `https://wa.me/${WHATSAPP_NUM}?text=${WA_MSG}`;
+
+  // Scroll progress
+  const pb = document.getElementById('scroll-progress');
+  window.addEventListener('scroll',()=>{pb.style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';},{passive:true});
+
+  // Nav
+  const nav=document.getElementById('main-nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
+
+  // Mobile menu
+  function toggleMenu(){
+    document.getElementById('mobile-menu').classList.toggle('open');
+    document.getElementById('ham-open').classList.toggle('hidden');
+    document.getElementById('ham-close').classList.toggle('hidden');
+  }
+
+  // Mobile sticky bar
+  const mBar=document.getElementById('mobile-sticky-bar');
+  new IntersectionObserver(e=>mBar.classList.toggle('visible',!e[0].isIntersecting),{threshold:0.1}).observe(document.getElementById('hero'));
+
+  // Section tabs
+  const tabs=document.getElementById('section-tabs');
+  const tabLinks=document.querySelectorAll('.tab-link');
+  const tabObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        tabLinks.forEach(t=>t.classList.remove('active'));
+        const a=document.querySelector('.tab-link[data-tab="'+e.target.id+'"]');
+        if(a){a.classList.add('active');a.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px',threshold:0});
+  document.querySelectorAll('#overview,#itinerary,#includes,#gallery,#guide,#dates,#reviews,#faq').forEach(s=>{if(s)tabObs.observe(s);});
+  window.addEventListener('scroll',()=>tabs.classList.toggle('elevated',window.scrollY>100),{passive:true});
+  tabLinks.forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      const target=document.getElementById(link.dataset.tab);
+      if(!target)return;
+      const offset=nav.offsetHeight+tabs.offsetHeight+16;
+      window.scrollTo({top:target.getBoundingClientRect().top+window.scrollY-offset,behavior:'smooth'});
+    });
+  });
+
+  // Itinerary accordion
+  function toggleDay(row){
+    const isOpen=row.classList.contains('open-day');
+    document.querySelectorAll('.day-row').forEach(r=>{r.classList.remove('open-day');r.querySelector('.day-body').classList.remove('open');});
+    if(!isOpen){row.classList.add('open-day');row.querySelector('.day-body').classList.add('open');}
+  }
+
+  // FAQ accordion
+  function toggleFaq(row){
+    const isOpen=row.classList.contains('open-faq');
+    document.querySelectorAll('.faq-row').forEach(r=>{r.classList.remove('open-faq');r.querySelector('.faq-body').classList.remove('open');});
+    if(!isOpen){row.classList.add('open-faq');row.querySelector('.faq-body').classList.add('open');}
+  }
+
+  // Date selection
+  function selectDate(row,id){
+    document.querySelectorAll('.date-row').forEach(r=>r.classList.remove('selected'));
+    row.classList.add('selected');
+    const p=document.querySelector('#card-date-pills [data-id="'+id+'"]');
+    if(p)p.click();
+  }
+  function cardSelectDate(pill,id,price){
+    document.querySelectorAll('#card-date-pills .bk-date-pill').forEach(p=>p.classList.remove('active'));
+    pill.classList.add('active');
+    document.getElementById('card-price').textContent=price;
+    document.getElementById('mobile-bar-price').innerHTML=price+' <span style="font-size:.875rem;font-weight:400;color:rgba(44,51,64,.4)">pp</span>';
+  }
+
+  // Gallery lightbox
+  const IMGS=[
+    {src:'https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=1400&q=85&auto=format&fit=crop',cap:'Sapa rice terraces, Northern Vietnam'},
+    {src:'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1400&q=85&auto=format&fit=crop',cap:'Ha Long Bay at dawn'},
+    {src:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=85&auto=format&fit=crop',cap:'Trekking through the Sapa valley'},
+    {src:'https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=1400&q=85&auto=format&fit=crop',cap:'Lanterns on the water'},
+    {src:'https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=1400&q=85&auto=format&fit=crop',cap:'Vietnam by night'},
+  ];
+  function openLightbox(i){
+    document.getElementById('lightbox-img').src=IMGS[i].src;
+    document.getElementById('lightbox-cap').textContent=IMGS[i].cap;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+  document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLightbox();});
+
+  // Modal
+  function showPanel(id){
+    ['modal-panel-options','modal-panel-calendly','modal-panel-wa'].forEach(p=>{
+      document.getElementById(p).classList.toggle('hidden',p!==id);
+    });
+  }
+  function openModal(){showPanel('modal-panel-options');document.getElementById('booking-modal').classList.add('open');document.body.style.overflow='hidden';}
+  function closeModal(){document.getElementById('booking-modal').classList.remove('open');document.body.style.overflow='';setTimeout(()=>showPanel('modal-panel-options'),300);}
+  function resetModal(){showPanel('modal-panel-options');}
+  function goCalendly(){document.getElementById('calendly-fallback-link').href=CALENDLY_URL;showPanel('modal-panel-calendly');window.open(CALENDLY_URL,'_blank','noopener');}
+  function goWhatsApp(){document.getElementById('wa-fallback-link').href=WA_URL;showPanel('modal-panel-wa');window.open(WA_URL,'_blank','noopener');}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeLightbox();}});
+
+  // Scroll reveal
+  const ro=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
+  },{threshold:0.08,rootMargin:'0px 0px -32px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — HiddenPath Vietnam</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config={theme:{extend:{colors:{teal:{DEFAULT:'#006D5B',dark:'#005548',light:'#E8F4F1'},orange:{DEFAULT:'#FF8A42'}},fontFamily:{display:['"Cormorant Garamond"','Georgia','serif'],body:['"DM Sans"','system-ui','sans-serif']}}}}
+  </script>
+  <style>
+    :root{--teal:#006D5B;--teal-dark:#005548;--teal-light:#E8F4F1;--orange:#FF8A42;--slate:#2C3340;--warm:#FAF9F7;--gray:#E8E6E1;}
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{height:100%;margin:0;font-family:'DM Sans',system-ui,sans-serif;background:#F1F0ED;}
+    body{-webkit-font-smoothing:antialiased;}
+    /* ── Sidebar ──────────────────────────────────────── */
+    #sidebar{width:240px;min-height:100vh;background:var(--slate);flex-shrink:0;display:flex;flex-direction:column;}
+    .nav-item{display:flex;align-items:center;gap:.75rem;padding:.7rem 1.25rem;border-radius:10px;cursor:pointer;color:rgba(255,255,255,.55);font-size:.85rem;font-weight:500;transition:all .2s;margin:0 .5rem .15rem;}
+    .nav-item:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);}
+    .nav-item.active{background:var(--teal);color:white;}
+    .nav-item svg{flex-shrink:0;}
+    /* ── Main area ────────────────────────────────────── */
+    #main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+    /* ── Topbar ───────────────────────────────────────── */
+    #topbar{background:white;border-bottom:1px solid var(--gray);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+    /* ── Cards ────────────────────────────────────────── */
+    .stat-card{background:white;border-radius:16px;padding:1.25rem;border:1px solid var(--gray);}
+    /* ── Tables ───────────────────────────────────────── */
+    .data-table{width:100%;border-collapse:collapse;}
+    .data-table th{text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,51,64,.45);padding:.75rem 1rem;border-bottom:2px solid var(--gray);}
+    .data-table td{padding:.85rem 1rem;font-size:.85rem;color:rgba(44,51,64,.82);border-bottom:1px solid rgba(232,230,225,.6);vertical-align:middle;}
+    .data-table tr:last-child td{border-bottom:none;}
+    .data-table tr:hover td{background:rgba(250,249,247,.7);}
+    /* ── Status badges ────────────────────────────────── */
+    .badge{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .65rem;border-radius:100px;white-space:nowrap;}
+    .badge-new        {background:#EFF6FF;color:#1D4ED8;}
+    .badge-contacted  {background:#FEF9C3;color:#854D0E;}
+    .badge-qualified  {background:var(--teal-light);color:var(--teal);}
+    .badge-booked     {background:#F0FFF4;color:#166534;}
+    .badge-completed  {background:#F0FDF4;color:#15803D;}
+    .badge-cancelled  {background:#FEF2F2;color:#991B1B;}
+    .badge-published  {background:#F0FFF4;color:#166534;}
+    .badge-draft      {background:#F9FAFB;color:#6B7280;border:1px solid #E5E7EB;}
+    /* ── Buttons ──────────────────────────────────────── */
+    .btn-sm{font-size:.75rem;font-weight:600;padding:.4rem .9rem;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+    .btn-teal{background:var(--teal);color:white;}
+    .btn-teal:hover{background:var(--teal-dark);}
+    .btn-orange{background:var(--orange);color:white;}
+    .btn-orange:hover{background:#E87535;}
+    .btn-ghost{background:white;border:1.5px solid var(--gray);color:rgba(44,51,64,.75);}
+    .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+    .btn-danger{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA;}
+    .btn-danger:hover{background:#DC2626;color:white;}
+    /* ── Forms ────────────────────────────────────────── */
+    .form-input{width:100%;border:1.5px solid var(--gray);border-radius:10px;padding:.6rem .9rem;font-size:.85rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif;}
+    .form-input:focus{border-color:var(--teal);}
+    .form-label{font-size:.75rem;font-weight:600;color:rgba(44,51,64,.6);margin-bottom:.3rem;display:block;}
+    /* ── Modal overlay ─────────────────────────────────── */
+    #modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:1rem;}
+    #modal-overlay.open{display:flex;}
+    #modal-box{background:white;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.2);}
+    /* ── Toast ────────────────────────────────────────── */
+    #toast-stack{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;display:flex;flex-direction:column;gap:.6rem;}
+    .toast{padding:.75rem 1rem;border-radius:12px;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:.6rem;box-shadow:0 8px 24px rgba(0,0,0,.12);animation:slideUp .3s ease both;max-width:300px;}
+    @keyframes slideUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    /* ── Skeleton ─────────────────────────────────────── */
+    .sk{background:linear-gradient(90deg,#E8E6E1 25%,#F0EDE9 50%,#E8E6E1 75%);background-size:400%;animation:sk 1.4s infinite;border-radius:6px;}
+    @keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
+    /* ── Login screen ─────────────────────────────────── */
+    #login-screen{position:fixed;inset:0;background:var(--slate);display:flex;align-items:center;justify-content:center;z-index:200;}
+    /* ── Section pages ─────────────────────────────────── */
+    .page{display:none;padding:1.5rem;}
+    .page.active{display:block;}
+    /* ── Misc ──────────────────────────────────────────── */
+    .truncate-cell{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232C3340' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center;}
+  </style>
+<style>
+/* ── Folder sidebar ─────────────────────────────────── */
+.media-layout        { display: flex; gap: 0; height: calc(100vh - 120px); }
+.media-sidebar       { width: 220px; min-width: 220px; border-right: 1px solid #e5e7eb; padding: 16px 0; overflow-y: auto; background: #fafafa; }
+.media-sidebar-title { font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: .08em; padding: 0 16px 8px; }
+.folder-item         { display: flex; align-items: center; gap: 10px; padding: 8px 16px; cursor: pointer; border-radius: 0; transition: background .15s; position: relative; }
+.folder-item:hover   { background: #f3f4f6; }
+.folder-item.active  { background: #eff6ff; border-right: 3px solid #3b82f6; }
+.folder-item .f-icon { font-size: 16px; flex-shrink: 0; }
+.folder-item .f-name { font-size: 13px; color: #374151; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.folder-item .f-count{ font-size: 11px; color: #9ca3af; background: #f3f4f6; padding: 1px 6px; border-radius: 10px; }
+.folder-divider      { border: none; border-top: 1px solid #e5e7eb; margin: 8px 16px; }
+.folder-add-btn      { display: flex; align-items: center; gap: 8px; padding: 8px 16px; cursor: pointer; color: #6b7280; font-size: 13px; transition: color .15s; }
+.folder-add-btn:hover{ color: #3b82f6; }
+.folder-delete-btn   { opacity: 0; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #ef4444; font-size: 14px; padding: 2px 4px; }
+.folder-item:hover .folder-delete-btn { opacity: 1; }
+.media-main          { flex: 1; overflow-y: auto; padding: 20px; }
+.media-toolbar       { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.media-toolbar h3    { font-size: 16px; font-weight: 600; color: #111827; flex: 1; }
+.media-grid          { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.media-card          { border: 2px solid #e5e7eb; border-radius: 10px; overflow: hidden; background: #fff; cursor: pointer; transition: border-color .2s, transform .15s; position: relative; }
+.media-card:hover    { border-color: #3b82f6; transform: translateY(-2px); }
+.media-card.selected { border-color: #3b82f6; background: #eff6ff; }
+.media-card .thumb   { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #f3f4f6; }
+.media-card .video-thumb { width: 100%; aspect-ratio: 1; background: #1f2937; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+.media-card .card-info { padding: 8px; }
+.media-card .card-name { font-size: 11px; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.media-card .card-folders { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+.folder-tag          { font-size: 10px; padding: 1px 6px; border-radius: 8px; color: #fff; }
+.media-card .select-check { position: absolute; top: 6px; right: 6px; width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; color: #fff; display: none; align-items: center; justify-content: center; font-size: 12px; }
+.media-card.selected .select-check { display: flex; }
+.assign-modal        { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+.assign-modal-box    { background: #fff; border-radius: 16px; padding: 24px; width: 400px; max-width: 90vw; }
+.assign-modal-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+.folder-checkbox-list{ display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; margin-bottom: 20px; }
+.folder-checkbox-item{ display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: background .15s; }
+.folder-checkbox-item:hover { background: #f9fafb; }
+.folder-checkbox-item input { width: 16px; height: 16px; cursor: pointer; }
+.modal-actions       { display: flex; gap: 10px; justify-content: flex-end; }
+.new-folder-box      { background: #fff; border-radius: 16px; padding: 24px; width: 340px; max-width: 90vw; }
+.new-folder-box h3   { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+.color-row           { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.color-swatch        { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: border-color .15s; }
+.color-swatch.active { border-color: #111; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div style="background:white;border-radius:24px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 32px 80px rgba(0,0,0,.25);">
+    <div class="text-center mb-8">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--teal);font-weight:600;letter-spacing:-.01em;">HiddenPath</div>
+      <div style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(44,51,64,.4);margin-bottom:1.5rem;">Vietnam &nbsp;·&nbsp; Admin</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:500;color:var(--slate);">Welcome back</h2>
+      <p style="color:rgba(44,51,64,.55);font-size:.875rem;margin-top:.3rem;">Sign in to manage your journeys</p>
+    </div>
+    <div id="login-error" class="hidden mb-4 p-3 rounded-xl text-sm font-medium" style="background:#FEF2F2;color:#991B1B;border:1px solid #FECACA;"></div>
+    <div class="mb-4">
+      <label class="form-label">Email</label>
+      <input id="login-email" type="email" class="form-input" placeholder="admin@hiddenpath.vn" value="admin@hiddenpath.vn"/>
+    </div>
+    <div class="mb-6">
+      <label class="form-label">Password</label>
+      <input id="login-pass" type="password" class="form-input" placeholder="Your password" value="HiddenPath@2024!"/>
+    </div>
+    <button id="login-btn" onclick="doLogin()" style="width:100%;background:var(--teal);color:white;border:none;border-radius:12px;padding:.9rem;font-size:.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">
+      Sign In &rarr;
+    </button>
+    <p style="text-align:center;font-size:.75rem;color:rgba(44,51,64,.4);margin-top:1rem;">Default: admin@hiddenpath.vn / HiddenPath@2024!</p>
+  </div>
+</div>
+
+<!-- APP SHELL (hidden until logged in) -->
+<div id="app-shell" class="hidden flex" style="min-height:100vh;">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div style="padding:1.25rem 1rem 1rem;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:white;font-weight:600;">HiddenPath</div>
+      <div style="font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1.5rem;">Vietnam &nbsp;·&nbsp; Admin</div>
+    </div>
+
+    <div style="padding:0 .5rem;flex:1;">
+      <div class="nav-item active" data-page="dashboard"   onclick="goPage('dashboard')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-item" data-page="inquiries" onclick="goPage('inquiries')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12"/></svg>
+        Inquiries
+        <span id="nav-badge-inquiries" class="hidden ml-auto text-[.62rem] font-bold bg-[#FF8A42] text-white px-2 py-0.5 rounded-full"></span>
+      </div>
+      <div class="nav-item" data-page="tours"     onclick="goPage('tours')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Tours
+      </div>
+      <div class="nav-item" data-page="articles"  onclick="goPage('articles')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Articles
+      </div>
+      <div class="nav-item" data-page="team"      onclick="goPage('team')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Team
+      </div>
+      <div class="nav-item" data-page="newsletter" onclick="goPage('newsletter')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Newsletter
+      </div>
+      <div class="nav-item" data-page="settings" onclick="goPage('settings')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Site Settings
+        </div>
+      <div class="nav-item" data-page="media" onclick="goPage('media'); initMediaPage();">
+  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+  Media Library
+</div>
+      </div>
+    </div>
+
+    <div style="padding:1rem;border-top:1px solid rgba(255,255,255,.08);">
+      <button onclick="doLogout()" style="width:100%;background:rgba(255,255,255,.06);border:none;border-radius:10px;padding:.6rem;color:rgba(255,255,255,.5);font-size:.8rem;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Log out
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="main">
+    <!-- TOPBAR -->
+    <div id="topbar">
+      <div>
+        <h1 id="page-heading" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--slate);">Dashboard</h1>
+        <p id="page-sub" style="font-size:.75rem;color:rgba(44,51,64,.45);margin-top:.1rem;">Welcome back</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="../index.html" target="_blank" class="btn-sm btn-ghost flex items-center gap-1.5">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View site
+        </a>
+        <div id="admin-name" style="font-size:.82rem;font-weight:600;color:var(--teal);background:var(--teal-light);padding:.4rem .85rem;border-radius:100px;"></div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: DASHBOARD ────────────────────────────────── -->
+    <div id="page-dashboard" class="page active">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="stat-card">
+          <p style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,51,64,.45);margin-bottom:.5rem;">New Inquiries</p>
+          <p id="stat-new-inquiries" class="sk h-8 w-16 rounded-lg"></p>
+          <p style="font-size:.72rem;color:rgba(44,51,64,.45);margin-top:.4rem;">awaiting response</p>
+        </div>
+        <div class="stat-card">
+          <p style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,51,64,.45);margin-bottom:.5rem;">Published Tours</p>
+          <p id="stat-tours" class="sk h-8 w-12 rounded-lg"></p>
+          <p style="font-size:.72rem;color:rgba(44,51,64,.45);margin-top:.4rem;">active routes</p>
+        </div>
+        <div class="stat-card">
+          <p style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,51,64,.45);margin-bottom:.5rem;">Published Articles</p>
+          <p id="stat-articles" class="sk h-8 w-12 rounded-lg"></p>
+          <p style="font-size:.72rem;color:rgba(44,51,64,.45);margin-top:.4rem;">live on journal</p>
+        </div>
+        <div class="stat-card">
+          <p style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(44,51,64,.45);margin-bottom:.5rem;">Subscribers</p>
+          <p id="stat-subs" class="sk h-8 w-12 rounded-lg"></p>
+          <p style="font-size:.72rem;color:rgba(44,51,64,.45);margin-top:.4rem;">newsletter</p>
+        </div>
+      </div>
+
+      <!-- Recent inquiries -->
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);">
+        <div style="padding:1.1rem 1.25rem;border-bottom:1px solid var(--gray);display:flex;align-items:center;justify-content:space-between;">
+          <h3 style="font-size:.9rem;font-weight:600;color:var(--slate);">Recent Inquiries</h3>
+          <button class="btn-sm btn-ghost" onclick="goPage('inquiries')">View all &rarr;</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Source</th><th>Status</th><th>Date</th><th></th></tr></thead>
+            <tbody id="dash-inquiries-body">
+              <tr><td colspan="6" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: INQUIRIES ────────────────────────────────── -->
+    <div id="page-inquiries" class="page">
+      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <select id="filter-status" class="form-input" style="width:auto;min-width:140px;" onchange="loadInquiries()">
+            <option value="">All statuses</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="qualified">Qualified</option>
+            <option value="proposal_sent">Proposal sent</option>
+            <option value="booked">Booked</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <select id="filter-source" class="form-input" style="width:auto;min-width:140px;" onchange="loadInquiries()">
+            <option value="">All sources</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="calendly">Calendly</option>
+            <option value="contact_form">Contact form</option>
+          </select>
+        </div>
+        <button class="btn-sm btn-ghost" onclick="loadInquiries()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+          Refresh
+        </button>
+      </div>
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);overflow:hidden;">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Tour</th><th>Group</th><th>Source</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="inquiries-body">
+              <tr><td colspan="8" style="text-align:center;padding:2.5rem;color:rgba(44,51,64,.35);">Loading inquiries…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="inquiries-pagination" class="hidden flex items-center justify-between p-4 border-t border-[#E8E6E1] text-sm text-[#2C3340]/55"></div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: TOURS ────────────────────────────────────── -->
+    <div id="page-tours" class="page">
+      <div class="flex items-center justify-between mb-5">
+        <p style="font-size:.85rem;color:rgba(44,51,64,.55);">Manage tour listings and departure dates.</p>
+        <button class="btn-sm btn-teal" onclick="openTourModal()">+ New Tour</button>
+      </div>
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);overflow:hidden;">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>Tour</th><th>Region</th><th>Days</th><th>From</th><th>Rating</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="tours-body">
+              <tr><td colspan="7" style="text-align:center;padding:2.5rem;color:rgba(44,51,64,.35);">Loading tours…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: ARTICLES ─────────────────────────────────── -->
+    <div id="page-articles" class="page">
+      <div class="flex items-center justify-between mb-5">
+        <p style="font-size:.85rem;color:rgba(44,51,64,.55);">Manage journal articles and blog posts.</p>
+        <button class="btn-sm btn-teal" onclick="openArticleModal()">+ New Article</button>
+      </div>
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);overflow:hidden;">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>Title</th><th>Category</th><th>Author</th><th>Read time</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead>
+            <tbody id="articles-body">
+              <tr><td colspan="7" style="text-align:center;padding:2.5rem;color:rgba(44,51,64,.35);">Loading articles…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: TEAM ─────────────────────────────────────── -->
+    <div id="page-team" class="page">
+      <div class="flex items-center justify-between mb-5">
+        <p style="font-size:.85rem;color:rgba(44,51,64,.55);">Manage guide profiles shown on the About page.</p>
+      </div>
+      <div id="team-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="sk rounded-2xl h-64"></div>
+        <div class="sk rounded-2xl h-64"></div>
+        <div class="sk rounded-2xl h-64"></div>
+        <div class="sk rounded-2xl h-64"></div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: NEWSLETTER ───────────────────────────────── -->
+    <div id="page-newsletter" class="page">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="stat-card text-center">
+          <p id="ns-total" style="font-size:2.5rem;font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--teal);">—</p>
+          <p style="font-size:.78rem;color:rgba(44,51,64,.55);">Total Subscribers</p>
+        </div>
+        <div class="stat-card text-center">
+          <p id="ns-active" style="font-size:2.5rem;font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--teal);">—</p>
+          <p style="font-size:.78rem;color:rgba(44,51,64,.55);">Active</p>
+        </div>
+        <div class="stat-card text-center">
+          <p id="ns-unsub" style="font-size:2.5rem;font-family:'Cormorant Garamond',serif;font-weight:600;color:rgba(44,51,64,.4);">—</p>
+          <p style="font-size:.78rem;color:rgba(44,51,64,.55);">Unsubscribed</p>
+        </div>
+      </div>
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);overflow:hidden;">
+        <div style="padding:1rem 1.25rem;border-bottom:1px solid var(--gray);display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="font-size:.9rem;font-weight:600;">Recent Subscribers</h3>
+          <button class="btn-sm btn-ghost" onclick="loadNewsletter()">Refresh</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>Email</th><th>Source</th><th>Subscribed</th><th>Status</th></tr></thead>
+            <tbody id="newsletter-body">
+              <tr><td colspan="4" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <section id="page-media" class="page hidden">
+  <div class="media-layout">
+
+    <!-- Folder Sidebar -->
+    <aside class="media-sidebar">
+      <div class="media-sidebar-title">Thư mục</div>
+
+      <!-- All Files -->
+      <div class="folder-item active" data-folder-id="" onclick="selectFolder(this, '', 'Tất cả file')">
+        <span class="f-icon">🗂️</span>
+        <span class="f-name">Tất cả file</span>
+        <span class="f-count" id="count-all">0</span>
+      </div>
+
+      <hr class="folder-divider">
+
+      <!-- Dynamic folders list -->
+      <div id="folder-list"></div>
+
+      <hr class="folder-divider">
+
+      <!-- Add new folder -->
+      <div class="folder-add-btn" onclick="openNewFolderModal()">
+        <span>＋</span> Tạo folder mới
+      </div>
+    </aside>
+
+    <!-- Main Media Area -->
+    <div class="media-main">
+      <div class="media-toolbar">
+        <h3 id="media-section-title">Tất cả file</h3>
+        <!-- Selection actions (show when files are selected) -->
+        <div id="selection-actions" style="display:none; gap:8px; display:none;">
+          <span id="selected-count" style="font-size:13px;color:#6b7280;"></span>
+          <button class="btn btn-sm btn-outline" onclick="openAssignModal()">📁 Gắn vào folder</button>
+          <button class="btn btn-sm btn-danger-outline" onclick="clearSelection()">✕ Bỏ chọn</button>
+        </div>
+        <label class="btn btn-primary btn-sm" for="media-upload-input">
+          ＋ Upload file
+        </label>
+        <input type="file" id="media-upload-input" multiple accept="image/*,video/*"
+               style="display:none" onchange="handleUpload(event)">
+      </div>
+
+      <!-- Media Grid -->
+      <div class="media-grid" id="media-grid">
+        <div style="grid-column:1/-1;text-align:center;color:#9ca3af;padding:40px;">
+          Đang tải...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Assign to Folder Modal ── -->
+  <div class="assign-modal hidden" id="assign-modal">
+    <div class="assign-modal-box">
+      <h3>📁 Gắn vào folder</h3>
+      <div class="folder-checkbox-list" id="assign-folder-list"></div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeAssignModal()">Huỷ</button>
+        <button class="btn btn-primary" onclick="saveAssignments()">Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── New Folder Modal ── -->
+  <div class="assign-modal hidden" id="new-folder-modal">
+    <div class="new-folder-box">
+      <h3>✨ Tạo folder mới</h3>
+      <input type="text" id="new-folder-name" class="form-input"
+             placeholder="Tên folder (vd: Vietnam 2025)"
+             style="width:100%;margin-bottom:12px;">
+      <div style="font-size:12px;color:#6b7280;margin-bottom:8px;">Chọn màu & icon:</div>
+      <div class="color-row" id="color-picker">
+        <div class="color-swatch active" style="background:#4f8ef7" data-color="#4f8ef7" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#f97316" data-color="#f97316" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#10b981" data-color="#10b981" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#6366f1" data-color="#6366f1" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#ec4899" data-color="#ec4899" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#f43f5e" data-color="#f43f5e" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#0ea5e9" data-color="#0ea5e9" onclick="pickColor(this)"></div>
+        <div class="color-swatch" style="background:#8b5cf6" data-color="#8b5cf6" onclick="pickColor(this)"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px;" id="icon-picker">
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="📁">📁</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="🌅">🌅</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="🧭">🧭</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="📝">📝</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="👥">👥</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="🎬">🎬</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="📍">📍</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="🏖️">🏖️</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="🍜">🍜</span>
+        <span style="cursor:pointer;font-size:20px;" onclick="pickIcon(this)" data-icon="⭐">⭐</span>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeNewFolderModal()">Huỷ</button>
+        <button class="btn btn-primary" onclick="createFolder()">Tạo folder</button>
+      </div>
+    </div>
+  </div>
+</section>
+    <!-- ── PAGE: SETTINGS ───────────────────────────────────── -->
+    <div id="page-settings" class="page">
+      <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
+        <p style="font-size:.85rem;color:rgba(44,51,64,.55);">Manage homepage content, contact info and SEO — no code needed.</p>
+        <button id="save-settings-btn" class="btn-sm btn-teal" onclick="saveAllSettings()">Save All Changes</button>
+      </div>
+
+      <!-- Hero -->
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);margin-bottom:1.25rem;">
+        <div style="padding:1rem 1.25rem;border-bottom:1px solid var(--gray);display:flex;align-items:center;gap:.75rem;">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block;"></span>
+          <h3 style="font-size:.9rem;font-weight:600;">Hero Section (Homepage)</h3>
+        </div>
+        <div style="padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div style="grid-column:span 2;">
+            <label class="form-label">Hero Background Image URL</label>
+            <div style="display:flex;gap:.5rem;">
+              <input id="setting-hero_image_url" class="form-input" placeholder="https://images.unsplash.com/..."/>
+              <button onclick="previewHeroImage()" class="btn-sm btn-ghost" style="white-space:nowrap;">Preview</button>
+            </div>
+          </div>
+          <div id="hero-preview-wrap" style="display:none;grid-column:span 2;border-radius:12px;overflow:hidden;height:200px;">
+            <img id="hero-preview-img" style="width:100%;height:100%;object-fit:cover;" src="" alt="Preview"/>
+          </div>
+          <div>
+            <label class="form-label">Title Line 1</label>
+            <input id="setting-hero_title_line1" class="form-input" placeholder="Vietnam, Beyond"/>
+          </div>
+          <div>
+            <label class="form-label">Title Line 2</label>
+            <input id="setting-hero_title_line2" class="form-input" placeholder="the Surface."/>
+          </div>
+          <div style="grid-column:span 2;">
+            <label class="form-label">Subtitle</label>
+            <textarea id="setting-hero_subtitle" class="form-input" rows="2" style="resize:vertical;"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Primary Button Text</label>
+            <input id="setting-hero_cta_primary" class="form-input" placeholder="Find Your Journey"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vietnam image suggestions -->
+      <div style="background:var(--teal-light);border-radius:16px;padding:1.25rem;margin-bottom:1.25rem;border:1px solid rgba(0,109,91,.15);">
+        <p style="font-size:.8rem;font-weight:600;color:var(--teal);margin-bottom:.75rem;">🖼️ Ảnh Vietnam đẹp — Click để dùng ngay:</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;">
+          <button onclick="useImage('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920&q=90&auto=format&fit=crop','Ha Long Bay')"
+            style="background:white;border:1px solid var(--gray);border-radius:10px;padding:.6rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--teal);">
+            🌊 Ha Long Bay
+          </button>
+          <button onclick="useImage('https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1920&q=90&auto=format&fit=crop','Hoi An')"
+            style="background:white;border:1px solid var(--gray);border-radius:10px;padding:.6rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--teal);">
+            🏮 Hoi An Lanterns
+          </button>
+          <button onclick="useImage('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90&auto=format&fit=crop','Sapa')"
+            style="background:white;border:1px solid var(--gray);border-radius:10px;padding:.6rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--teal);">
+            🌾 Sapa Rice Terraces
+          </button>
+          <button onclick="useImage('https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=1920&q=90&auto=format&fit=crop','Ho Chi Minh')"
+            style="background:white;border:1px solid var(--gray);border-radius:10px;padding:.6rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--teal);">
+            🌆 Ho Chi Minh City
+          </button>
+          <button onclick="useImage('https://images.unsplash.com/photo-1555217851-6141534701ac?w=1920&q=90&auto=format&fit=crop','Hue')"
+            style="background:white;border:1px solid var(--gray);border-radius:10px;padding:.6rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--teal);">
+            🏯 Hue Ancient City
+          </button>
+          <button onclick="useImage('https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=1920&q=90&auto=format&fit=crop','Hanoi')"
+            style="background:white;border:1px solid var(--gray);border-radius:10px;padding:.6rem;cursor:pointer;font-size:.75rem;font-weight:500;color:var(--teal);">
+            🛺 Hanoi Old Quarter
+          </button>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);margin-bottom:1.25rem;">
+        <div style="padding:1rem 1.25rem;border-bottom:1px solid var(--gray);display:flex;align-items:center;gap:.75rem;">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block;"></span>
+          <h3 style="font-size:.9rem;font-weight:600;">Contact Information</h3>
+        </div>
+        <div style="padding:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div><label class="form-label">Email</label><input id="setting-contact_email" class="form-input"/></div>
+          <div><label class="form-label">Phone</label><input id="setting-contact_phone" class="form-input"/></div>
+          <div><label class="form-label">WhatsApp (số thôi, vd: 84912345678)</label><input id="setting-contact_whatsapp" class="form-input"/></div>
+          <div><label class="form-label">Address</label><input id="setting-contact_address" class="form-input"/></div>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);">
+        <div style="padding:1rem 1.25rem;border-bottom:1px solid var(--gray);display:flex;align-items:center;gap:.75rem;">
+          <span style="width:8px;height:8px;border-radius:50%;background:#6366F1;display:inline-block;"></span>
+          <h3 style="font-size:.9rem;font-weight:600;">SEO</h3>
+        </div>
+        <div style="padding:1.25rem;display:grid;gap:1rem;">
+          <div><label class="form-label">Site Title</label><input id="setting-seo_title" class="form-input"/></div>
+          <div><label class="form-label">Meta Description (max 160 ký tự)</label>
+            <textarea id="setting-seo_description" class="form-input" rows="2" style="resize:vertical;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app-shell -->
+
+<!-- MODAL OVERLAY -->
+<div id="modal-overlay">
+  <div id="modal-box">
+    <div style="padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--gray);display:flex;align-items:center;justify-content:space-between;">
+      <h3 id="modal-title" style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--slate);"></h3>
+      <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;color:rgba(44,51,64,.4);padding:.25rem;" onmouseover="this.style.color=var(--slate)" onmouseout="this.style.color='rgba(44,51,64,.4)'">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="modal-content" style="padding:1.5rem;"></div>
+    <div id="modal-footer" style="padding:1rem 1.5rem;border-top:1px solid var(--gray);display:flex;justify-content:flex-end;gap:.75rem;"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-stack"></div>
+
+<!-- API CLIENT -->
+    <script>
+      // Set API URL BEFORE loading api.js
+      (function() {
+        var host = window.location.hostname;
+        window.HP_API_URL = (host === 'localhost' || host === '127.0.0.1')
+          ? 'http://localhost:1337'
+          : 'https://hiddenpath-backend-production.up.railway.app';
+      })();
+    </script>
+    <script src="../js/api.js"></script>
+    <script>
+      'use strict';
+
+      let currentPage    = 'dashboard';
+let inquiriesPage  = 1;
+
+// ================================================================
+//  AUTH
+// ================================================================
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const btn   = document.getElementById('login-btn');
+  const errEl = document.getElementById('login-error');
+  errEl.classList.add('hidden');
+
+  btn.textContent = 'Signing in…';
+  btn.disabled    = true;
+
+  try {
+    const user = await HP.admin.login(email, pass);
+    document.getElementById('admin-name').textContent = user.user.name;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-shell').classList.remove('hidden');
+    document.getElementById('app-shell').style.display = 'flex';
+    loadDashboard();
+  } catch (err) {
+    errEl.textContent = err.message || 'Invalid credentials';
+    errEl.classList.remove('hidden');
+  } finally {
+    btn.textContent = 'Sign In →';
+    btn.disabled    = false;
+  }
+}
+
+async function doLogout() {
+  await HP.admin.logout();
+  document.getElementById('app-shell').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+// Allow Enter key on login form
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+    doLogin();
+  }
+});
+
+// Auto-login if token exists
+if (HP.auth.isLoggedIn()) {
+  HP.admin.me().then(r => {
+    document.getElementById('admin-name').textContent = r.data.name;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-shell').classList.remove('hidden');
+    document.getElementById('app-shell').style.display = 'flex';
+    loadDashboard();
+  }).catch(() => { /* token expired — stay on login */ });
+}
+
+// ================================================================
+//  NAVIGATION
+// ================================================================
+const PAGE_META = {
+  dashboard:  { heading: 'Dashboard',      sub: 'Overview of your business' },
+  inquiries:  { heading: 'Inquiries',      sub: 'Manage booking requests' },
+  tours:      { heading: 'Tours',          sub: 'Manage tour listings' },
+  articles:   { heading: 'Articles',       sub: 'Manage journal posts' },
+  team:       { heading: 'Team',           sub: 'Manage guide profiles' },
+  newsletter: { heading: 'Newsletter',     sub: 'Email subscribers' },
+  settings:   { heading: 'Site Settings',    sub: 'Manage homepage content without touching code' },
+};
+
+function goPage(name) {
+  currentPage = name;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(`page-${name}`).classList.add('active');
+  document.querySelector(`.nav-item[data-page="${name}"]`).classList.add('active');
+  const m = PAGE_META[name] || {};
+  document.getElementById('page-heading').textContent = m.heading || name;
+  document.getElementById('page-sub').textContent     = m.sub     || '';
+
+  const loaders = { dashboard:'loadDashboard', inquiries:'loadInquiries', tours:'loadTours',
+                    articles:'loadArticles', team:'loadTeam', newsletter:'loadNewsletter', settings:'loadSettings' };
+  if (loaders[name]) window[loaders[name]]();
+}
+
+// ================================================================
+//  UTILITIES
+// ================================================================
+function toast(msg, type = 'success') {
+  const c = { success:'#E8F4F1|#006D5B|✓', error:'#FEF2F2|#DC2626|✗', info:'#EFF6FF|#3B82F6|ℹ' };
+  const [bg, col, icon] = (c[type] || c.info).split('|');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.style.cssText = `background:${bg};color:${col};border:1.5px solid ${col}30;`;
+  el.innerHTML = `<span>${icon}</span><span>${msg}</span>`;
+  document.getElementById('toast-stack').appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; el.style.transform='translateY(8px)'; el.style.transition='.3s'; setTimeout(()=>el.remove(),300); }, 3200);
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function badgeClass(status) {
+  return {
+    new:'badge-new', contacted:'badge-contacted', qualified:'badge-qualified',
+    proposal_sent:'badge-contacted', booked:'badge-booked',
+    completed:'badge-completed', cancelled:'badge-cancelled',
+  }[status] || 'badge-new';
+}
+
+function openModal(title, contentHtml, footerHtml='') {
+  document.getElementById('modal-title').textContent   = title;
+  document.getElementById('modal-content').innerHTML   = contentHtml;
+  document.getElementById('modal-footer').innerHTML    = footerHtml;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+
+// ================================================================
+//  DASHBOARD
+// ================================================================
+async function loadDashboard() {
+  try {
+    const [inquiriesRes, toursRes, articlesRes] = await Promise.all([
+      HP.admin.inquiries.list({ status: 'new', pageSize: 5 }),
+      HP.admin.tours.list({ pageSize: 50 }),
+      HP.admin.articles.list({ pageSize: 50 }),
+    ]);
+
+    // Stats
+    const setS = (id, val) => {
+      const el = document.getElementById(id);
+      el.classList.remove('sk','h-8','w-16','w-12','rounded-lg');
+      el.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:2.2rem;font-weight:600;color:var(--teal);line-height:1;';
+      el.textContent = val;
+    };
+
+    setS('stat-new-inquiries', inquiriesRes.meta.pagination.total);
+    setS('stat-tours',   toursRes.data.filter(t => t.is_published).length);
+    setS('stat-articles', articlesRes.data.filter(a => a.is_published).length);
+
+    // Nav badge
+    const nb = document.getElementById('nav-badge-inquiries');
+    if (inquiriesRes.meta.pagination.total > 0) {
+      nb.textContent = inquiriesRes.meta.pagination.total;
+      nb.classList.remove('hidden');
+    }
+
+    // Newsletter stats
+    try {
+      const ns = await HP.admin.newsletter.subscribers({ pageSize: 1 });
+      setS('stat-subs', ns.meta.pagination.total);
+    } catch (_) { document.getElementById('stat-subs').textContent = '—'; }
+
+    // Recent inquiries table
+    const all = await HP.admin.inquiries.list({ pageSize: 5 });
+    renderInquiryRows('dash-inquiries-body', all.data, true);
+
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+// ================================================================
+//  INQUIRIES
+// ================================================================
+async function loadInquiries() {
+  const status = document.getElementById('filter-status').value;
+  const source = document.getElementById('filter-source').value;
+  document.getElementById('inquiries-body').innerHTML =
+    '<tr><td colspan="8" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">Loading…</td></tr>';
+  try {
+    const res = await HP.admin.inquiries.list({ status, source, page: inquiriesPage, pageSize: 15 });
+    renderInquiryRows('inquiries-body', res.data, false);
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+function renderInquiryRows(tbodyId, rows, compact) {
+  const tbody = document.getElementById(tbodyId);
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="${compact?6:8}" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">No inquiries found.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td><span style="font-weight:600;">${r.full_name}</span></td>
+      <td><a href="mailto:${r.email}" style="color:var(--teal);">${r.email}</a></td>
+      ${compact ? '' : `<td class="truncate-cell">${r.tour_title || '—'}</td>`}
+      ${compact ? '' : `<td>${r.group_size || 1}</td>`}
+      <td><span class="badge badge-${r.source||'other'}" style="background:rgba(44,51,64,.07);color:var(--slate);">${r.source||'—'}</span></td>
+      <td><span class="badge ${badgeClass(r.status)}">${r.status}</span></td>
+      <td style="color:rgba(44,51,64,.45);font-size:.78rem;">${fmtDate(r.created_at)}</td>
+      <td>
+        <div style="display:flex;gap:.4rem;">
+          <button class="btn-sm btn-ghost" onclick="openInquiryDetail(${r.id})">View</button>
+          ${!compact ? `<button class="btn-sm btn-danger" onclick="deleteInquiry(${r.id})">Del</button>` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function openInquiryDetail(id) {
+  try {
+    const { data: r } = await HP.admin.inquiries.get(id);
+    const statusOptions = ['new','contacted','qualified','proposal_sent','booked','completed','cancelled']
+      .map(s => `<option value="${s}" ${r.status===s?'selected':''}>${s.replace('_',' ')}</option>`).join('');
+
+    openModal(`Inquiry — ${r.full_name}`, `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+        <div><p class="form-label">Full name</p><p style="font-weight:600;">${r.full_name}</p></div>
+        <div><p class="form-label">Email</p><a href="mailto:${r.email}" style="color:var(--teal);">${r.email}</a></div>
+        <div><p class="form-label">Phone</p><p>${r.phone||'—'}</p></div>
+        <div><p class="form-label">Nationality</p><p>${r.nationality||'—'}</p></div>
+        <div><p class="form-label">Tour</p><p>${r.tour_title||'—'}</p></div>
+        <div><p class="form-label">Group size</p><p>${r.group_size||1} person(s)</p></div>
+        <div><p class="form-label">Source</p><p>${r.source||'—'}</p></div>
+        <div><p class="form-label">Received</p><p>${fmtDate(r.created_at)}</p></div>
+      </div>
+      ${r.message ? `<div style="margin-bottom:1rem;"><p class="form-label">Message</p><p style="background:var(--warm);border-radius:10px;padding:.75rem;font-size:.85rem;color:rgba(44,51,64,.8);line-height:1.6;">${r.message}</p></div>` : ''}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <label class="form-label" for="modal-status">Update status</label>
+          <select id="modal-status" class="form-input">${statusOptions}</select>
+        </div>
+        <div>
+          <label class="form-label" for="modal-notes">Internal notes</label>
+          <input id="modal-notes" class="form-input" value="${r.internal_notes||''}" placeholder="Private notes…"/>
+        </div>
+      </div>
+    `, `
+      <button class="btn-sm btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-sm btn-teal" onclick="saveInquiryStatus(${id})">Save changes</button>
+    `);
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+async function saveInquiryStatus(id) {
+  const status = document.getElementById('modal-status').value;
+  const notes  = document.getElementById('modal-notes').value;
+  try {
+    await HP.admin.inquiries.updateStatus(id, status, notes);
+    toast('Inquiry updated ✓', 'success');
+    closeModal();
+    if (currentPage === 'dashboard') loadDashboard(); else loadInquiries();
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+async function deleteInquiry(id) {
+  if (!confirm('Delete this inquiry permanently?')) return;
+  try {
+    await HP.admin.inquiries.delete(id);
+    toast('Inquiry deleted', 'info');
+    loadInquiries();
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+// ================================================================
+//  TOURS
+// ================================================================
+async function loadTours() {
+  document.getElementById('tours-body').innerHTML =
+    '<tr><td colspan="7" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">Loading…</td></tr>';
+  try {
+    const { data } = await HP.admin.tours.list({ pageSize: 50 });
+    if (!data.length) {
+      document.getElementById('tours-body').innerHTML =
+        '<tr><td colspan="7" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">No tours yet.</td></tr>';
+      return;
+    }
+    document.getElementById('tours-body').innerHTML = data.map(t => `
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <img src="${t.cover_image}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'"/>
+            <div>
+              <p style="font-weight:600;font-size:.85rem;">${t.title}</p>
+              <p style="font-size:.72rem;color:rgba(44,51,64,.45);">/${t.slug}</p>
+            </div>
+          </div>
+        </td>
+        <td><span class="badge" style="background:var(--teal-light);color:var(--teal);">${t.region}</span></td>
+        <td>${t.duration_days}d</td>
+        <td style="font-weight:600;">$${Number(t.price_from).toLocaleString()}</td>
+        <td>${t.rating} <span style="color:rgba(44,51,64,.35);font-size:.75rem;">(${t.review_count})</span></td>
+        <td>
+          <span class="badge ${t.is_published ? 'badge-published' : 'badge-draft'}">
+            ${t.is_published ? 'Published' : 'Draft'}
+          </span>
+        </td>
+        <td>
+          <div style="display:flex;gap:.4rem;">
+            <button class="btn-sm btn-ghost" onclick="toggleTourPublish(${t.id}, ${!t.is_published})">
+              ${t.is_published ? 'Unpublish' : 'Publish'}
+            </button>
+            <a href="../hiddenpath-tour-detail.html" target="_blank" class="btn-sm btn-ghost">View</a>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+async function toggleTourPublish(id, publish) {
+  try {
+    await HP.admin.tours.publish(id);
+    toast(`Tour ${publish ? 'published' : 'unpublished'} ✓`, 'success');
+    loadTours();
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+function openTourModal() {
+  openModal('New Tour', `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="grid-column:span 2;"><label class="form-label">Title *</label><input id="nt-title" class="form-input" placeholder="The Northern Soul"/></div>
+      <div><label class="form-label">Region *</label>
+        <select id="nt-region" class="form-input">
+          <option value="north">North</option><option value="central">Central</option>
+          <option value="south">South</option><option value="full">Full Country</option>
+        </select>
+      </div>
+      <div><label class="form-label">Duration (days) *</label><input id="nt-days" type="number" class="form-input" value="7" min="1"/></div>
+      <div><label class="form-label">Price from (USD) *</label><input id="nt-price" type="number" class="form-input" value="1290"/></div>
+      <div><label class="form-label">Max group size</label><input id="nt-group" type="number" class="form-input" value="12"/></div>
+      <div style="grid-column:span 2;"><label class="form-label">Tagline</label><input id="nt-tagline" class="form-input" placeholder="Short compelling description…"/></div>
+      <div style="grid-column:span 2;"><label class="form-label">Cover image URL</label><input id="nt-img" class="form-input" placeholder="https://images.unsplash.com/…"/></div>
+    </div>
+  `, `
+    <button class="btn-sm btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-teal" onclick="createTour()">Create Tour</button>
+  `);
+}
+
+async function createTour() {
+  const title = document.getElementById('nt-title').value.trim();
+  if (!title) { toast('Title is required', 'error'); return; }
+  try {
+    await HP.admin.tours.create({
+      title,
+      region:         document.getElementById('nt-region').value,
+      duration_days:  parseInt(document.getElementById('nt-days').value),
+      duration_nights: parseInt(document.getElementById('nt-days').value) - 1,
+      price_from:     parseFloat(document.getElementById('nt-price').value),
+      group_size_max: parseInt(document.getElementById('nt-group').value),
+      tagline:        document.getElementById('nt-tagline').value,
+      cover_image:    document.getElementById('nt-img').value,
+      is_published:   false,
+    });
+    toast('Tour created ✓', 'success');
+    closeModal();
+    loadTours();
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+// ================================================================
+//  ARTICLES
+// ================================================================
+async function loadArticles() {
+  document.getElementById('articles-body').innerHTML =
+    '<tr><td colspan="7" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">Loading…</td></tr>';
+  try {
+    const { data } = await HP.admin.articles.list({ pageSize: 50 });
+    if (!data.length) {
+      document.getElementById('articles-body').innerHTML =
+        '<tr><td colspan="7" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">No articles yet.</td></tr>';
+      return;
+    }
+    document.getElementById('articles-body').innerHTML = data.map(a => `
+      <tr>
+        <td>
+          <div>
+            <p style="font-weight:600;font-size:.85rem;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.title}</p>
+            <p style="font-size:.72rem;color:rgba(44,51,64,.4);">/${a.slug}</p>
+          </div>
+        </td>
+        <td><span class="badge" style="background:var(--teal-light);color:var(--teal);font-size:.62rem;">${a.category_label||a.category}</span></td>
+        <td style="font-size:.82rem;">${a.author_id || '—'}</td>
+        <td>${a.read_time_min} min</td>
+        <td><span class="badge ${a.is_published ? 'badge-published' : 'badge-draft'}">${a.is_published?'Published':'Draft'}</span></td>
+        <td style="font-size:.78rem;color:rgba(44,51,64,.45);">${fmtDate(a.published_at)}</td>
+        <td>
+          <div style="display:flex;gap:.4rem;">
+            <button class="btn-sm btn-ghost" onclick="toggleArticlePublish(${a.id}, ${!a.is_published})">
+              ${a.is_published ? 'Unpublish' : 'Publish'}
+            </button>
+            <a href="../blog-post.html?slug=${a.slug}" target="_blank" class="btn-sm btn-ghost">View</a>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+async function toggleArticlePublish(id, publish) {
+  try {
+    await HP.admin.articles.publish(id);
+    toast(`Article ${publish ? 'published' : 'unpublished'} ✓`, 'success');
+    loadArticles();
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+function openArticleModal() {
+  openModal('New Article', `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="grid-column:span 2;"><label class="form-label">Title *</label><input id="na-title" class="form-input" placeholder="Article title…"/></div>
+      <div><label class="form-label">Category *</label>
+        <select id="na-cat" class="form-input">
+          <option value="logistics">Logistics & Visas</option>
+          <option value="etiquette">Cultural Etiquette</option>
+          <option value="culinary">Insider Culinary</option>
+          <option value="destinations">Hidden Destinations</option>
+          <option value="slow_travel">Slow Travel</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div><label class="form-label">Read time (min)</label><input id="na-time" type="number" class="form-input" value="5" min="1"/></div>
+      <div style="grid-column:span 2;"><label class="form-label">Excerpt</label><textarea id="na-excerpt" class="form-input" rows="3" placeholder="Short summary shown on blog index…" style="resize:vertical;"></textarea></div>
+      <div style="grid-column:span 2;"><label class="form-label">Cover image URL</label><input id="na-img" class="form-input" placeholder="https://images.unsplash.com/…"/></div>
+    </div>
+  `, `
+    <button class="btn-sm btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn-sm btn-teal" onclick="createArticle()">Create Article</button>
+  `);
+}
+
+async function createArticle() {
+  const title = document.getElementById('na-title').value.trim();
+  if (!title) { toast('Title is required', 'error'); return; }
+  try {
+    await HP.admin.articles.create({
+      title,
+      category:       document.getElementById('na-cat').value,
+      read_time_min:  parseInt(document.getElementById('na-time').value),
+      excerpt:        document.getElementById('na-excerpt').value,
+      cover_image:    document.getElementById('na-img').value,
+      is_published:   false,
+    });
+    toast('Article created ✓', 'success');
+    closeModal();
+    loadArticles();
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+// ================================================================
+//  TEAM
+// ================================================================
+async function loadTeam() {
+  try {
+    const { data } = await HP.team.list();
+    document.getElementById('team-grid').innerHTML = data.map(m => `
+      <div style="background:white;border-radius:16px;border:1px solid var(--gray);overflow:hidden;">
+        <div style="height:160px;overflow:hidden;">
+          <img src="${m.photo}" alt="${m.name}" style="width:100%;height:100%;object-fit:cover;object-position:top;"/>
+        </div>
+        <div style="padding:1rem;">
+          <p style="font-weight:700;font-size:.9rem;color:var(--slate);">${m.name}</p>
+          <p style="font-size:.75rem;color:rgba(44,51,64,.55);margin-bottom:.5rem;">${m.role}</p>
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;">
+            <span style="font-size:.68rem;font-weight:600;color:var(--teal);">★ ${m.average_rating}</span>
+            <span style="font-size:.68rem;color:rgba(44,51,64,.4);">${m.travelers_guided}+ travelers</span>
+          </div>
+          <p style="font-size:.72rem;color:rgba(44,51,64,.55);line-height:1.5;font-style:italic;">"${(m.insider_tip||'').slice(0,80)}…"</p>
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    toast(err.message, 'error');
+    document.getElementById('team-grid').innerHTML =
+      '<p style="color:rgba(44,51,64,.5);grid-column:span 4;padding:2rem;">Could not load team data.</p>';
+  }
+}
+
+// ================================================================
+//  NEWSLETTER
+// ================================================================
+async function loadNewsletter() {
+  try {
+    const [total, active, unsub] = await Promise.all([
+      HP.admin.newsletter.subscribers({ pageSize: 1 }),
+      HP.admin.newsletter.subscribers({ active: 'true',  pageSize: 1 }),
+      HP.admin.newsletter.subscribers({ active: 'false', pageSize: 1 }),
+    ]);
+    document.getElementById('ns-total').textContent = total.meta.pagination.total;
+    document.getElementById('ns-active').textContent = active.meta.pagination.total;
+    document.getElementById('ns-unsub').textContent  = unsub.meta.pagination.total;
+
+    const { data } = await HP.admin.newsletter.subscribers({ pageSize: 25 });
+    document.getElementById('newsletter-body').innerHTML = data.length
+      ? data.map(s => `
+          <tr>
+            <td>${s.email}</td>
+            <td><span class="badge" style="background:var(--teal-light);color:var(--teal);">${s.source||'website'}</span></td>
+            <td style="font-size:.78rem;color:rgba(44,51,64,.45);">${fmtDate(s.subscribed_at)}</td>
+            <td><span class="badge ${s.is_active ? 'badge-published' : 'badge-cancelled'}">${s.is_active ? 'Active' : 'Unsub'}</span></td>
+          </tr>
+        `).join('')
+      : '<tr><td colspan="4" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">No subscribers yet.</td></tr>';
+  } catch (err) { toast(err.message, 'error'); }
+}
+
+  // ================================================================
+  //  SETTINGS
+  // ================================================================
+  const SETTING_KEYS = [
+    'hero_image_url','hero_title_line1','hero_title_line2',
+    'hero_subtitle','hero_cta_primary',
+    'contact_email','contact_phone','contact_whatsapp','contact_address',
+    'seo_title','seo_description',
+  ];
+
+  async function loadSettings() {
+    try {
+      const res      = await fetch((window.HP_API_URL||'') + '/api/v1/settings');
+      const { data } = await res.json();
+      SETTING_KEYS.forEach(key => {
+        const el = document.getElementById('setting-' + key);
+        if (el && data[key] !== undefined) el.value = data[key];
+      });
+    } catch (err) { toast('Could not load settings: ' + err.message, 'error'); }
+  }
+
+  async function saveAllSettings() {
+    const btn      = document.getElementById('save-settings-btn');
+    const settings = {};
+    SETTING_KEYS.forEach(key => {
+      const el = document.getElementById('setting-' + key);
+      if (el) settings[key] = el.value;
+    });
+    btn.textContent = 'Saving…'; btn.disabled = true;
+    try {
+      const res = await fetch((window.HP_API_URL||'') + '/api/v1/settings/bulk', {
+        method:  'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer ' + HP.auth.token },
+        body:    JSON.stringify({ settings }),
+      });
+      if (!res.ok) throw new Error('Save failed');
+      toast('Settings saved! ✅ Redeploy Netlify to see changes on website.', 'success', 5000);
+    } catch (err) { toast(err.message, 'error'); }
+    finally { btn.textContent = 'Save All Changes'; btn.disabled = false; }
+  }
+
+  function previewHeroImage() {
+    const url  = document.getElementById('setting-hero_image_url').value;
+    const wrap = document.getElementById('hero-preview-wrap');
+    const img  = document.getElementById('hero-preview-img');
+    if (!url) return;
+    img.src = url;
+    wrap.style.display = '';
+  }
+
+  function useImage(url, name) {
+    document.getElementById('setting-hero_image_url').value = url;
+    previewHeroImage();
+    toast('Đã chọn ảnh: ' + name + ' — nhớ nhấn Save!', 'info');
+  }
+
+</script>
+<script id="media-folders-js">
+let allFolders=[];let allMedia=[];let currentFolderId='';let selectedMediaIds=new Set();let newFolderColor='#4f8ef7';let newFolderIcon='📁';
+async function initMediaPage(){await Promise.all([loadFolders(),loadMedia('')]);}
+async function loadFolders(){try{const res=await fetch('/api/v1/media-folders',{headers:authHeaders()});const{data}=await res.json();allFolders=data||[];renderFolderSidebar();}catch(e){console.error(e);}}
+function renderFolderSidebar(){const list=document.getElementById('folder-list');list.innerHTML=allFolders.map(f=>`<div class="folder-item" data-folder-id="${f.id}" onclick="selectFolder(this,'${f.id}','${f.name}')"><span class="f-icon">${f.icon}</span><span class="f-name">${f.name}</span><span class="f-count">${f.file_count||0}</span>${!f.is_default?`<button class="folder-delete-btn" onclick="deleteFolder(event,${f.id})" title="Xoá">✕</button>`:''}</div>`).join('');}
+async function selectFolder(el,folderId,name){document.querySelectorAll('.folder-item').forEach(x=>x.classList.remove('active'));el.classList.add('active');currentFolderId=folderId;document.getElementById('media-section-title').textContent=name;clearSelection();await loadMedia(folderId);}
+async function loadMedia(folderId){const grid=document.getElementById('media-grid');grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#9ca3af;padding:40px;">Đang tải...</div>';try{let url=folderId?`/api/v1/media-folders/${folderId}/media`:'/api/v1/media';const res=await fetch(url,{headers:authHeaders()});const{data}=await res.json();allMedia=data||[];if(!folderId)document.getElementById('count-all').textContent=allMedia.length;if(!folderId&&allMedia.length)await attachFolderTags(allMedia);renderMediaGrid(allMedia);}catch(e){grid.innerHTML='<div style="grid-column:1/-1;color:#ef4444;padding:20px;">Lỗi tải media</div>';}}
+async function attachFolderTags(mediaList){await Promise.all(mediaList.slice(0,30).map(async(m)=>{try{const res=await fetch(`/api/v1/media-folders/by-media/${m.id}`,{headers:authHeaders()});const{data}=await res.json();m._folders=data||[];}catch{m._folders=[];}}));}
+function renderMediaGrid(mediaList){const grid=document.getElementById('media-grid');if(!mediaList.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#9ca3af;padding:60px;">Chưa có file nào</div>';return;}grid.innerHTML=mediaList.map(m=>{const isImg=/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(m.url||'');const isVideo=/\.(mp4|webm|mov)$/i.test(m.url||'');const tags=(m._folders||[]).map(f=>`<span class="folder-tag" style="background:${f.color}">${f.icon} ${f.name}</span>`).join('');const selected=selectedMediaIds.has(m.id)?'selected':'';return`<div class="media-card ${selected}" data-id="${m.id}" onclick="toggleSelect(this,${m.id})">${isImg?`<img class="thumb" src="${m.url}" loading="lazy" alt="">`:''}${isVideo?'<div class="video-thumb">🎬</div>':''}${!isImg&&!isVideo?'<div class="video-thumb" style="font-size:36px;">📄</div>':''}<div class="card-info"><div class="card-name">${m.filename||m.original_name||'file'}</div>${tags?`<div class="card-folders">${tags}</div>`:''}</div><div class="select-check">✓</div></div>`;}).join('');}
+function toggleSelect(el,id){if(selectedMediaIds.has(id)){selectedMediaIds.delete(id);el.classList.remove('selected');}else{selectedMediaIds.add(id);el.classList.add('selected');}updateSelectionBar();}
+function clearSelection(){selectedMediaIds.clear();document.querySelectorAll('.media-card').forEach(c=>c.classList.remove('selected'));updateSelectionBar();}
+function updateSelectionBar(){const bar=document.getElementById('selection-actions');const cnt=document.getElementById('selected-count');if(selectedMediaIds.size>0){bar.style.display='flex';cnt.textContent=`${selectedMediaIds.size} file đã chọn`;}else{bar.style.display='none';}}
+function openAssignModal(){const list=document.getElementById('assign-folder-list');list.innerHTML=allFolders.map(f=>`<label class="folder-checkbox-item"><input type="checkbox" value="${f.id}"><span style="font-size:18px;">${f.icon}</span><span style="font-size:13px;flex:1;">${f.name}</span><span class="folder-tag" style="background:${f.color};font-size:10px;">${f.file_count||0} files</span></label>`).join('');document.getElementById('assign-modal').classList.remove('hidden');}
+function closeAssignModal(){document.getElementById('assign-modal').classList.add('hidden');}
+async function saveAssignments(){const checks=document.querySelectorAll('#assign-folder-list input:checked');const folderIds=[...checks].map(c=>c.value);const mediaIds=[...selectedMediaIds];if(!folderIds.length){toast('Chọn ít nhất 1 folder!','error');return;}try{await Promise.all(folderIds.map(fid=>fetch(`/api/v1/media-folders/${fid}/media`,{method:'POST',headers:{...authHeaders(),'Content-Type':'application/json'},body:JSON.stringify({media_ids:mediaIds})})));toast(`Đã gắn ${mediaIds.length} file vào ${folderIds.length} folder ✅`,'success');closeAssignModal();clearSelection();await loadFolders();await loadMedia(currentFolderId);}catch(e){toast(e.message,'error');}}
+function openNewFolderModal(){document.getElementById('new-folder-name').value='';document.getElementById('new-folder-modal').classList.remove('hidden');}
+function closeNewFolderModal(){document.getElementById('new-folder-modal').classList.add('hidden');}
+function pickColor(el){document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('active'));el.classList.add('active');newFolderColor=el.dataset.color;}
+function pickIcon(el){document.querySelectorAll('#icon-picker span').forEach(s=>s.style.opacity='0.4');el.style.opacity='1';newFolderIcon=el.dataset.icon;}
+async function createFolder(){const name=document.getElementById('new-folder-name').value.trim();if(!name){toast('Nhập tên folder!','error');return;}try{const res=await fetch('/api/v1/media-folders',{method:'POST',headers:{...authHeaders(),'Content-Type':'application/json'},body:JSON.stringify({name,color:newFolderColor,icon:newFolderIcon})});const json=await res.json();if(!res.ok)throw new Error(json.error);toast(`Folder "${name}" đã tạo ✅`,'success');closeNewFolderModal();await loadFolders();}catch(e){toast(e.message,'error');}}
+async function deleteFolder(event,id){event.stopPropagation();if(!confirm('Xoá folder này?'))return;try{await fetch(`/api/v1/media-folders/${id}`,{method:'DELETE',headers:authHeaders()});toast('Đã xoá folder','success');if(currentFolderId==id)currentFolderId='';await loadFolders();await loadMedia(currentFolderId);}catch(e){toast(e.message,'error');}}
+function authHeaders() {
+  const token = HP?.auth?.token || HP?.auth?.getToken?.() || '';
+  return { 'Authorization': `Bearer ${token}` };
+}
+  </script>
+</body>
+</html>

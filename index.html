@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HiddenPath Vietnam — Curated Small Group Journeys</title>
+  <meta name="description" content="Boutique small-group tours in Vietnam for thoughtful Western travelers. Authentic local experts, max 12 guests, no crowds." />
+
+  <!-- ============================================================
+       FONTS — Cormorant Garamond (editorial serif) + DM Sans (clean body)
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- ============================================================
+       TAILWIND CDN + BRAND CONFIG
+       ============================================================ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            teal:   { DEFAULT: '#006D5B', dark: '#005548', light: '#E8F4F1' },
+            orange: { DEFAULT: '#FF8A42', hover: '#E87535' },
+            slate:  { DEFAULT: '#2C3340' },
+            warm:   { white: '#FAF9F7', gray: '#E8E6E1' },
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            body:    ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES
+       IMAGE SWAP GUIDE: all swappable photo URLs are marked with
+       a comment: /* IMG-SWAP: <description> * /
+    ============================================================ */
+    :root {
+      --teal:       #006D5B;
+      --teal-dark:  #005548;
+      --orange:     #FF8A42;
+      --orange-h:   #E87535;
+      --slate:      #2C3340;
+      --warm-white: #FAF9F7;
+      --warm-gray:  #E8E6E1;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html  { font-family: 'DM Sans', system-ui, sans-serif; }
+    body  {
+      background: var(--warm-white);
+      color: var(--slate);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    ::selection { background: rgba(0,109,91,.15); }
+
+    /* ── Typography helpers ────────────────────────────────── */
+    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .section-label {
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+    .stat-number { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    /* ── Keyframes ─────────────────────────────────────────── */
+    @keyframes fadeInUp  { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn    { from { opacity:0; } to { opacity:1; } }
+    @keyframes bounce    { 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+    @keyframes slideDown { from { opacity:0; transform:translateY(-10px); max-height:0; } to { opacity:1; transform:translateY(0); max-height:300px; } }
+
+    /* ── Scroll-reveal ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .reveal.visible                 { opacity:1; transform:translateY(0); }
+    .reveal-delay-1.visible         { transition-delay:.10s; }
+    .reveal-delay-2.visible         { transition-delay:.20s; }
+    .reveal-delay-3.visible         { transition-delay:.30s; }
+    .reveal-delay-4.visible         { transition-delay:.40s; }
+    .reveal-delay-5.visible         { transition-delay:.50s; }
+    .reveal-delay-6.visible         { transition-delay:.60s; }
+
+    /* ── Scroll progress bar ───────────────────────────────── */
+    #scroll-progress {
+      position: fixed; top:0; left:0; height:3px;
+      background: var(--orange); z-index:9999; transition: width .1s linear;
+    }
+
+    /* ── Navigation ────────────────────────────────────────── */
+    #main-nav { transition: background .4s ease, box-shadow .4s ease; }
+    #main-nav.scrolled {
+      background: rgba(250,249,247,.96) !important;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(0,0,0,.08);
+    }
+    #main-nav.scrolled .nav-link  { color: var(--slate) !important; }
+    #main-nav.scrolled .nav-logo  { color: var(--teal) !important; }
+    #main-nav.scrolled .logo-sub  { color: var(--slate); opacity:.5; }
+
+    /* ── Hero ──────────────────────────────────────────────── */
+    .hero-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.18) 0%,
+        rgba(0,0,0,.04) 45%,
+        rgba(0,0,0,.62) 100%
+      );
+    }
+    .scroll-bounce { animation: bounce 2.2s ease-in-out infinite; }
+
+    /* ── Trust bar ─────────────────────────────────────────── */
+    .trust-bar { background:#fff; border-bottom: 1px solid var(--warm-gray); }
+
+    /* ── Segment cards ─────────────────────────────────────── */
+    .seg-card {
+      position: relative; overflow: hidden;
+      border-radius: 18px; cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s ease;
+    }
+    .seg-card img  { transition: transform .65s cubic-bezier(.25,.46,.45,.94); }
+    .seg-card:hover img, .seg-card.active img { transform: scale(1.07); }
+    .seg-card:hover { transform: translateY(-7px); box-shadow: 0 24px 52px rgba(0,0,0,.22); }
+    .seg-card.active {
+      box-shadow: 0 0 0 3px var(--orange), 0 22px 52px rgba(0,0,0,.22);
+      transform: translateY(-5px);
+    }
+    .seg-overlay { background: linear-gradient(to bottom, transparent 25%, rgba(0,0,0,.75) 100%); }
+    .seg-badge {
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.25);
+      transition: background .3s ease, border-color .3s ease;
+    }
+    .seg-card:hover .seg-badge, .seg-card.active .seg-badge {
+      background: var(--orange); border-color: var(--orange);
+    }
+    .seg-check { display: none; }
+    .seg-card.active .seg-check { display: flex; }
+
+    /* ── Secondary filter ──────────────────────────────────── */
+    #secondary-filter { display:none; overflow:hidden; }
+    #secondary-filter.open { display:block; animation: slideDown .4s ease forwards; }
+    .f-chip {
+      cursor:pointer; border: 1.5px solid var(--warm-gray);
+      transition: all .2s ease; user-select:none;
+    }
+    .f-chip:hover  { border-color:var(--teal); color:var(--teal); }
+    .f-chip.active { background:var(--teal); border-color:var(--teal); color:#fff; }
+
+    /* ── Tour cards ────────────────────────────────────────── */
+    .tour-card { border-radius:18px; overflow:hidden; transition: transform .35s ease, box-shadow .35s ease, opacity .3s ease; }
+    .tour-card:hover { transform:translateY(-9px); box-shadow:0 30px 60px rgba(0,0,0,.12); }
+    .tour-card img   { transition: transform .55s ease; }
+    .tour-card:hover img { transform: scale(1.06); }
+    /* Filter animation states */
+    .tour-card.is-hiding  { opacity:0; transform:translateY(8px) scale(.97); pointer-events:none; }
+    .tour-card.is-hidden  { display:none; }
+    .tour-card.is-showing { opacity:0; transform:translateY(8px) scale(.97); }
+
+    /* ── Tours empty state ─────────────────────────────────── */
+    #tours-empty { display:none; }
+    #tours-empty.visible { display:flex; }
+
+    /* ── Filter active indicator ───────────────────────────── */
+    #filter-active-bar { display:none; }
+    #filter-active-bar.visible { display:flex; }
+
+    /* ── Modal panels ──────────────────────────────────────── */
+    .modal-panel { transition: opacity .25s ease, transform .25s ease; }
+    .modal-panel.hidden { display:none; }
+    .confirm-icon-ring {
+      width:64px; height:64px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;
+    }
+
+    /* ── Buttons ───────────────────────────────────────────── */
+    .btn-primary {
+      background: var(--orange); color:#fff;
+      transition: background .25s ease, transform .2s ease, box-shadow .25s ease;
+    }
+    .btn-primary:hover {
+      background: var(--orange-h);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(255,138,66,.38);
+    }
+    .btn-outline {
+      border: 2px solid var(--teal); color: var(--teal);
+      transition: all .25s ease;
+    }
+    .btn-outline:hover { background: var(--teal); color:#fff; }
+    .btn-ghost-white {
+      border: 2px solid rgba(255,255,255,.7); color:#fff;
+      transition: all .25s ease;
+    }
+    .btn-ghost-white:hover { background:#fff; color:var(--teal); }
+
+    /* ── Value cards ───────────────────────────────────────── */
+    .val-card { border-radius:14px; transition: background .3s ease, transform .3s ease; }
+    .val-card:hover { background:#fff; transform:translateY(-5px); box-shadow:0 14px 36px rgba(0,0,0,.07); }
+
+    /* ── Testimonial carousel ──────────────────────────────── */
+    .t-track { transition: transform .55s cubic-bezier(.25,.46,.45,.94); }
+    .dot {
+      width:8px; height:8px; border-radius:50%;
+      background:#D1CEC9; cursor:pointer;
+      transition: all .3s ease;
+    }
+    .dot.active { background:var(--teal); width:26px; border-radius:4px; }
+
+    /* ── Destination tiles ─────────────────────────────────── */
+    .dest-tile { overflow:hidden; border-radius:14px; position:relative; cursor:pointer; }
+    .dest-tile img { transition: transform .6s ease; }
+    .dest-tile:hover img { transform: scale(1.08); }
+    .dest-overlay { background: linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 65%); transition: background .3s ease; }
+    .dest-tile:hover .dest-overlay { background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.08) 75%); }
+
+    /* ── Instagram grid ────────────────────────────────────── */
+    .ig-tile { overflow:hidden; aspect-ratio:1; border-radius:10px; position:relative; cursor:pointer; }
+    .ig-tile img { width:100%; height:100%; object-fit:cover; transition: transform .5s ease; }
+    .ig-tile:hover img { transform: scale(1.1); }
+    .ig-overlay { background:rgba(0,109,91,.72); opacity:0; transition: opacity .3s ease; }
+    .ig-tile:hover .ig-overlay { opacity:1; }
+
+    /* ── Booking modal ─────────────────────────────────────── */
+    #booking-modal { display:none; animation: fadeIn .3s ease; }
+    #booking-modal.open { display:flex; }
+    .modal-card { animation: fadeInUp .4s ease forwards; border-radius:26px; }
+    .book-opt {
+      border: 2px solid var(--warm-gray); border-radius:18px;
+      cursor:pointer; transition: all .25s ease;
+    }
+    .book-opt:hover { border-color:var(--teal); background:#E8F4F1; transform:translateY(-2px); }
+    .book-opt.wa:hover { border-color:#25D366; background:#F0FFF4; }
+
+    /* ── Mobile menu ───────────────────────────────────────── */
+    #mobile-menu { display:none; }
+    #mobile-menu.open { display:block; animation: slideDown .3s ease forwards; }
+
+    /* ── Hero text animation ───────────────────────────────── */
+    .hero-content { animation: fadeInUp 1s ease .25s both; }
+  </style>
+<script src="js/config.js"></script>
+         <script src="js/api.js"></script>
+         </head>
+
+<body>
+
+  <!-- ============================================================
+       SCROLL PROGRESS BAR
+  ============================================================ -->
+  <div id="scroll-progress" style="width:0%"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 px-5 py-5 md:px-12">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="#" class="nav-logo flex flex-col leading-none text-white transition-colors duration-300">
+        <span class="font-body font-semibold text-[1.15rem] tracking-tight">Hidden<span class="font-light">Path</span></span>
+        <span class="logo-sub font-body font-normal text-white/55 tracking-[.22em] uppercase transition-colors duration-300" style="font-size:.58rem;">Vietnam</span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#tours"        class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors duration-200">Tours</a>
+        <a href="#about"        class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors duration-200">About</a>
+        <a href="#destinations" class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors duration-200">Destinations</a>
+        <a href="#journal"      class="nav-link text-white/88 hover:text-white text-sm font-medium transition-colors duration-200">Journal</a>
+        <button onclick="openModal()" class="btn-primary ml-3 px-6 py-2.5 rounded-full text-sm font-semibold">
+          Book a Free Call
+        </button>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="ham-btn" onclick="toggleMenu()" class="md:hidden text-white p-1 flex flex-col gap-[5px]">
+        <span class="ham-line block w-6 h-[2px] bg-current transition-all duration-300"></span>
+        <span class="ham-line block w-6 h-[2px] bg-current transition-all duration-300"></span>
+        <span class="ham-line block w-4 h-[2px] bg-current transition-all duration-300"></span>
+      </button>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu" class="md:hidden mx-2 mt-3 bg-white/96 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden">
+      <div class="p-6 flex flex-col gap-1">
+        <a href="#tours"        onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Tours</a>
+        <a href="#about"        onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">About</a>
+        <a href="#destinations" onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Destinations</a>
+        <a href="#journal"      onclick="toggleMenu()" class="text-[#2C3340] font-medium py-3 border-b border-gray-100 text-sm">Journal</a>
+        <button onclick="openModal(); toggleMenu();" class="btn-primary w-full mt-4 py-3.5 rounded-full text-sm font-semibold">
+          Book a Free Call
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="relative h-screen min-h-[620px] flex items-end pb-16 md:pb-24">
+    <!-- IMG-SWAP: Hero background — full-viewport Vietnam hero photo -->
+    <img
+      src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920&q=85&auto=format&fit=crop"
+      alt="Misty limestone karsts at dawn — Ha Long Bay, Vietnam"
+      class="absolute inset-0 w-full h-full object-cover object-center"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-overlay absolute inset-0"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-12 w-full hero-content">
+      <div class="max-w-2xl">
+        <p class="section-label text-white/60 mb-4">Est. 2019 &nbsp;·&nbsp; Hanoi, Vietnam</p>
+        <h1 class="font-display text-white mb-5 leading-[1.07]" style="font-size:clamp(3rem,8vw,5.8rem); letter-spacing:-.015em;">
+          Vietnam,<br/>Beyond<br/><em>the Surface.</em>
+        </h1>
+        <p class="text-white/82 font-body font-light text-lg md:text-xl leading-relaxed max-w-[480px] mb-8">
+          Curated small-group journeys for thoughtful travelers who want depth, not just destinations.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button onclick="scrollTo('#journeys')" class="btn-primary px-8 py-4 rounded-full text-base font-semibold">
+            Find Your Journey
+          </button>
+          <button onclick="openModal()" class="btn-ghost-white px-8 py-4 rounded-full text-base font-semibold">
+            Talk to a Local Expert
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="scroll-bounce absolute bottom-7 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-white/50">
+      <span style="font-size:.58rem; letter-spacing:.22em; text-transform:uppercase;">Scroll</span>
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRUST BAR
+  ============================================================ -->
+  <div class="trust-bar py-4">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm">
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 tracking-tight">★★★★★</span>
+          <span class="font-semibold text-[#2C3340]">4.9/5</span>
+          <span class="text-[#2C3340]/45">Google · 312 reviews</span>
+        </div>
+        <div class="hidden sm:block w-px h-4 bg-[#E8E6E1]"></div>
+        <div class="flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#00AA6C"><rect width="24" height="24" rx="4"/><text x="4" y="17" font-size="11" fill="white" font-weight="bold">TA</text></svg>
+          <span class="font-medium text-[#2C3340]">Travelers' Choice 2025</span>
+        </div>
+        <div class="hidden sm:block w-px h-4 bg-[#E8E6E1]"></div>
+        <div class="flex items-center gap-2 text-[#2C3340]/65">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Max 12 guests per departure</span>
+        </div>
+        <div class="hidden md:block w-px h-4 bg-[#E8E6E1]"></div>
+        <div class="hidden md:flex items-center gap-2 text-[#2C3340]/45">
+          <span class="text-xs tracking-widest uppercase">As seen in:</span>
+          <span class="font-semibold text-[#2C3340]">Lonely Planet</span>
+          <span class="text-[#2C3340]/30">·</span>
+          <span class="font-semibold text-[#2C3340]">CNN Travel</span>
+          <span class="text-[#2C3340]/30">·</span>
+          <span class="font-semibold text-[#2C3340]">Condé Nast</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       FIND YOUR JOURNEY — Lifestyle Segment Selector
+  ============================================================ -->
+  <section id="journeys" class="py-20 md:py-28 bg-[#FAF9F7]">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+      <div class="text-center max-w-xl mx-auto mb-12 reveal">
+        <p class="section-label mb-3">Your Journey Starts Here</p>
+        <h2 class="font-display text-[#2C3340] mb-4" style="font-size:clamp(2rem,5vw,3.6rem); font-weight:500; letter-spacing:-.015em; line-height:1.1;">
+          Every Traveler<br/>Is Different.
+        </h2>
+        <p class="text-[#2C3340]/62 text-lg font-light leading-relaxed">
+          Tell us who you are. We'll show you the path made for you.
+        </p>
+      </div>
+
+      <!-- 4 Lifestyle Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
+
+        <!-- Card 1: Thrill & Connection -->
+        <div class="seg-card h-72 md:h-[420px]" onclick="selectSeg(this,'adventure')" data-seg="adventure">
+          <span class="seg-check absolute top-3 right-3 z-20 w-7 h-7 bg-[#FF8A42] rounded-full items-center justify-center">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <!-- IMG-SWAP: Adventure card — trekking / mountain landscape -->
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop"
+               alt="Sapa mountain trekking" class="absolute inset-0 w-full h-full object-cover object-[center_60%]" />
+          <div class="seg-overlay absolute inset-0"></div>
+          <div class="absolute inset-0 p-5 flex flex-col justify-between">
+            <div class="seg-badge w-10 h-10 rounded-full flex items-center justify-center">
+              <svg width="18" height="18" fill="none" stroke="white" stroke-width="1.6" viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 8"/><path d="M21 21H3"/></svg>
+            </div>
+            <div>
+              <p class="text-white/55 text-[.6rem] tracking-[.18em] uppercase mb-1">Solo &amp; Social</p>
+              <h3 class="font-display text-white text-xl md:text-[1.6rem] font-medium leading-tight mb-1">Thrill &amp;<br/>Connection</h3>
+              <p class="text-white/65 text-xs leading-relaxed hidden md:block">Solo travelers &amp; young professionals who want stories to tell.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Intimate Escapes -->
+        <div class="seg-card h-72 md:h-[420px]" onclick="selectSeg(this,'romance')" data-seg="romance">
+          <span class="seg-check absolute top-3 right-3 z-20 w-7 h-7 bg-[#FF8A42] rounded-full items-center justify-center">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <!-- IMG-SWAP: Romance card — Hoi An lanterns / evening water -->
+          <img src="https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=600&q=80&auto=format&fit=crop"
+               alt="Hoi An lanterns at night" class="absolute inset-0 w-full h-full object-cover object-center" />
+          <div class="seg-overlay absolute inset-0"></div>
+          <div class="absolute inset-0 p-5 flex flex-col justify-between">
+            <div class="seg-badge w-10 h-10 rounded-full flex items-center justify-center">
+              <svg width="18" height="18" fill="none" stroke="white" stroke-width="1.6" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div>
+              <p class="text-white/55 text-[.6rem] tracking-[.18em] uppercase mb-1">Couples</p>
+              <h3 class="font-display text-white text-xl md:text-[1.6rem] font-medium leading-tight mb-1">Intimate<br/>Escapes</h3>
+              <p class="text-white/65 text-xs leading-relaxed hidden md:block">Couples seeking beauty, privacy, and slow, deliberate moments.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Deep Discovery -->
+        <div class="seg-card h-72 md:h-[420px]" onclick="selectSeg(this,'culture')" data-seg="culture">
+          <span class="seg-check absolute top-3 right-3 z-20 w-7 h-7 bg-[#FF8A42] rounded-full items-center justify-center">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <!-- IMG-SWAP: Culture card — temple / ancient architecture -->
+          <img src="https://images.unsplash.com/photo-1555217851-6141534701ac?w=600&q=80&auto=format&fit=crop"
+               alt="Hoi An ancient town" class="absolute inset-0 w-full h-full object-cover object-[center_40%]" />
+          <div class="seg-overlay absolute inset-0"></div>
+          <div class="absolute inset-0 p-5 flex flex-col justify-between">
+            <div class="seg-badge w-10 h-10 rounded-full flex items-center justify-center">
+              <svg width="18" height="18" fill="none" stroke="white" stroke-width="1.6" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div>
+              <p class="text-white/55 text-[.6rem] tracking-[.18em] uppercase mb-1">Families &amp; Professionals</p>
+              <h3 class="font-display text-white text-xl md:text-[1.6rem] font-medium leading-tight mb-1">Deep<br/>Discovery</h3>
+              <p class="text-white/65 text-xs leading-relaxed hidden md:block">Mid-career travelers &amp; families who want meaning without roughing it.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Premium Immersion -->
+        <div class="seg-card h-72 md:h-[420px]" onclick="selectSeg(this,'luxury')" data-seg="luxury">
+          <span class="seg-check absolute top-3 right-3 z-20 w-7 h-7 bg-[#FF8A42] rounded-full items-center justify-center">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <!-- IMG-SWAP: Luxury card — premium resort / panoramic view -->
+          <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80&auto=format&fit=crop"
+               alt="Ha Long Bay premium experience" class="absolute inset-0 w-full h-full object-cover object-[center_50%]" />
+          <div class="seg-overlay absolute inset-0"></div>
+          <div class="absolute inset-0 p-5 flex flex-col justify-between">
+            <div class="seg-badge w-10 h-10 rounded-full flex items-center justify-center">
+              <svg width="18" height="18" fill="none" stroke="white" stroke-width="1.6" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div>
+              <p class="text-white/55 text-[.6rem] tracking-[.18em] uppercase mb-1">Premium</p>
+              <h3 class="font-display text-white text-xl md:text-[1.6rem] font-medium leading-tight mb-1">Premium<br/>Immersion</h3>
+              <p class="text-white/65 text-xs leading-relaxed hidden md:block">High-end travelers who expect excellence at every single step.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Secondary Filter Panel -->
+      <div id="secondary-filter">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-[#E8E6E1]">
+          <div class="flex flex-col md:flex-row md:items-center gap-6">
+            <div class="flex-1">
+              <p class="text-[.65rem] font-semibold tracking-[.18em] uppercase text-[#2C3340]/45 mb-3">Duration</p>
+              <div class="flex flex-wrap gap-2">
+                <div class="f-chip px-4 py-2 rounded-full text-sm font-medium text-[#2C3340]" data-type="duration" data-value="3to5"   onclick="toggleChip(this)">3–5 Days</div>
+                <div class="f-chip px-4 py-2 rounded-full text-sm font-medium text-[#2C3340]" data-type="duration" data-value="6to9"   onclick="toggleChip(this)">6–9 Days</div>
+                <div class="f-chip px-4 py-2 rounded-full text-sm font-medium text-[#2C3340]" data-type="duration" data-value="10plus" onclick="toggleChip(this)">10+ Days</div>
+              </div>
+            </div>
+            <div class="hidden md:block w-px h-10 bg-[#E8E6E1]"></div>
+            <div class="flex-1">
+              <p class="text-[.65rem] font-semibold tracking-[.18em] uppercase text-[#2C3340]/45 mb-3">Region</p>
+              <div class="flex flex-wrap gap-2">
+                <div class="f-chip px-4 py-2 rounded-full text-sm font-medium text-[#2C3340]" data-type="region" data-value="north"   onclick="toggleChip(this)">North</div>
+                <div class="f-chip px-4 py-2 rounded-full text-sm font-medium text-[#2C3340]" data-type="region" data-value="central" onclick="toggleChip(this)">Central</div>
+                <div class="f-chip px-4 py-2 rounded-full text-sm font-medium text-[#2C3340]" data-type="region" data-value="south"   onclick="toggleChip(this)">South</div>
+                <div class="f-chip px-4 py-2 rounded-full text-sm font-medium text-[#2C3340]" data-type="region" data-value="full"    onclick="toggleChip(this)">Full Country</div>
+              </div>
+            </div>
+            <div>
+              <button onclick="applyFilters(true)" class="btn-primary px-6 py-3 rounded-full text-sm font-semibold whitespace-nowrap">
+                Show Matching Tours →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURED TOURS
+  ============================================================ -->
+  <section id="tours" class="py-20 md:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal">
+        <div>
+          <p class="section-label mb-3">Handpicked for 2025</p>
+          <h2 id="tours-heading" class="font-display text-[#2C3340]" style="font-size:clamp(1.9rem,4vw,3.2rem); font-weight:500; letter-spacing:-.01em;">
+            Our Most Loved Journeys
+          </h2>
+          <!-- Active filter pill row -->
+          <div id="filter-active-bar" class="items-center gap-2 mt-3 flex-wrap">
+            <span id="filter-active-label" class="text-sm text-[#2C3340]/55"></span>
+            <button onclick="resetFilters()" class="text-xs font-semibold text-[#FF8A42] border border-[#FF8A42]/40 px-3 py-1 rounded-full hover:bg-[#FF8A42]/10 transition-colors">
+              × Clear filters
+            </button>
+          </div>
+        </div>
+        <a href="#" class="text-[#006D5B] font-semibold text-sm flex items-center gap-1.5 group self-start md:self-auto">
+          View All 18 Tours
+          <svg class="transition-transform duration-200 group-hover:translate-x-1" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <div id="tours-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Tour 1: The Northern Soul -->
+        <div class="tour-card bg-white border border-[#E8E6E1] reveal reveal-delay-1"
+             data-segments="adventure culture"
+             data-duration="10plus"
+             data-region="north">
+          <div class="relative h-56 overflow-hidden">
+            <!-- IMG-SWAP: Tour 1 — Sapa / Northern Vietnam terraces -->
+            <img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=700&q=80&auto=format&fit=crop"
+                 alt="Sapa rice terraces — Northern Soul tour" class="w-full h-full object-cover" />
+            <span class="absolute top-3 left-3 bg-[#FF8A42] text-white text-[.65rem] font-bold px-3 py-1.5 rounded-full tracking-wide uppercase">Bestseller</span>
+            <span class="absolute top-3 right-3 bg-black/30 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">10 Days</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="text-amber-400 text-sm">★★★★★</span>
+              <span class="text-sm font-semibold">4.9</span>
+              <span class="text-sm text-[#2C3340]/45">(87 reviews)</span>
+            </div>
+            <h3 class="font-display text-2xl font-medium leading-tight mb-2">The Northern Soul</h3>
+            <p class="text-[#2C3340]/60 text-sm leading-relaxed mb-4">Hanoi's old quarter, the mist-wrapped peaks of Sapa, and three nights aboard a traditional junk on Ha Long Bay. Vietnam at its most poetic.</p>
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">Hanoi</span>
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">Sapa</span>
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">Ha Long Bay</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[#E8E6E1]">
+              <div>
+                <p class="text-xs text-[#2C3340]/40 mb-0.5">From</p>
+                <p class="font-display text-2xl font-semibold">$1,890 <span class="text-sm font-normal text-[#2C3340]/45">USD/pp</span></p>
+              </div>
+              <a href="#" class="btn-outline px-5 py-2.5 rounded-full text-sm font-semibold">View Tour</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 2: The Central Chapter -->
+        <div class="tour-card bg-white border border-[#E8E6E1] reveal reveal-delay-2"
+             data-segments="romance culture"
+             data-duration="6to9"
+             data-region="central">
+          <div class="relative h-56 overflow-hidden">
+            <!-- IMG-SWAP: Tour 2 — Hoi An / Central Vietnam lanterns -->
+            <img src="https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=700&q=80&auto=format&fit=crop"
+                 alt="Hoi An lantern festival — Central Chapter tour" class="w-full h-full object-cover" />
+            <span class="absolute top-3 right-3 bg-black/30 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">7 Days</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="text-amber-400 text-sm">★★★★★</span>
+              <span class="text-sm font-semibold">5.0</span>
+              <span class="text-sm text-[#2C3340]/45">(52 reviews)</span>
+            </div>
+            <h3 class="font-display text-2xl font-medium leading-tight mb-2">The Central Chapter</h3>
+            <p class="text-[#2C3340]/60 text-sm leading-relaxed mb-4">Imperial Huế at sunrise, Da Nang's marble mountains, and the golden-lanterned streets of Hội An. Culture, coast, and cuisine in perfect balance.</p>
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">Huế</span>
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">Da Nang</span>
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">Hội An</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[#E8E6E1]">
+              <div>
+                <p class="text-xs text-[#2C3340]/40 mb-0.5">From</p>
+                <p class="font-display text-2xl font-semibold">$1,290 <span class="text-sm font-normal text-[#2C3340]/45">USD/pp</span></p>
+              </div>
+              <a href="#" class="btn-outline px-5 py-2.5 rounded-full text-sm font-semibold">View Tour</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 3: Vietnam in Full -->
+        <div class="tour-card bg-white border border-[#E8E6E1] reveal reveal-delay-3"
+             data-segments="adventure romance culture luxury"
+             data-duration="10plus"
+             data-region="full">
+          <div class="relative h-56 overflow-hidden">
+            <!-- IMG-SWAP: Tour 3 — Panoramic Vietnam landscape (North to South) -->
+            <img src="https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=700&q=80&auto=format&fit=crop"
+                 alt="Vietnam in Full — Saigon cityscape" class="w-full h-full object-cover" />
+            <span class="absolute top-3 left-3 bg-[#006D5B] text-white text-[.65rem] font-bold px-3 py-1.5 rounded-full tracking-wide uppercase">Signature</span>
+            <span class="absolute top-3 right-3 bg-black/30 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">15 Days</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="text-amber-400 text-sm">★★★★★</span>
+              <span class="text-sm font-semibold">4.9</span>
+              <span class="text-sm text-[#2C3340]/45">(63 reviews)</span>
+            </div>
+            <h3 class="font-display text-2xl font-medium leading-tight mb-2">Vietnam in Full</h3>
+            <p class="text-[#2C3340]/60 text-sm leading-relaxed mb-4">Our most comprehensive journey: from Hanoi's timeworn streets to the Mekong Delta. For those who want to understand Vietnam completely.</p>
+            <div class="flex flex-wrap gap-2 mb-5">
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">North</span>
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">Central</span>
+              <span class="bg-[#E8F4F1] text-[#006D5B] text-xs px-3 py-1 rounded-full font-medium">South</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[#E8E6E1]">
+              <div>
+                <p class="text-xs text-[#2C3340]/40 mb-0.5">From</p>
+                <p class="font-display text-2xl font-semibold">$2,890 <span class="text-sm font-normal text-[#2C3340]/45">USD/pp</span></p>
+              </div>
+              <a href="#" class="btn-outline px-5 py-2.5 rounded-full text-sm font-semibold">View Tour</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Empty state — shown when no tours match filters -->
+      <div id="tours-empty" class="flex-col items-center justify-center text-center py-20">
+        <div class="w-16 h-16 bg-[#E8F4F1] rounded-full flex items-center justify-center mx-auto mb-5">
+          <svg width="28" height="28" fill="none" stroke="#006D5B" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3 class="font-display text-2xl font-medium text-[#2C3340] mb-2">No exact matches yet</h3>
+        <p class="text-[#2C3340]/55 text-sm max-w-xs mx-auto mb-6 leading-relaxed">We're constantly adding new routes. Talk to us — we'll build the perfect journey for you.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="resetFilters()" class="btn-outline px-6 py-3 rounded-full text-sm font-semibold">Clear Filters</button>
+          <button onclick="openModal()" class="btn-primary px-6 py-3 rounded-full text-sm font-semibold">Talk to an Expert</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section id="about" class="py-20 md:py-28 bg-[#FAF9F7]">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20 reveal">
+        <div class="text-center"><p class="stat-number text-[3.6rem] md:text-[4.5rem] font-semibold text-[#006D5B] leading-none">312<span class="text-3xl">+</span></p><p class="text-sm text-[#2C3340]/55 mt-2">Five-Star Reviews</p></div>
+        <div class="text-center"><p class="stat-number text-[3.6rem] md:text-[4.5rem] font-semibold text-[#006D5B] leading-none">6</p><p class="text-sm text-[#2C3340]/55 mt-2">Years of Experience</p></div>
+        <div class="text-center"><p class="stat-number text-[3.6rem] md:text-[4.5rem] font-semibold text-[#006D5B] leading-none">18</p><p class="text-sm text-[#2C3340]/55 mt-2">Curated Routes</p></div>
+        <div class="text-center"><p class="stat-number text-[3.6rem] md:text-[4.5rem] font-semibold text-[#006D5B] leading-none">12</p><p class="text-sm text-[#2C3340]/55 mt-2">Max Group Size</p></div>
+      </div>
+
+      <div class="text-center max-w-xl mx-auto mb-14 reveal">
+        <p class="section-label mb-3">Our Philosophy</p>
+        <h2 class="font-display text-[#2C3340] mb-4" style="font-size:clamp(1.9rem,4vw,3.2rem); font-weight:500; letter-spacing:-.01em;">
+          The HiddenPath Difference
+        </h2>
+        <p class="text-[#2C3340]/60 text-base font-light leading-relaxed">We believe the finest travel moments happen away from the crowds, guided by people who call this place home.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Val 1 -->
+        <div class="val-card p-7 reveal reveal-delay-1">
+          <div class="w-12 h-12 bg-[#E8F4F1] rounded-xl flex items-center justify-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">Small Groups, Real Bonds</h3>
+          <p class="text-[#2C3340]/60 text-sm leading-relaxed">A firm maximum of 12 guests per journey. You'll never feel like a tourist herd — only a traveler who belongs.</p>
+        </div>
+        <!-- Val 2 -->
+        <div class="val-card p-7 reveal reveal-delay-2">
+          <div class="w-12 h-12 bg-[#E8F4F1] rounded-xl flex items-center justify-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">Born &amp; Raised in Vietnam</h3>
+          <p class="text-[#2C3340]/60 text-sm leading-relaxed">Our guides aren't reading from a script. They grew up here. They know which village café makes the best phở and why that matters.</p>
+        </div>
+        <!-- Val 3 -->
+        <div class="val-card p-7 reveal reveal-delay-3">
+          <div class="w-12 h-12 bg-[#E8F4F1] rounded-xl flex items-center justify-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">Fully Flexible &amp; Private</h3>
+          <p class="text-[#2C3340]/60 text-sm leading-relaxed">Every route is a starting point. We build around your pace, preferences, and the things that make you stop and stare.</p>
+        </div>
+        <!-- Val 4 -->
+        <div class="val-card p-7 reveal reveal-delay-1">
+          <div class="w-12 h-12 bg-[#E8F4F1] rounded-xl flex items-center justify-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">Carbon-Conscious Routes</h3>
+          <p class="text-[#2C3340]/60 text-sm leading-relaxed">We design for slowness: fewer flights, more trains, local transport. Responsible travel is richer travel.</p>
+        </div>
+        <!-- Val 5 -->
+        <div class="val-card p-7 reveal reveal-delay-2">
+          <div class="w-12 h-12 bg-[#E8F4F1] rounded-xl flex items-center justify-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.58 1.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.7a16 16 0 0 0 6.11 6.11l.88-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.91z"/></svg>
+          </div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">24/7 Real-Human Support</h3>
+          <p class="text-[#2C3340]/60 text-sm leading-relaxed">A real person at the other end of your WhatsApp — from first inquiry until you land home safe. No chatbots. Ever.</p>
+        </div>
+        <!-- Val 6 -->
+        <div class="val-card p-7 reveal reveal-delay-3">
+          <div class="w-12 h-12 bg-[#E8F4F1] rounded-xl flex items-center justify-center mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">Transparent Pricing</h3>
+          <p class="text-[#2C3340]/60 text-sm leading-relaxed">What you see is what you pay. No mystery fees, no hidden supplements. Trust starts before the trip does.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS
+  ============================================================ -->
+  <section class="py-20 md:py-28 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+      <div class="text-center mb-12 reveal">
+        <p class="section-label mb-3">Traveler Stories</p>
+        <h2 class="font-display text-[#2C3340]" style="font-size:clamp(1.9rem,4vw,3.2rem); font-weight:500; letter-spacing:-.01em;">
+          What Our Travelers Say
+        </h2>
+        <p class="text-[#2C3340]/50 mt-3 font-light">Unfiltered. From people who've walked the hidden paths.</p>
+      </div>
+
+      <div class="relative overflow-hidden">
+        <div id="t-track" class="t-track flex">
+
+          <!-- Testimonial 1 -->
+          <div class="t-slide min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-2.5">
+            <div class="bg-[#FAF9F7] rounded-2xl p-8 h-full flex flex-col">
+              <div class="text-amber-400 text-xl mb-4">★★★★★</div>
+              <blockquote class="font-display text-[#2C3340] italic leading-relaxed flex-1 mb-6" style="font-size:1.18rem;">
+                "This wasn't just a holiday — it was one of the most meaningful things we've ever done together. HiddenPath found moments in Vietnam no guidebook could ever lead you to."
+              </blockquote>
+              <div class="flex items-center gap-4 mt-auto">
+                <!-- IMG-SWAP: Testimonial 1 avatar -->
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Sarah M." class="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-[#2C3340] text-sm">Sarah &amp; James M.</p>
+                  <p class="text-[#2C3340]/45 text-xs">London, UK · The Northern Soul, 10 Days</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="t-slide min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-2.5">
+            <div class="bg-[#FAF9F7] rounded-2xl p-8 h-full flex flex-col">
+              <div class="text-amber-400 text-xl mb-4">★★★★★</div>
+              <blockquote class="font-display text-[#2C3340] italic leading-relaxed flex-1 mb-6" style="font-size:1.18rem;">
+                "I hate group tours. I genuinely hate them. But 12 people is actually different — you make real friends. I've already booked my second trip with HiddenPath."
+              </blockquote>
+              <div class="flex items-center gap-4 mt-auto">
+                <!-- IMG-SWAP: Testimonial 2 avatar -->
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Marcus T." class="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-[#2C3340] text-sm">Marcus T.</p>
+                  <p class="text-[#2C3340]/45 text-xs">Melbourne, Australia · Vietnam in Full, 15 Days</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="t-slide min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-2.5">
+            <div class="bg-[#FAF9F7] rounded-2xl p-8 h-full flex flex-col">
+              <div class="text-amber-400 text-xl mb-4">★★★★★</div>
+              <blockquote class="font-display text-[#2C3340] italic leading-relaxed flex-1 mb-6" style="font-size:1.18rem;">
+                "We brought our teenagers and I was nervous. Completely unnecessary. They were speechless in Hội An. Dinner that night — no phones. Just conversation. That's rare."
+              </blockquote>
+              <div class="flex items-center gap-4 mt-auto">
+                <!-- IMG-SWAP: Testimonial 3 avatar -->
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Claire B." class="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-[#2C3340] text-sm">Claire B.</p>
+                  <p class="text-[#2C3340]/45 text-xs">San Francisco, USA · The Central Chapter, 7 Days</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 4 -->
+          <div class="t-slide min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-2.5">
+            <div class="bg-[#FAF9F7] rounded-2xl p-8 h-full flex flex-col">
+              <div class="text-amber-400 text-xl mb-4">★★★★★</div>
+              <blockquote class="font-display text-[#2C3340] italic leading-relaxed flex-1 mb-6" style="font-size:1.18rem;">
+                "The premium experience exceeded every expectation. The private boat on Ha Long, the boutique properties — it never felt touristy. Someone had designed this journey just for us. Because they had."
+              </blockquote>
+              <div class="flex items-center gap-4 mt-auto">
+                <!-- IMG-SWAP: Testimonial 4 avatar -->
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&q=80&auto=format&fit=crop&facepad=2" alt="Robert K." class="w-12 h-12 rounded-full object-cover" />
+                <div>
+                  <p class="font-semibold text-[#2C3340] text-sm">Robert &amp; Anne K.</p>
+                  <p class="text-[#2C3340]/45 text-xs">Zürich, Switzerland · Premium Immersion</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center justify-center gap-3 mt-8">
+        <button onclick="prevT()" class="w-10 h-10 rounded-full border border-[#E8E6E1] flex items-center justify-center hover:border-[#006D5B] hover:text-[#006D5B] transition-colors">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div id="t-dots" class="flex gap-2">
+          <div class="dot active" onclick="goT(0)"></div>
+          <div class="dot" onclick="goT(1)"></div>
+          <div class="dot" onclick="goT(2)"></div>
+          <div class="dot" onclick="goT(3)"></div>
+        </div>
+        <button onclick="nextT()" class="w-10 h-10 rounded-full border border-[#E8E6E1] flex items-center justify-center hover:border-[#006D5B] hover:text-[#006D5B] transition-colors">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <p class="text-center mt-5"><a href="#" class="text-sm text-[#006D5B] font-medium hover:underline">Read all 312 reviews on Google →</a></p>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DESTINATIONS
+  ============================================================ -->
+  <section id="destinations" class="py-20 md:py-28 bg-[#FAF9F7]">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+      <div class="text-center max-w-xl mx-auto mb-12 reveal">
+        <p class="section-label mb-3">Explore the Country</p>
+        <h2 class="font-display text-[#2C3340]" style="font-size:clamp(1.9rem,4vw,3.2rem); font-weight:500; letter-spacing:-.01em;">
+          Vietnam, Region by Region
+        </h2>
+        <p class="text-[#2C3340]/58 font-light mt-3">One country. Three completely different worlds. Which calls to you?</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 reveal">
+
+        <!-- North -->
+        <div class="dest-tile h-80 md:h-[440px]">
+          <!-- IMG-SWAP: North Vietnam — Sapa terraces / Ha Long Bay -->
+          <img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=700&q=80&auto=format&fit=crop"
+               alt="Northern Vietnam — Sapa rice terraces" class="absolute inset-0 w-full h-full object-cover" />
+          <div class="dest-overlay absolute inset-0"></div>
+          <div class="absolute inset-0 p-7 flex flex-col justify-end">
+            <p class="text-white/55 text-[.6rem] tracking-[.18em] uppercase mb-1">The North</p>
+            <h3 class="font-display text-white font-medium leading-tight mb-1" style="font-size:1.75rem;">Hanoi · Sapa<br/>Ha Long Bay</h3>
+            <p class="text-white/60 text-sm mb-4">Ancient history meets mountain grandeur</p>
+            <a href="#" class="text-[#FF8A42] text-sm font-semibold flex items-center gap-1 group">Explore North <svg class="transition-transform duration-200 group-hover:translate-x-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Central -->
+        <div class="dest-tile h-80 md:h-[440px]">
+          <!-- IMG-SWAP: Central Vietnam — Hoi An / Hue -->
+          <img src="https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=700&q=80&auto=format&fit=crop"
+               alt="Central Vietnam — Hoi An lanterns" class="absolute inset-0 w-full h-full object-cover" />
+          <div class="dest-overlay absolute inset-0"></div>
+          <div class="absolute inset-0 p-7 flex flex-col justify-end">
+            <p class="text-white/55 text-[.6rem] tracking-[.18em] uppercase mb-1">The Centre</p>
+            <h3 class="font-display text-white font-medium leading-tight mb-1" style="font-size:1.75rem;">Huế · Da Nang<br/>Hội An</h3>
+            <p class="text-white/60 text-sm mb-4">Dynasties, coastline, and lantern light</p>
+            <a href="#" class="text-[#FF8A42] text-sm font-semibold flex items-center gap-1 group">Explore Central <svg class="transition-transform duration-200 group-hover:translate-x-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+          </div>
+        </div>
+
+        <!-- South -->
+        <div class="dest-tile h-80 md:h-[440px]">
+          <!-- IMG-SWAP: Southern Vietnam — Saigon / Mekong Delta -->
+          <img src="https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=700&q=80&auto=format&fit=crop"
+               alt="Southern Vietnam — Saigon and Mekong Delta" class="absolute inset-0 w-full h-full object-cover" />
+          <div class="dest-overlay absolute inset-0"></div>
+          <div class="absolute inset-0 p-7 flex flex-col justify-end">
+            <p class="text-white/55 text-[.6rem] tracking-[.18em] uppercase mb-1">The South</p>
+            <h3 class="font-display text-white font-medium leading-tight mb-1" style="font-size:1.75rem;">Saigon · Mekong<br/>Phú Quốc</h3>
+            <p class="text-white/60 text-sm mb-4">Vibrant cities, river life, island escape</p>
+            <a href="#" class="text-[#FF8A42] text-sm font-semibold flex items-center gap-1 group">Explore South <svg class="transition-transform duration-200 group-hover:translate-x-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW IT WORKS
+  ============================================================ -->
+  <section class="py-20 md:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+      <div class="text-center max-w-xl mx-auto mb-16 reveal">
+        <p class="section-label mb-3">The Process</p>
+        <h2 class="font-display text-[#2C3340]" style="font-size:clamp(1.9rem,4vw,3.2rem); font-weight:500; letter-spacing:-.01em;">
+          Simple from Start to Journey
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 relative reveal">
+        <!-- Connector line (desktop) -->
+        <div class="hidden md:block absolute top-8 left-[14%] right-[14%] h-px bg-[#E8E6E1] z-0"></div>
+
+        <div class="flex flex-col items-center text-center relative z-10">
+          <div class="w-16 h-16 rounded-full bg-[#006D5B] text-white flex items-center justify-center mb-5 font-display text-xl font-semibold shadow-lg shadow-teal-900/15">01</div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">Browse &amp; Choose</h3>
+          <p class="text-sm text-[#2C3340]/55 leading-relaxed">Explore our curated routes. Find the journey that sparks something.</p>
+        </div>
+
+        <div class="flex flex-col items-center text-center relative z-10">
+          <div class="w-16 h-16 rounded-full bg-[#006D5B] text-white flex items-center justify-center mb-5 font-display text-xl font-semibold shadow-lg shadow-teal-900/15">02</div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">Free Consultation</h3>
+          <p class="text-sm text-[#2C3340]/55 leading-relaxed">A 20-minute call with a local expert. No hard sell — honest conversation only.</p>
+        </div>
+
+        <div class="flex flex-col items-center text-center relative z-10">
+          <div class="w-16 h-16 rounded-full bg-[#006D5B] text-white flex items-center justify-center mb-5 font-display text-xl font-semibold shadow-lg shadow-teal-900/15">03</div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">We Tailor Your Trip</h3>
+          <p class="text-sm text-[#2C3340]/55 leading-relaxed">We customise pace, hotels, and experiences around your real preferences.</p>
+        </div>
+
+        <div class="flex flex-col items-center text-center relative z-10">
+          <div class="w-16 h-16 rounded-full bg-[#FF8A42] text-white flex items-center justify-center mb-5 font-display text-xl font-semibold shadow-lg shadow-orange-400/20">04</div>
+          <h3 class="font-semibold text-[#2C3340] mb-2">You Travel in Peace</h3>
+          <p class="text-sm text-[#2C3340]/55 leading-relaxed">Everything is arranged. 24/7 support active. Just show up and be present.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA BAND
+  ============================================================ -->
+  <section class="py-24 md:py-32 relative overflow-hidden" style="background:#006D5B;">
+    <!-- Dot texture -->
+    <div class="absolute inset-0 opacity-[.06]" style="background-image:radial-gradient(white 1px,transparent 1px);background-size:40px 40px;"></div>
+    <div class="max-w-3xl mx-auto px-5 md:px-12 text-center relative z-10 reveal">
+      <p class="section-label text-white/40 mb-4">Ready When You Are</p>
+      <h2 class="font-display text-white mb-6" style="font-size:clamp(2.2rem,6vw,4rem); font-weight:400; letter-spacing:-.015em; line-height:1.1;">
+        Stop Scrolling.<br/><em>Start Exploring.</em>
+      </h2>
+      <p class="text-white/72 text-lg font-light mb-10 max-w-lg mx-auto leading-relaxed">
+        Talk to a local Vietnam expert for free. 20 minutes. No pressure. Just honest answers to your honest questions.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="openModal()" class="btn-primary px-10 py-4 rounded-full text-base font-semibold">
+          Book a Free 20-Min Call →
+        </button>
+        <a href="#tours" class="btn-ghost-white px-10 py-4 rounded-full text-base font-semibold">
+          Browse Tours First
+        </a>
+      </div>
+      <p class="text-white/35 text-sm mt-6">No spam. No hard sell. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INSTAGRAM / VISUAL FEED
+  ============================================================ -->
+  <section id="journal" class="py-20 md:py-28 bg-[#FAF9F7]">
+    <div class="max-w-7xl mx-auto px-5 md:px-12">
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 reveal">
+        <div>
+          <p class="section-label mb-2">Life on the Hidden Path</p>
+          <h2 class="font-display text-[#2C3340]" style="font-size:clamp(1.5rem,3vw,2.2rem); font-weight:500;">@hiddenpath_vietnam</h2>
+        </div>
+        <a href="https://instagram.com" target="_blank" class="text-[#006D5B] font-semibold text-sm flex items-center gap-1.5 group self-start sm:self-auto">
+          Follow on Instagram
+          <svg class="transition-transform duration-200 group-hover:translate-x-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-3 reveal">
+        <!-- IMG-SWAP: Instagram tiles (6 images) -->
+        <div class="ig-tile"><img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=320&q=75&auto=format&fit=crop" alt="Ha Long Bay"/><div class="ig-overlay absolute inset-0 flex items-center justify-center"><svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div></div>
+        <div class="ig-tile"><img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?w=320&q=75&auto=format&fit=crop" alt="Sapa"/><div class="ig-overlay absolute inset-0 rounded-xl"></div></div>
+        <div class="ig-tile"><img src="https://images.unsplash.com/photo-1557750255-d7d5c5e22e75?w=320&q=75&auto=format&fit=crop" alt="Hoi An"/><div class="ig-overlay absolute inset-0 rounded-xl"></div></div>
+        <div class="ig-tile"><img src="https://images.unsplash.com/photo-1555217851-6141534701ac?w=320&q=75&auto=format&fit=crop" alt="Old Town"/><div class="ig-overlay absolute inset-0 rounded-xl"></div></div>
+        <div class="ig-tile"><img src="https://images.unsplash.com/photo-1583417267826-aebc4d1542e1?w=320&q=75&auto=format&fit=crop" alt="Saigon"/><div class="ig-overlay absolute inset-0 rounded-xl"></div></div>
+        <div class="ig-tile"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=320&q=75&auto=format&fit=crop" alt="Mountains"/><div class="ig-overlay absolute inset-0 rounded-xl"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="bg-[#2C3340] text-white">
+    <div class="max-w-7xl mx-auto px-5 md:px-12 pt-16 pb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+
+        <!-- Brand -->
+        <div class="sm:col-span-2 lg:col-span-1">
+          <div class="font-body font-semibold text-[1.1rem] tracking-tight mb-0.5">Hidden<span class="font-light">Path</span></div>
+          <div class="text-[.58rem] tracking-[.22em] uppercase text-white/40 mb-4">Vietnam</div>
+          <p class="text-white/50 text-sm leading-relaxed mb-5">Curated small-group journeys for thoughtful travelers. Est. 2019, Hanoi.</p>
+          <div class="flex gap-4">
+            <a href="#" aria-label="Instagram" class="text-white/35 hover:text-white transition-colors">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="text-white/35 hover:text-white transition-colors">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" aria-label="TikTok" class="text-white/35 hover:text-white transition-colors">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.75a4.85 4.85 0 01-1.02-.06z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Explore -->
+        <div>
+          <h4 class="font-semibold text-sm mb-5">Explore</h4>
+          <ul class="space-y-3 text-sm text-white/50">
+            <li><a href="#tours" class="hover:text-[#FF8A42] transition-colors">All Tours</a></li>
+            <li><a href="#destinations" class="hover:text-[#FF8A42] transition-colors">Destinations</a></li>
+            <li><a href="#about" class="hover:text-[#FF8A42] transition-colors">About HiddenPath</a></li>
+            <li><a href="#" class="hover:text-[#FF8A42] transition-colors">Travel Journal</a></li>
+            <li><a href="#" class="hover:text-[#FF8A42] transition-colors">Responsible Travel</a></li>
+            <li><a href="#" class="hover:text-[#FF8A42] transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="font-semibold text-sm mb-5">Contact</h4>
+          <ul class="space-y-3 text-sm text-white/50">
+            <li class="flex gap-2 items-start"><svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>hello@hiddenpath.vn</span></li>
+            <li class="flex gap-2 items-start"><svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.58 1.34h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.7a16 16 0 0 0 6.11 6.11l.88-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.91z"/></svg><span>WhatsApp: +84 91 234 5678</span></li>
+            <li class="flex gap-2 items-start"><svg class="mt-0.5 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>36 Hàng Bè, Hoàn Kiếm, Hà Nội</span></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div>
+          <h4 class="font-semibold text-sm mb-2">The Hidden Path Letter</h4>
+          <p class="text-white/45 text-xs mb-4 leading-relaxed">Seasonal dispatches from Vietnam. Real stories, zero spam.</p>
+          <div class="flex flex-col gap-2">
+            <input type="email" placeholder="your@email.com" class="bg-white/10 border border-white/18 text-white placeholder:text-white/28 rounded-full px-4 py-3 text-sm outline-none focus:border-[#FF8A42] transition-colors" />
+            <button class="btn-primary py-3 rounded-full text-sm font-semibold">Subscribe →</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/10 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30">
+        <p>© 2026 HiddenPath Vietnam. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white/60 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-white/60 transition-colors">Terms of Service</a>
+          <a href="#" class="hover:text-white/60 transition-colors">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       BOOKING MODAL
+  ============================================================ -->
+  <div id="booking-modal" class="fixed inset-0 z-[200] items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/58 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="modal-card relative bg-white max-w-[480px] w-full p-8 md:p-10 z-10 overflow-hidden">
+
+      <!-- Close button — always visible -->
+      <button onclick="closeModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#F0EDE9] flex items-center justify-center hover:bg-[#E5E1DC] transition-colors z-10">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2C3340" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- ── PANEL 1: Choose your path ──────────────────────── -->
+      <div id="modal-panel-options" class="modal-panel">
+        <div class="mb-7 pr-8">
+          <p class="section-label mb-2">Free Consultation</p>
+          <h3 class="font-display text-[#2C3340] mb-2" style="font-size:1.9rem; font-weight:500; letter-spacing:-.01em; line-height:1.1;">Talk to a<br/>Local Expert</h3>
+          <p class="text-[#2C3340]/55 text-sm leading-relaxed">20 minutes with someone who actually lives in Vietnam. No script. No pressure. Just honest answers.</p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <!-- Calendly -->
+          <button onclick="goCalendly()" class="book-opt flex items-center gap-5 p-5 w-full text-left">
+            <div class="w-12 h-12 rounded-xl bg-[#E8F4F1] flex items-center justify-center shrink-0">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="flex-1">
+              <p class="font-semibold text-[#2C3340] text-sm mb-0.5">Schedule via Calendly</p>
+              <p class="text-xs text-[#2C3340]/50 text-left">Pick a time that suits you — Mon–Sat, 9am–6pm ICT.</p>
+            </div>
+            <svg class="text-[#006D5B] shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <!-- WhatsApp -->
+          <button onclick="goWhatsApp()" class="book-opt wa flex items-center gap-5 p-5 w-full text-left">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style="background:rgba(37,211,102,.12);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <div class="flex-1">
+              <p class="font-semibold text-[#2C3340] text-sm mb-0.5">Chat Instantly on WhatsApp</p>
+              <p class="text-xs text-[#2C3340]/50 text-left">Typically reply within 15 minutes during business hours.</p>
+            </div>
+            <svg class="shrink-0" style="color:#25D366;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <p class="text-center text-xs text-[#2C3340]/30 mt-5">We will never share your details. Privacy Policy applies.</p>
+      </div>
+
+      <!-- ── PANEL 2: Calendly confirmation ─────────────────── -->
+      <div id="modal-panel-calendly" class="modal-panel hidden text-center py-4">
+        <div class="confirm-icon-ring bg-[#E8F4F1]">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#006D5B" stroke-width="1.7"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
+        </div>
+        <h3 class="font-display text-[#2C3340] mb-2 pr-8" style="font-size:1.7rem; font-weight:500; line-height:1.15;">Calendly is opening…</h3>
+        <p class="text-[#2C3340]/58 text-sm leading-relaxed mb-2">We've opened the booking page in a new tab. Choose any slot that works for you.</p>
+        <p class="text-[#2C3340]/40 text-xs mb-8">Tab didn't open? <a id="calendly-fallback-link" href="https://calendly.com/hiddenpath-vietnam/consultation" target="_blank" class="text-[#006D5B] font-semibold hover:underline">Click here to open it →</a></p>
+        <div class="bg-[#FAF9F7] rounded-xl p-4 text-left mb-6">
+          <p class="text-xs font-semibold text-[#2C3340]/50 uppercase tracking-widest mb-2">What to expect</p>
+          <ul class="text-sm text-[#2C3340]/65 space-y-1.5">
+            <li class="flex gap-2"><span class="text-[#006D5B] shrink-0">✓</span> 20-minute video or phone call</li>
+            <li class="flex gap-2"><span class="text-[#006D5B] shrink-0">✓</span> No sales pressure — just honest advice</li>
+            <li class="flex gap-2"><span class="text-[#006D5B] shrink-0">✓</span> Available Mon–Sat, 9am–6pm Hanoi time</li>
+          </ul>
+        </div>
+        <button onclick="resetModal()" class="w-full btn-outline py-3 rounded-full text-sm font-semibold">← Back to options</button>
+      </div>
+
+      <!-- ── PANEL 3: WhatsApp confirmation ─────────────────── -->
+      <div id="modal-panel-wa" class="modal-panel hidden text-center py-4">
+        <div class="confirm-icon-ring" style="background:rgba(37,211,102,.1);">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <h3 class="font-display text-[#2C3340] mb-2 pr-8" style="font-size:1.7rem; font-weight:500; line-height:1.15;">WhatsApp is opening…</h3>
+        <p class="text-[#2C3340]/58 text-sm leading-relaxed mb-2">We've opened a WhatsApp chat pre-loaded with your message. Just hit send.</p>
+        <p class="text-[#2C3340]/40 text-xs mb-8">Didn't open? <a id="wa-fallback-link" href="https://wa.me/84912345678" target="_blank" class="text-[#25D366] font-semibold hover:underline">Click here to open WhatsApp →</a></p>
+        <div class="bg-[#FAF9F7] rounded-xl p-4 text-left mb-6">
+          <p class="text-xs font-semibold text-[#2C3340]/50 uppercase tracking-widest mb-2">What happens next</p>
+          <ul class="text-sm text-[#2C3340]/65 space-y-1.5">
+            <li class="flex gap-2"><span style="color:#25D366;" class="shrink-0">✓</span> Typical reply: within 15 minutes</li>
+            <li class="flex gap-2"><span style="color:#25D366;" class="shrink-0">✓</span> A real human — not a bot</li>
+            <li class="flex gap-2"><span style="color:#25D366;" class="shrink-0">✓</span> Mon–Sat, 8am–8pm Hanoi time</li>
+          </ul>
+        </div>
+        <button onclick="resetModal()" class="w-full btn-outline py-3 rounded-full text-sm font-semibold">← Back to options</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    /* ============================================================
+       CONFIGURATION — swap these two values when going live
+    ============================================================ */
+    const CALENDLY_URL = 'https://calendly.com/hiddenpath-vietnam/consultation';
+    const WHATSAPP_NUM = '84912345678'; // international format, no +
+
+    /* ── Pre-fill WhatsApp message ─────────────────────────────── */
+    const WA_MESSAGE = encodeURIComponent(
+      "Hi HiddenPath! I'd love to learn more about your Vietnam journeys. Could you help me find the right tour?"
+    );
+    const WA_URL = `https://wa.me/${WHATSAPP_NUM}?text=${WA_MESSAGE}`;
+
+    /* ── Scroll progress bar ───────────────────────────────────── */
+    const bar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+      bar.style.width = p + '%';
+    }, { passive: true });
+
+    /* ── Nav scroll state ──────────────────────────────────────── */
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 70);
+    }, { passive: true });
+
+    /* ── Smooth scroll helper ──────────────────────────────────── */
+    function scrollTo(sel) {
+      const el = document.querySelector(sel);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ── Mobile menu ───────────────────────────────────────────── */
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+
+    /* ============================================================
+       FILTER ENGINE
+    ============================================================ */
+    let activeSeg = null;
+
+    /* Maps segment card keys → human labels for the active bar */
+    const SEG_LABELS = {
+      adventure: 'Thrill & Connection',
+      romance:   'Intimate Escapes',
+      culture:   'Deep Discovery',
+      luxury:    'Premium Immersion',
+    };
+
+    /* Maps chip values → human labels */
+    const DUR_LABELS = { '3to5': '3–5 Days', '6to9': '6–9 Days', '10plus': '10+ Days' };
+    const REG_LABELS = { north: 'North', central: 'Central', south: 'South', full: 'Full Country' };
+
+    /* ── Segment card click ─────────────────────────────────── */
+    function selectSeg(card, seg) {
+      document.querySelectorAll('.seg-card').forEach(c => c.classList.remove('active'));
+      const filter = document.getElementById('secondary-filter');
+
+      if (activeSeg === seg) {
+        /* Toggle OFF — deselect and reset */
+        activeSeg = null;
+        filter.classList.remove('open');
+        resetFilters(false); /* reset tours without scrolling */
+      } else {
+        card.classList.add('active');
+        activeSeg = seg;
+        if (!filter.classList.contains('open')) filter.classList.add('open');
+        /* Scroll filter panel into view on mobile */
+        if (window.innerWidth < 768) {
+          setTimeout(() => filter.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
+        }
+        /* Apply segment filter immediately — chips can refine further */
+        applyFilters(false);
+      }
+    }
+
+    /* ── Chip click ─────────────────────────────────────────── */
+    function toggleChip(chip) {
+      /* Within the same type, allow multi-select (any of the durations / any of the regions) */
+      chip.classList.toggle('active');
+      /* Live-filter as chips are toggled — no need to press button */
+      applyFilters(false);
+    }
+
+    /* ── Core filter function ───────────────────────────────── */
+    function applyFilters(shouldScroll = true) {
+      const cards  = document.querySelectorAll('.tour-card[data-segments]');
+      const active = {
+        dur: [...document.querySelectorAll('.f-chip.active[data-type="duration"]')].map(c => c.dataset.value),
+        reg: [...document.querySelectorAll('.f-chip.active[data-type="region"]')].map(c => c.dataset.value),
+      };
+
+      const hasFilter = activeSeg || active.dur.length || active.reg.length;
+      let visible = 0;
+
+      cards.forEach(card => {
+        const segs = card.dataset.segments.split(' ');
+        const dur  = card.dataset.duration;
+        const reg  = card.dataset.region;
+
+        const segMatch = !activeSeg          || segs.includes(activeSeg);
+        const durMatch = !active.dur.length  || active.dur.includes(dur);
+        const regMatch = !active.reg.length  || active.reg.includes(reg);
+        const show     = segMatch && durMatch && regMatch;
+
+        if (show) {
+          showCard(card);
+          visible++;
+        } else {
+          hideCard(card);
+        }
+      });
+
+      /* Update heading */
+      const heading = document.getElementById('tours-heading');
+      if (hasFilter && visible > 0) {
+        heading.textContent = `${visible} Journey${visible > 1 ? 's' : ''} Match Your Vibe`;
+      } else if (!hasFilter) {
+        heading.textContent = 'Our Most Loved Journeys';
+      }
+
+      /* Active filter summary bar */
+      const bar   = document.getElementById('filter-active-bar');
+      const label = document.getElementById('filter-active-label');
+      if (hasFilter) {
+        const parts = [];
+        if (activeSeg)      parts.push(SEG_LABELS[activeSeg]);
+        if (active.dur.length) parts.push(active.dur.map(v => DUR_LABELS[v]).join(', '));
+        if (active.reg.length) parts.push(active.reg.map(v => REG_LABELS[v]).join(', '));
+        label.textContent = `Filtering by: ${parts.join(' · ')}`;
+        bar.classList.add('visible');
+      } else {
+        bar.classList.remove('visible');
+      }
+
+      /* Empty state */
+      const empty = document.getElementById('tours-empty');
+      empty.classList.toggle('visible', visible === 0 && hasFilter);
+
+      /* Scroll to tours section on explicit "Show" button click */
+      if (shouldScroll && visible > 0) {
+        setTimeout(() => {
+          document.getElementById('tours').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
+      }
+    }
+
+    /* ── Show a card (reverse any hidden state) ─────────────── */
+    function showCard(card) {
+      /* If already hidden via display:none we need to restore it before animating */
+      if (card.classList.contains('is-hidden')) {
+        card.classList.remove('is-hidden');
+        card.style.display = '';
+        card.offsetHeight; /* force reflow so transition fires */
+      }
+      card.classList.remove('is-hiding', 'is-showing');
+    }
+
+    /* ── Hide a card with a fade-scale exit ─────────────────── */
+    function hideCard(card) {
+      if (card.classList.contains('is-hidden')) return; /* already gone */
+      card.classList.add('is-hiding');
+      setTimeout(() => {
+        card.classList.add('is-hidden');
+        card.classList.remove('is-hiding');
+        card.style.display = 'none';
+      }, 300);
+    }
+
+    /* ── Reset all filters ──────────────────────────────────── */
+    function resetFilters(shouldScroll = true) {
+      activeSeg = null;
+      document.querySelectorAll('.seg-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.f-chip').forEach(c => c.classList.remove('active'));
+      document.getElementById('secondary-filter').classList.remove('open');
+
+      /* Restore all tour cards */
+      document.querySelectorAll('.tour-card[data-segments]').forEach(card => {
+        card.style.display = '';
+        card.classList.remove('is-hiding', 'is-hidden', 'is-showing');
+      });
+
+      document.getElementById('tours-heading').textContent   = 'Our Most Loved Journeys';
+      document.getElementById('filter-active-bar').classList.remove('visible');
+      document.getElementById('tours-empty').classList.remove('visible');
+
+      if (shouldScroll) {
+        document.getElementById('tours').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    /* ============================================================
+       TESTIMONIAL CAROUSEL
+    ============================================================ */
+    let tIdx = 0;
+    const TOTAL = 4;
+    function spv() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768)  return 2;
+      return 1;
+    }
+    function renderT() {
+      const perView = spv();
+      const max = TOTAL - perView;
+      if (tIdx > max) tIdx = max;
+      if (tIdx < 0)   tIdx = 0;
+      document.getElementById('t-track').style.transform = `translateX(-${tIdx * (100 / perView)}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === tIdx));
+    }
+    function nextT() { tIdx = (tIdx >= TOTAL - spv()) ? 0 : tIdx + 1; renderT(); }
+    function prevT() { tIdx = (tIdx <= 0) ? TOTAL - spv() : tIdx - 1; renderT(); }
+    function goT(i)  { tIdx = i; renderT(); }
+    let autoT = setInterval(nextT, 5500);
+    const track = document.getElementById('t-track');
+    track.addEventListener('mouseenter', () => clearInterval(autoT));
+    track.addEventListener('mouseleave', () => { autoT = setInterval(nextT, 5500); });
+    window.addEventListener('resize', renderT);
+    renderT();
+
+    /* Touch swipe for testimonials */
+    let tsX = 0;
+    track.addEventListener('touchstart', e => { tsX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - tsX;
+      if (Math.abs(dx) > 50) dx < 0 ? nextT() : prevT();
+    }, { passive: true });
+
+    /* ============================================================
+       BOOKING MODAL
+    ============================================================ */
+
+    /* Internal panel switcher */
+    function showModalPanel(id) {
+      ['modal-panel-options', 'modal-panel-calendly', 'modal-panel-wa'].forEach(p => {
+        const el = document.getElementById(p);
+        if (el.id === id) { el.classList.remove('hidden'); }
+        else              { el.classList.add('hidden'); }
+      });
+    }
+
+    function openModal() {
+      showModalPanel('modal-panel-options'); /* always start at options */
+      document.getElementById('booking-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('booking-modal').classList.remove('open');
+      document.body.style.overflow = '';
+      /* Small delay so the close animation plays before resetting the panel */
+      setTimeout(() => showModalPanel('modal-panel-options'), 300);
+    }
+
+    function resetModal() {
+      showModalPanel('modal-panel-options');
+    }
+
+    /* Calendly: switch to confirm panel → open external tab */
+    function goCalendly() {
+      document.getElementById('calendly-fallback-link').href = CALENDLY_URL;
+      showModalPanel('modal-panel-calendly');
+      window.open(CALENDLY_URL, '_blank', 'noopener');
+    }
+
+    /* WhatsApp: switch to confirm panel → open wa.me */
+    function goWhatsApp() {
+      document.getElementById('wa-fallback-link').href = WA_URL;
+      showModalPanel('modal-panel-wa');
+      window.open(WA_URL, '_blank', 'noopener');
+    }
+
+    /* Close modal on Escape */
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ============================================================
+       SCROLL REVEAL — Intersection Observer
+    ============================================================ */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+    /* ── Anchor smooth scroll ──────────────────────────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
+
+<script>
+(async function() {
+  try {
+    const res = await fetch('/api/v1/settings');
+    const { data } = await res.json();
+    if (!data.hero_image_url) return;
+
+    const heroImg = document.querySelector('img[src*="w=1920"]')
+                 || document.querySelector('img[src*="w=1200"]')
+                 || document.querySelector('section img:first-child');
+
+    if (heroImg) {
+      heroImg.src = data.hero_image_url;
+      console.log('Hero image updated ✅');
+    }
+  } catch(e) {
+    console.log('Settings load failed:', e.message);
+  }
+})();
+</script>
+</body>
+</html>
