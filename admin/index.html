@@ -643,7 +643,7 @@ async function doLogin() {
     document.getElementById('admin-name').textContent = user.user.name;
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app-shell').classList.remove('hidden');
-    document.getElementById('app-shell').style.display = 'flex';
+    document.getElementById('app-shell').style.display = 'flex'; window.scrollTo(0,0); window.scrollTo(0,0);
     loadDashboard();
   } catch (err) {
     errEl.textContent = err.message || 'Invalid credentials';
@@ -673,7 +673,7 @@ if (HP.auth.isLoggedIn()) {
     document.getElementById('admin-name').textContent = r.data.name;
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app-shell').classList.remove('hidden');
-    document.getElementById('app-shell').style.display = 'flex';
+    document.getElementById('app-shell').style.display = 'flex'; window.scrollTo(0,0); window.scrollTo(0,0);
     loadDashboard();
   }).catch(() => { /* token expired — stay on login */ });
 }
