@@ -154,29 +154,29 @@ const HP = (() => {
 
     // Tours (admin)
     tours: {
-      list:    (p)  => get('/tours' + qs(p), auth.token),
-      create:  (d)  => post('/tours', d, auth.token),
+      list:    (p)     => get('/tours' + qs(p), auth.token),
+      create:  (d)     => post('/tours', d, auth.token),
       update:  (id, d) => put(`/tours/${id}`, d, auth.token),
-      publish: (id) => patch(`/tours/${id}/publish`, {}, auth.token),
-      delete:  (id) => del(`/tours/${id}`, auth.token),
+      publish: (id)    => patch(`/tours/${id}/publish`, {}, auth.token),
+      delete:  (id)    => del(`/tours/${id}`, auth.token),
     },
 
     // Articles (admin)
     articles: {
-      list:    (p)  => get('/articles' + qs(p), auth.token),
-      create:  (d)  => post('/articles', d, auth.token),
+      list:    (p)     => get('/articles' + qs(p), auth.token),
+      create:  (d)     => post('/articles', d, auth.token),
       update:  (id, d) => put(`/articles/${id}`, d, auth.token),
-      publish: (id) => patch(`/articles/${id}/publish`, {}, auth.token),
-      delete:  (id) => del(`/articles/${id}`, auth.token),
+      publish: (id)    => patch(`/articles/${id}/publish`, {}, auth.token),
+      delete:  (id)    => del(`/articles/${id}`, auth.token),
     },
 
     // Inquiries (admin)
     inquiries: {
-      list:         (p)  => get('/inquiries' + qs(p), auth.token),
-      get:          (id) => get(`/inquiries/${id}`, auth.token),
+      list:         (p)             => get('/inquiries' + qs(p), auth.token),
+      get:          (id)            => get(`/inquiries/${id}`, auth.token),
       updateStatus: (id, status, notes) =>
         patch(`/inquiries/${id}/status`, { status, internal_notes: notes }, auth.token),
-      delete:       (id) => del(`/inquiries/${id}`, auth.token),
+      delete:       (id)            => del(`/inquiries/${id}`, auth.token),
     },
 
     // Team (admin)
@@ -191,19 +191,53 @@ const HP = (() => {
       subscribers: (p) => get('/newsletter/subscribers' + qs(p), auth.token),
     },
 
-    // Media (admin)
+    // ── Media (admin) ─────────────────────────────────────────
+    // FIX: Added missing list(), getFolders(), get(), delete() methods.
+    // The original file only had upload(), causing 404 / "Failed to fetch"
+    // when the Admin UI tried to load the media library.
     media: {
+      /** List all media files. Optional: { folder_id, page, pageSize, entity_type } */
+      list: (p) => get('/media' + qs(p), auth.token),
+
+      /** List all media folders. Optional: { page, pageSize } */
+      getFolders: (p) => get('/media-folders' + qs(p), auth.token),
+
+      /** Get single media item by id */
+      get: (id) => get(`/media/${id}`, auth.token),
+
+      /** Create a new folder */
+      createFolder: (d) => post('/media-folders', d, auth.token),
+
+      /** Rename / update a folder */
+      updateFolder: (id, d) => put(`/media-folders/${id}`, d, auth.token),
+
+      /** Delete a folder */
+      deleteFolder: (id) => del(`/media-folders/${id}`, auth.token),
+
+      /** Delete a media file */
+      delete: (id) => del(`/media/${id}`, auth.token),
+
+      /** Upload a file (multipart/form-data — cannot use req() helper) */
       async upload(file, entityType = 'general', entityId = null) {
         const form = new FormData();
         form.append('file', file);
         if (entityType) form.append('entity_type', entityType);
         if (entityId)   form.append('entity_id',   entityId);
+
         const res = await fetch(`${BASE}/media`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${auth.token}` },
           body: form,
         });
-        return res.json();
+
+        // FIX: original upload() had no error handling — added below
+        const json = await res.json();
+        if (!res.ok) {
+          const err = new Error(json.message || 'Upload failed');
+          err.status = res.status;
+          throw err;
+        }
+        return json;
       },
     },
   };
