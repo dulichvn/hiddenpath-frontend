@@ -1182,7 +1182,7 @@ async function loadNewsletter() {
 
 </script>
 <script id="media-folders-js">
-const _API=(window.HP_API_URL||'').replace(/\/$/,'') + '/api/v1';
+const _API=(window.HP_API_URL||'').replace(/[/]+$/,'') + '/api/v1';
 let allFolders=[];let allMedia=[];let currentFolderId='';let selectedMediaIds=new Set();let newFolderColor='#4f8ef7';let newFolderIcon='📁';
 async function initMediaPage(){await Promise.all([loadFolders(),loadMedia('')]);}
 async function loadFolders(){try{const res=await fetch(_API + '/media-folders',{headers:authHeaders()});const{data}=await res.json();allFolders=data||[];renderFolderSidebar();}catch(e){console.error(e);}}
@@ -1203,10 +1203,9 @@ function pickColor(el){document.querySelectorAll('.color-swatch').forEach(s=>s.c
 function pickIcon(el){document.querySelectorAll('#icon-picker span').forEach(s=>s.style.opacity='0.4');el.style.opacity='1';newFolderIcon=el.dataset.icon;}
 async function createFolder(){const name=document.getElementById('new-folder-name').value.trim();if(!name){toast('Nhập tên folder!','error');return;}try{const res=await fetch(_API + '/media-folders',{method:'POST',headers:{...authHeaders(),'Content-Type':'application/json'},body:JSON.stringify({name,color:newFolderColor,icon:newFolderIcon})});const json=await res.json();if(!res.ok)throw new Error(json.error);toast(`Folder "${name}" đã tạo ✅`,'success');closeNewFolderModal();await loadFolders();}catch(e){toast(e.message,'error');}}
 async function deleteFolder(event,id){event.stopPropagation();if(!confirm('Xoá folder này?'))return;try{await fetch(`${_API}/media-folders/${id}`,{method:'DELETE',headers:authHeaders()});toast('Đã xoá folder','success');if(currentFolderId==id)currentFolderId='';await loadFolders();await loadMedia(currentFolderId);}catch(e){toast(e.message,'error');}}
-
-async function handleUpload(event) { const file = event.target.files[0]; if (!file) return; try { await HP.admin.media.upload(file, String.fromCharCode(39) + "general" + String.fromCharCode(39), null); HP.ui.toast(String.fromCharCode(39) + "Upload thanh cong!" + String.fromCharCode(39), "success"); await loadMedia(currentFolderId); } catch(e) { HP.ui.toast(e.message || "Upload that bai", "error"); } finally { event.target.value = ""; } }function authHeaders() {
-  function authHeaders() {
-const token = HP?.auth?.token || HP?.auth?.getToken?.() || '';
+async function handleUpload(event){const file=event.target.files[0];if(!file)return;try{await HP.admin.media.upload(file,'general',null);HP.ui.toast('Upload thanh cong!','success');await loadMedia(currentFolderId);}catch(e){HP.ui.toast(e.message||'Upload that bai','error');}finally{event.target.value='';}}
+function authHeaders() {
+  const token = HP?.auth?.token || HP?.auth?.getToken?.() || '';
   return { 'Authorization': `Bearer ${token}` };
 }
   </script>
