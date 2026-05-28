@@ -1205,7 +1205,8 @@ async function createFolder(){const name=document.getElementById('new-folder-nam
 async function deleteFolder(event,id){event.stopPropagation();if(!confirm('Xoá folder này?'))return;try{await fetch(`${_API}/media-folders/${id}`,{method:'DELETE',headers:authHeaders()});toast('Đã xoá folder','success');if(currentFolderId==id)currentFolderId='';await loadFolders();await loadMedia(currentFolderId);}catch(e){toast(e.message,'error');}}
 
 async function handleUpload(event) { const file = event.target.files[0]; if (!file) return; try { await HP.admin.media.upload(file, String.fromCharCode(39) + "general" + String.fromCharCode(39), null); HP.ui.toast(String.fromCharCode(39) + "Upload thanh cong!" + String.fromCharCode(39), "success"); await loadMedia(currentFolderId); } catch(e) { HP.ui.toast(e.message || "Upload that bai", "error"); } finally { event.target.value = ""; } }function authHeaders() {
-  const token = HP?.auth?.token || HP?.auth?.getToken?.() || '';
+  function authHeaders() {
+const token = HP?.auth?.token || HP?.auth?.getToken?.() || '';
   return { 'Authorization': `Bearer ${token}` };
 }
   </script>
