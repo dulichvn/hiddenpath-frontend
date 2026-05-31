@@ -916,7 +916,6 @@ async function loadTours() {
         </td>
         <td>
           <div style="display:flex;gap:.4rem;">
-            <button class="btn-sm btn-ghost" onclick="editTour(${t.id})">Edit</button><button class="btn-sm btn-ghost" onclick="toggleTourPublish(${t.id}, ${!t.is_published})">
               ${t.is_published ? 'Unpublish' : 'Publish'}
             </button>
             <button class="btn-sm btn-ghost" onclick="editTour(${t.id})">Edit</button><a href="../hiddenpath-tour-detail.html" target="_blank" class="btn-sm btn-ghost">View</a>
