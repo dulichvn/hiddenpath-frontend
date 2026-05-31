@@ -916,7 +916,7 @@ async function loadTours() {
         </td>
         <td>
           <div style="display:flex;gap:.4rem;">
-            <button class="btn-sm btn-ghost" onclick="toggleTourPublish(${t.id}, ${!t.is_published})">
+            <button class="btn-sm btn-ghost" onclick="editTour(${t.id})">Edit</button><button class="btn-sm btn-ghost" onclick="toggleTourPublish(${t.id}, ${!t.is_published})">
               ${t.is_published ? 'Unpublish' : 'Publish'}
             </button>
             <button class="btn-sm btn-ghost" onclick="editTour(${t.id})">Edit</button><a href="../hiddenpath-tour-detail.html" target="_blank" class="btn-sm btn-ghost">View</a>
@@ -954,34 +954,10 @@ function openTourModal(tour={}) {
     </div>
   `, `
     <button class="btn-sm btn-ghost" onclick="closeModal()">Cancel</button>
-    <button class="btn-sm btn-teal" onclick="createTour()">Create Tour</button>
+    <button class="btn-sm btn-teal" onclick="${e?'updateTour('+tour.id+')':'createTour()'}">  ${e?'Save Changes':'Create Tour'}</button>
   `);
 }
 
-async function createTour() {
-  const title = document.getElementById('nt-title').value.trim();
-  if (!title) { toast('Title is required', 'error'); return; }
-  try {
-    await HP.admin.tours.create({
-      title,
-      region:         document.getElementById('nt-region').value,
-      duration_days:  parseInt(document.getElementById('nt-days').value),
-      duration_nights: parseInt(document.getElementById('nt-days').value) - 1,
-      price_from:     parseFloat(document.getElementById('nt-price').value),
-      group_size_max: parseInt(document.getElementById('nt-group').value),
-      tagline:        document.getElementById('nt-tagline').value,
-      cover_image:    document.getElementById('nt-img').value,
-      is_published:   false,
-    });
-    toast('Tour created ✓', 'success');
-    closeModal();
-    loadTours();
-  } catch (err) { toast(err.message, 'error'); }
-}
-
-// ================================================================
-//  ARTICLES
-// ================================================================
 async function loadArticles() {
   document.getElementById('articles-body').innerHTML =
     '<tr><td colspan="7" style="text-align:center;padding:2rem;color:rgba(44,51,64,.35);">Loading…</td></tr>';
@@ -1209,7 +1185,7 @@ async function deleteMedia(id){if(!confirm('Xóa ảnh này?'))return;try{await 
 function getTourData(){return{title:document.getElementById('nt-title').value.trim(),region:document.getElementById('nt-region').value,difficulty:document.getElementById('nt-diff')?.value||'easy',duration_days:parseInt(document.getElementById('nt-days').value),price_from:parseFloat(document.getElementById('nt-price').value),group_size_max:parseInt(document.getElementById('nt-group').value),tagline:document.getElementById('nt-tagline').value.trim(),description:document.getElementById('nt-desc')?.value.trim()||'',segments:document.getElementById('nt-segments')?.value.trim()||'',cover_image:document.getElementById('nt-img').value.trim(),guide_name:document.getElementById('nt-guide')?.value.trim()||'',is_featured:document.getElementById('nt-featured')?.checked||false,is_bestseller:document.getElementById('nt-bestseller')?.checked||false,is_signature:document.getElementById('nt-signature')?.checked||false};}
 async function createTour(){const d=getTourData();if(!d.title){toast('Title required','error');return;}try{await HP.admin.tours.create(d);toast('Tour created!','success');closeModal();loadTours();}catch(e){toast(e.message,'error');}}
 async function updateTour(id){const d=getTourData();if(!d.title){toast('Title required','error');return;}try{await HP.admin.tours.update(id,d);toast('Tour updated!','success');closeModal();loadTours();}catch(e){toast(e.message,'error');}}
-async function editTour(id){try{const{data}=await HP.admin.tours.list({pageSize:50});const t=data.find(x=>x.id===id);if(!t){toast('Not found','error');return;}openTourModal(t);}catch(e){toast(e.message,'error');}}
+async function editTour(id){try{const{data}=await HP.admin.tours.list({pageSize:50});const t=data.find(x=>x.id==id);if(!t){toast('Not found','error');return;}openTourModal(t);}catch(e){toast(e.message,'error');}}
 async function deleteTour(id){if(!confirm('Xoa tour nay?'))return;try{await HP.admin.tours.delete(id);toast('Deleted','success');closeModal();loadTours();}catch(e){toast(e.message,'error');}}
 function authHeaders() {
   const token = HP?.auth?.token || HP?.auth?.getToken?.() || '';
