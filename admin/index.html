@@ -691,7 +691,7 @@ const PAGE_META = {
   settings:   { heading: 'Site Settings',    sub: 'Manage homepage content without touching code' },
 };
 
-function goPage(name) {
+function goPage(n){document.getElementById('main').scrollTop=0;window.scrollTo(0,0);return goPage_real(n);}function goPage_real(name) {
   currentPage = name;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
