@@ -941,15 +941,15 @@ function openTourModal(tour={}) {
       <div style="grid-column:span 2;"><label class="form-label">Title *</label><input id="nt-title" class="form-input" value="${tour.title||''}" placeholder="The Northern Soul"/></div>
       <div><label class="form-label">Region *</label>
         <select id="nt-region" class="form-input">
-          <option value="north" ${tour.region==='north'?'selected':''}>North</option><option value="central" ${tour.region==='central'?'selected':''}>Central</option>
-          <option value="south" ${tour.region==='south'?'selected':''}>South</option><option value="full" ${tour.region==='full'?'selected':''}>Full Country</option>
+          <option value="north">North</option><option value="central">Central</option>
+          <option value="south">South</option><option value="full">Full Country</option>
         </select>
       </div>
-      <div><label class="form-label">Duration (days) *</label><input id="nt-days" type="number" class="form-input" value="${tour.duration_days||7}" min="1"/></div>
-      <div><label class="form-label">Price from (USD) *</label><input id="nt-price" type="number" class="form-input" value="${tour.price_from||1290}"/></div>
-      <div><label class="form-label">Max group size</label><input id="nt-group" type="number" class="form-input" value="${tour.group_size_max||12}"/></div>
+      <div><label class="form-label">Duration (days) *</label><input id="nt-days" type="number" class="form-input" value="7" min="1"/></div>
+      <div><label class="form-label">Price from (USD) *</label><input id="nt-price" type="number" class="form-input" value="1290"/></div>
+      <div><label class="form-label">Max group size</label><input id="nt-group" type="number" class="form-input" value="12"/></div>
       <div style="grid-column:span 2;"><label class="form-label">Tagline</label><input id="nt-tagline" class="form-input" placeholder="Short compelling description…"/></div>
-      <div style="grid-column:span 2;"><label class="form-label">Cover image URL</label><input id="nt-img" class="form-input" value="${tour.cover_image||'}" placeholder="https://res.cloudinary.com/…"/></div>
+      <div style="grid-column:span 2;"><label class="form-label">Cover image URL</label><input id="nt-img" class="form-input" placeholder="https://images.unsplash.com/…"/></div>
     </div>
   `, `
     <button class="btn-sm btn-ghost" onclick="closeModal()">Cancel</button>
