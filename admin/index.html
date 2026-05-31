@@ -69,7 +69,7 @@
     /* ── Login screen ─────────────────────────────────── */
     #login-screen{position:fixed;inset:0;background:var(--slate);display:flex;align-items:center;justify-content:center;z-index:200;}
     /* ── Section pages ─────────────────────────────────── */
-    .page{display:none;padding:1.5rem;}html,body{height:100%;overflow:hidden;}#app-shell{height:100%;}#sidebar{height:100%;overflow-y:auto;}#main{height:100%;overflow-y:auto;}#app-shell{align-items:flex-start;}#main{min-height:100vh;}
+    .page{display:none;padding:1.5rem;}html,body{height:auto;overflow-x:hidden;overflow-y:visible;}#app-shell{min-height:100vh;display:flex;align-items:stretch;}#sidebar{min-height:100vh;overflow-y:auto;}#main{flex:1;overflow-y:auto;min-height:100vh;}#app-shell{align-items:flex-start;}#main{min-height:100vh;}
     .page.active{display:block;}
     /* ── Misc ──────────────────────────────────────────── */
     .truncate-cell{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
